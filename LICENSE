@@ -1,0 +1,153 @@
+                        NEBULINO PUBLIC LICENSE
+                    Version 1.Apricot, February 2020
+
+             Copyright (C) 2020 Cloudnebby Dev Group.
+                       <https://nebulino.cloud/>
+
+        Everyone is permitted to copy and distribute verbatim copies
+          of this license document, but changing it is not allowed.
+
+                        NEBULINO PUBLIC LICENSE
+
+                           A-1. DEFINITIONS
+
+  0. “Copyright” also means copyright-like laws that apply to other kinds of works.
+
+  1. "This Licence" refers to the version 1.apricot of NEBULINO PUBLIC LICENSE
+ No one other than the license steward has the right to modify or
+ publish new versions of this License. Each version will be given a
+ distinguishing version number.
+
+  2. “Work" refers to any copyrightable work licensed under this License.
+Each licensee is addressed as “You” in this document.
+“Licensees” and “recipients” may be an individual, or individuals or organizations.
+
+  3. To “Modify” a Work means the action of copying or adapting part or the whole Work
+in a fashion that requires the copyright permission, other than making
+an exact copy of the the Work.
+The resulting Work is then called “a modified version” of the work based on the earlier Work,
+"based on" the previous work.
+
+  4. The "source code" for a work means the preferred form of the work
+for making modifications to it. "Object code" means any non-source
+form of a work.
+
+A "Standard Interface" means an interface that either is an official
+standard defined by a recognized standards body, or, in the case of
+interfaces specified for a particular programming language, one that
+is widely used among developers working in that language.
+
+The "System Libraries" of an executable work include anything, other
+than the work as a whole, that (a) is included in the normal form of
+packaging a Major Component, but which is not part of that Major
+Component, and (b) serves only to enable use of the work with that
+Major Component, or to implement a Standard Interface for which an
+implementation is available to the public in source code form.  A
+"Major Component", in this context, means a major essential component
+(kernel, window system, and so on) of the specific operating system
+(if any) on which the executable work runs, or a compiler used to
+produce the work, or an object code interpreter used to run it.
+
+  The "Corresponding Source" for a work in object code form means all
+the source code needed to generate, install, and (for an executable
+work) run the object code and to modify the work, including scripts to
+control those activities.  However, it does not include the work's
+System Libraries, or general-purpose tools or generally available free
+programs which are used unmodified in performing those activities but
+which are not part of the work.  For example, Corresponding Source
+includes interface definition files associated with source files for
+the work, and the source code for shared libraries and dynamically
+linked subprograms that the work is specifically designed to require,
+such as by intimate data communication or control flow between those
+subprograms and other parts of the work.
+
+  5. "The author" refers to "author" of the code, which is the one that made
+the particular code that exists inside of the Corresponding Source.
+
+  6. "Owner" refers to any group which are owning the Corresponding Source.
+
+  7. "Maintainers" refers to any group which are keeping in existence or
+continuance, preserving and retaining The Work and the Corresponding Source.
+
+  8. “Deprecation” refers to an act of The author and Owner without the agreement
+of the Maintainers, or even just one maintainer, to discontinuing the support
+and the maintenance of The Work.
+
+  9. "Discontinuation" refers to The Author and/or Owner and or all Maintainers to
+discontinuing the support and the maintenance of The Work.
+
+  10.  "Upstream" refers to the place or site where The Work and the
+Corresponding Source getting worked on and where The Author and Owner and the Maintainers,
+keeping the existence, continuance, preservation, and the maintainer-ship of
+The Work and Corresponding Source.
+
+     A-2. TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+
+  1. You must give any other recipients of the Work or Derivative
+Works a copy of this License; and
+
+  2. You must cause any modified files to carry prominent notices
+stating that You changed the files; and
+
+  3. You must retain, in the Source form of any Derivative Works
+that You distribute, this license, all copyright, patent, trademark,
+author-ships, and attribution notices from the Source form of the Work; and
+
+  3. You must cause the maintainers of the works to democratically
+selecting the new Owner in case of Deprecation with the Sign-offs from
+all Maintainers and final Sign-off from The Author of The Work and the
+Corresponding Source.
+
+  If the works are Discontinued, the Owner should archive The Work and
+the Corresponding Source or optionally removing The Work entirely and
+may stop the distribution of The Work and the Corresponding Source.
+
+  The Owner or The Author may give The Work or the Corresponding Source
+to a specific person for a new maintainer-ship structure in case
+The Owner, Author, and The Maintainers failed to democratically
+selecting a new Owner to continuing, preserving and retaining
+The Work and the Corresponding Source; and
+
+  4. Respecting the author and owner of works that are distributed in
+any way. In the means that decisions that are taken by Upstream are
+immediately imposed on both Upstream and Modified Version of
+The Works and Corresponding Source.
+
+  Any use, reproduction, or distribution of Your modifications, or
+for any such Derivative Works as a whole, provided Your use, reproduction,
+and distribution of the Work should comply with the conditions stated in
+this License.
+
+                       B. DISCLAIMER OF WARRANTY
+
+  THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ARE DISCLAIMED. IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE FOR
+ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+
+                   C. REVISED VERSION OF THIS LICENSE
+
+  Cloudnebby Dev Group may publish revised and/or new versions
+of the Nebulino Public License from time to time. Such new versions will be
+similar in spirit to the present version but may differ in detail to address new
+problems or concerns.
+
+  Each version is given a distinguishing version number.
+If the Program specifies
+that a certain numbered version of the Nebulino Public License
+"or any later version" applies to it, you have the option of following the terms
+and conditions either of that numbered version or of any later version published
+by the Cloudnebby Dev Group.
+
+ If the Program does not specify a version number of the Nebulino Public License,
+you may use the latest version published by the Cloudnebby Dev Group,
+or any component of it.
+
+                             END OF LICENSE
