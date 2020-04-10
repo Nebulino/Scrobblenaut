@@ -1,0 +1,27 @@
+language: dart
+
+# Dart Version.
+dart:
+  - stable
+
+# Setting up build directory.
+cache:
+  directories:
+    - $HOME/.pub-cache
+    - .dart_tool/build
+
+# Defining the stages.
+jobs:
+  include:
+    # Check that everything analyzes properly and is formatted.
+    - stage: build
+      script:
+        - pub run build_runner build
+    - stage: unit_test
+      script:
+        - pub run build_runner build test
+
+# Stages order.
+stages:
+  - build
+  - unit_test
