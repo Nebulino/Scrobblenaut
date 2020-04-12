@@ -24,7 +24,9 @@ class Request {
     _parameters = {};
 
     parameters?.forEach((key, value) {
-      _parameters[key] = formatUnicode(text: value);
+      if (value != null) {
+        _parameters[key] = formatUnicode(text: value);
+      }
     });
 
     _parameters['api_key'] = _api.apiKey;
