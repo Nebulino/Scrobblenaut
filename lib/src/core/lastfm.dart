@@ -10,18 +10,18 @@ import 'package:scrobblenaut/src/tools/spaceship.dart';
 class LastFM {
   SpaceShip _client;
 
-  String api_key;
-  String api_secret;
-  String session_key;
+  String apiKey;
+  String apiSecret;
+  String sessionKey;
   String username;
-  String password_hash;
+  String passwordHash;
 
   bool _isAuth;
 
   LastFM({
-    @required this.api_key,
-    @required this.api_secret,
-    this.session_key,
+    @required this.apiKey,
+    @required this.apiSecret,
+    this.sessionKey,
     String proxy,
   }) {
     _client = SpaceShip(

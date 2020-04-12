@@ -27,11 +27,11 @@ class Request {
       _parameters[key] = formatUnicode(text: value);
     });
 
-    _parameters['api_key'] = _api.api_key;
+    _parameters['api_key'] = _api.apiKey;
     _parameters['method'] = method;
 
-    if (_api.session_key != null) {
-      _parameters['sk'] = _api.session_key;
+    if (_api.sessionKey != null) {
+      _parameters['sk'] = _api.sessionKey;
       signRequest();
     }
   }
@@ -52,7 +52,7 @@ class Request {
       signature += _parameters[key];
     }
 
-    signature += _api.api_secret;
+    signature += _api.apiSecret;
 
     return generateMD5(signature);
   }

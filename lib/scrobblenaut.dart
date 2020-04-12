@@ -6,4 +6,4 @@
 /// Scrobblenaut Library.
 library scrobblenaut;
 
-export 'src/scrobblenaut.dart';
+export 'package:scrobblenaut/src/scrobblenaut.dart';

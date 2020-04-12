@@ -20,9 +20,11 @@ class Scrobblenaut {
     String proxy,
   }) {
     _api = LastFM(
-        api_key: apiKey,
-        api_secret: apiSecret,
-        session_key: sessionKey,
+        apiKey: apiKey,
+        apiSecret: apiSecret,
+        sessionKey: sessionKey,
         proxy: proxy);
   }
+
+  LastFM get api => _api;
 }
