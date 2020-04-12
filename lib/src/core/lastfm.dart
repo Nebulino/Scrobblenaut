@@ -4,33 +4,72 @@
  */
 
 import 'package:meta/meta.dart';
+import 'package:scrobblenaut/src/core/session_key_generator.dart';
+import 'package:scrobblenaut/src/helpers/utils.dart';
 import 'package:scrobblenaut/src/tools/spaceship.dart';
 
 /// It stores useful information and a client for HTTP requests.
 class LastFM {
   SpaceShip _client;
 
-  String apiKey;
-  String apiSecret;
-  String sessionKey;
-  String username;
-  String passwordHash;
+  final String _apiKey;
+  final String _apiSecret;
+  final String _sessionKey;
+  final String _username;
+  final String _passwordHash;
+  final bool _isAuth;
 
-  bool _isAuth;
-
-  LastFM({
-    @required this.apiKey,
-    @required this.apiSecret,
-    this.sessionKey,
-    String proxy,
-  }) {
+  /// Default constructor.
+  LastFM._(this._apiKey, this._apiSecret, this._sessionKey, this._username,
+      this._passwordHash, this._isAuth, String proxy) {
     _client = SpaceShip(
       base_url: 'https://ws.audioscrobbler.com/2.0/',
       proxy: proxy,
     );
   }
 
+  /// Default kind of API usage.
+  /// You can use methods that does not required authentication.
+  LastFM.noAuth({
+    @required String apiKey,
+    String proxy,
+  }) : this._(apiKey, null, null, null, null, false, proxy);
+
+  /// It creates a LastFM object with auth mode.
+  static Future<LastFM> authenticate({
+    @required String apiKey,
+    @required String apiSecret,
+    @required String username,
+    @required String password,
+    String proxy,
+  }) async {
+    final passwordHash = generateMD5(password);
+    final session = await SessionKeyGenerator(
+      LastFM._(apiKey, apiSecret, null, null, null, false, proxy),
+    ).getSessionKey(username: username, passwordHash: passwordHash);
+
+    return LastFM._(apiKey, apiSecret, session.sessionKey, username,
+        passwordHash, true, proxy);
+  }
+
+  /// It returns the created client.
   SpaceShip get client => _client;
 
+  /// It returns the apiKey used.
+  String get apiKey => _apiKey;
+
+  /// It returns the apiSecret used.
+  String get apiSecret => _apiSecret;
+
+  /// It returns, if authenticated, the session key.
+  String get sessionKey => _sessionKey;
+
+  /// It returns, if authenticated, the username.
+  String get username => _username;
+
+  /// It returns, if authenticated, the passwordHash.
+  String get passwordHash => _passwordHash;
+
+  /// True if authenticated.
   bool get isAuth => _isAuth;
 }

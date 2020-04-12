@@ -4,11 +4,20 @@
  */
 
 import 'package:scrobblenaut/scrobblenaut.dart';
+import 'package:scrobblenaut/src/core/lastfm.dart';
 
 import 'api_values.dart';
 
 // Just an example of use.
-void main() {
-  final scrobblenaut =
-      Scrobblenaut(apiKey: APIValues.API, apiSecret: APIValues.secret);
+void main() async {
+  final lastFM = await LastFM.authenticate(
+    apiKey: APIValues.API,
+    apiSecret: APIValues.secret,
+    username: APIValues.username,
+    password: APIValues.password,
+  );
+
+  final scrobblenaut = Scrobblenaut(lastFM: lastFM);
+
+  print(lastFM.sessionKey);
 }
