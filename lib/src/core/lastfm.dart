@@ -41,15 +41,49 @@ class LastFM {
     @required String apiSecret,
     @required String username,
     @required String password,
+    String sessionKey,
     String proxy,
   }) async {
     final passwordHash = generateMD5(password);
-    final session = await SessionKeyGenerator(
-      LastFM._(apiKey, apiSecret, null, null, null, false, proxy),
-    ).getSessionKey(username: username, passwordHash: passwordHash);
 
-    return LastFM._(apiKey, apiSecret, session.sessionKey, username,
-        passwordHash, true, proxy);
+    if ((apiKey != null && apiSecret != null) &&
+        sessionKey == null &&
+        (username != null && password != null)) {
+      final session = await SessionKeyGenerator(
+        LastFM._(
+          apiKey,
+          apiSecret,
+          null,
+          null,
+          null,
+          false,
+          proxy,
+        ),
+      ).getSessionKey(
+        username: username,
+        passwordHash: passwordHash,
+      );
+
+      return LastFM._(
+        apiKey,
+        apiSecret,
+        session.sessionKey,
+        username,
+        passwordHash,
+        true,
+        proxy,
+      );
+    } else {
+      return LastFM._(
+        apiKey,
+        apiSecret,
+        sessionKey,
+        username,
+        passwordHash,
+        true,
+        proxy,
+      );
+    }
   }
 
   /// It returns the created client.
