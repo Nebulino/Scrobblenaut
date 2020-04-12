@@ -17,6 +17,12 @@ String generateMD5(String value) {
   return hex.encode(digest.bytes);
 }
 
+/// Generate a string from a list.
+/// The LastFM way.
+String generateStringFromList(List list) {
+  return list.join(',');
+}
+
 /// Format the text in unicode
 String formatUnicode({@required dynamic text}) {
   if (text is Uint8List) {
