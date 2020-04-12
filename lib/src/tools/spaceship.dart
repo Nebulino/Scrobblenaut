@@ -40,6 +40,13 @@ class SpaceShip {
 
         return options;
       }, onResponse: (response) {
+        // Sometimes it responds without giving a error...
+        if (response.data['error'] != null) {
+          throw LastFMException(
+              errorCode: response.data['error'],
+              description: response.data['message']);
+        }
+
         return response.data;
       }, onError: (error) {
         if (error.type == DioErrorType.RESPONSE) {
