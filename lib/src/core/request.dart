@@ -5,6 +5,7 @@
 
 import 'package:meta/meta.dart';
 import 'package:scrobblenaut/src/core/lastfm.dart';
+import 'package:scrobblenaut/src/core/request_mode.dart';
 import 'package:scrobblenaut/src/helpers/utils.dart';
 
 /// It's creates a request object for the method.
@@ -38,6 +39,7 @@ class Request {
     }
   }
 
+  /// It signs the Request.
   void signRequest() {
     if (!_parameters.containsKey('api_sig')) {
       _parameters['api_sig'] = _getSignature();
@@ -59,7 +61,12 @@ class Request {
     return generateMD5(signature);
   }
 
-  Future<dynamic> send() async {
-    return await _api.client.post(parameters: _parameters);
+  Future<dynamic> send({@required RequestMode method}) async {
+    switch (method) {
+      case RequestMode.GET:
+        return await _api.client.get(parameters: _parameters);
+      case RequestMode.POST:
+        return await _api.client.post(parameters: _parameters);
+    }
   }
 }
