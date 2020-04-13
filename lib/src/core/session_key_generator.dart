@@ -7,6 +7,7 @@ import 'package:meta/meta.dart';
 import 'package:scrobblenaut/lastfm.dart';
 import 'package:scrobblenaut/src/core/lastfm.dart';
 import 'package:scrobblenaut/src/core/request.dart';
+import 'package:scrobblenaut/src/core/request_mode.dart';
 import 'package:scrobblenaut/src/helpers/utils.dart';
 
 /// It helps generating a session key.
@@ -34,7 +35,7 @@ class SessionKeyGenerator {
 
     request.signRequest();
 
-    final response = await request.send();
+    final response = await request.send(mode: RequestMode.GET);
 
     return Session.fromJson(response['session']);
   }

@@ -9,6 +9,8 @@ import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 import 'package:meta/meta.dart';
 import 'package:scrobblenaut/scrobblenaut_exceptions.dart';
+import 'package:scrobblenaut/src/helpers/utils.dart';
+import 'package:xml/xml.dart' as xml;
 
 /// It helps creating a Http Connection to [LastFM] APIs,
 /// for sending and receiving requests.
@@ -26,10 +28,12 @@ class SpaceShip {
             'Accept-Charset': 'utf-8',
             'User-Agent': 'DartyFM'
           },
+          contentType: Headers.formUrlEncodedContentType,
           responseType: ResponseType.json),
     )..interceptors
           .add(InterceptorsWrapper(onRequest: (RequestOptions options) {
         options.queryParameters?.removeWhere((key, value) => value == null);
+
         if (options.data == null) {
           return options;
         }
@@ -41,11 +45,20 @@ class SpaceShip {
         return options;
       }, onResponse: (response) {
         // Sometimes it responds without giving a error...
-        // It occurs on JSON responses...
-        if (response.data['error'] != null) {
-          throw LastFMException(
-              errorCode: response.data['error'],
-              description: response.data['message']);
+        if (isXml(response.data)) {
+          final xmlError = xml.parse(response.data);
+
+          final statusNode = xmlError.findElements('lfm').first;
+
+          if (statusNode.getAttribute('status') == 'failed') {
+            throw LastFMException.generate(response.data);
+          }
+        } else {
+          if (response.data['error'] != null) {
+            throw LastFMException(
+                errorCode: response.data['error'],
+                description: response.data['message']);
+          }
         }
 
         return response.data;

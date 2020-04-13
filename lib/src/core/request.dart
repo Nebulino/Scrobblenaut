@@ -39,7 +39,7 @@ class Request {
     }
   }
 
-  /// It signs the Request.
+  /// It signs the [Request].
   void signRequest() {
     if (!_parameters.containsKey('api_sig')) {
       _parameters['api_sig'] = _getSignature();
@@ -61,8 +61,9 @@ class Request {
     return generateMD5(signature);
   }
 
-  Future<dynamic> send({@required RequestMode method}) async {
-    switch (method) {
+  /// It sends the request to the API.
+  Future<dynamic> send({@required RequestMode mode}) async {
+    switch (mode) {
       case RequestMode.GET:
         return await _api.client.get(parameters: _parameters);
       case RequestMode.POST:
