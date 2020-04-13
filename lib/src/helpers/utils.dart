@@ -33,3 +33,12 @@ String formatUnicode({@required dynamic text}) {
     return text.toString();
   }
 }
+
+/// It helps checking if it's a xml.
+/// The only type of response are XML and JSON, so...
+bool isXml(dynamic object) {
+  if (object.toString().startsWith('<')) {
+    return true;
+  }
+  return false;
+}

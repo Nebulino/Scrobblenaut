@@ -41,6 +41,7 @@ class SpaceShip {
         return options;
       }, onResponse: (response) {
         // Sometimes it responds without giving a error...
+        // It occurs on JSON responses...
         if (response.data['error'] != null) {
           throw LastFMException(
               errorCode: response.data['error'],
@@ -50,9 +51,7 @@ class SpaceShip {
         return response.data;
       }, onError: (error) {
         if (error.type == DioErrorType.RESPONSE) {
-          return LastFMException(
-              errorCode: error.response.data['error'],
-              description: error.response.data['message']);
+          return LastFMException.generate(error.response.data);
         } else {
           return error;
         }
@@ -68,10 +67,17 @@ class SpaceShip {
     }
   }
 
-  Future<dynamic> post({
+  Future<dynamic> get({
     @required Map<String, dynamic> parameters,
   }) async {
     parameters['format'] = 'json';
-    return (await _dio.post('', queryParameters: parameters)).data;
+    return (await _dio.get('', queryParameters: parameters)).data;
+  }
+
+  // Post request with JSON response exists?
+  Future<dynamic> post({
+    @required Map<String, dynamic> parameters,
+  }) async {
+    return (await _dio.post('', data: parameters)).data;
   }
 }
