@@ -3,7 +3,8 @@
  * Copyright (c) 2020 Nebulino
  */
 
-/// Scrobblenaut Library.
-library scrobblenaut;
-
-export 'package:scrobblenaut/src/scrobblenaut.dart';
+/// Helps managing each request mode inside each methods.
+enum RequestMode {
+  GET,
+  POST,
+}

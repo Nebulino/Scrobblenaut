@@ -4,6 +4,7 @@
  */
 
 import 'package:scrobblenaut/scrobblenaut.dart';
+import 'package:scrobblenaut/src/core/lastfm.dart';
 import 'package:test/test.dart';
 
 // Some Scrobblenaut tests.
@@ -11,9 +12,12 @@ void main() {
   group('A group of tests', () {
     Scrobblenaut scrobblenaut;
     String token;
+    LastFM lastFM;
 
     setUp(() {
-      scrobblenaut = Scrobblenaut(apiKey: 'Key', apiSecret: 'Secret');
+      token = 'Just a token';
+      lastFM = LastFM.noAuth(apiKey: token);
+      scrobblenaut = Scrobblenaut(lastFM: lastFM);
     });
 
     test('Scrobblenaut Tests', () {
