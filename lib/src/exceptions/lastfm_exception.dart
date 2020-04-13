@@ -9,12 +9,15 @@ import 'package:meta/meta.dart';
 /// It implements [DioError] class.
 /// You can find [description] that gives a brief information of what happened.
 class LastFMException extends DioError {
-  int errorCode;
-  String description;
+  final int _errorCode;
+  final String _description;
 
-  LastFMException({@required this.errorCode, @required this.description});
+  LastFMException._(this._errorCode, this._description);
+
+  LastFMException({@required String errorCode, @required String description})
+      : this._(int.parse(errorCode), description);
 
   @override
   String toString() =>
-      '[LastFMException] => [Code ${errorCode}]: ${description}';
+      '[LastFMException] => [Code ${_errorCode}]: ${_description}';
 }
