@@ -1,6 +1,10 @@
+/**
+ * Scrobblenaut - A deadly simple Last.FM API Wrapper for Dart.
+ * Copyright (c) 2020 Nebulino
+ */
+
 import 'package:scrobblenaut/lastfm.dart';
 import 'package:scrobblenaut/scrobblenaut.dart';
-import 'package:scrobblenaut/src/core/lastfm.dart';
 
 import 'api_values.dart';
 
@@ -61,10 +65,8 @@ void main() async {
 
   // album.removeTag
   print('Result of removeTag request: ' +
-      (await scrobblenaut.album.removeTag(
-              album: 'Your Name.',
-              artist: 'RADWIMPS',
-              tag: 'anime'))
+      (await scrobblenaut.album
+              .removeTag(album: 'Your Name.', artist: 'RADWIMPS', tag: 'anime'))
           .toString());
 
   print('########################album.search################################');
