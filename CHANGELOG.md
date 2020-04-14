@@ -1,4 +1,11 @@
 ## 0.1.1
+#### Third Pre-Release. Still a long way...
+
+- Implemented Chart Methods.
+- Updated the changelog.
+- Added chart example.
+
+## 0.1.1
 #### Second Pre-Release. Still a long way...
 
 - Implemented Artist Methods.
