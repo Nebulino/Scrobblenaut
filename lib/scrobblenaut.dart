@@ -7,3 +7,4 @@
 library scrobblenaut;
 
 export 'package:scrobblenaut/src/scrobblenaut.dart';
+export 'package:scrobblenaut/src/core/lastfm.dart';

@@ -69,7 +69,7 @@ class AlbumMethods {
     String mbid,
     bool autoCorrect = false,
     String username,
-    String lang = 'en',
+    Language lang = Language.en,
   }) async {
     if ((album == null || artist == null) && mbid == null) {
       return Future.error(ScrobblenautException(
@@ -83,7 +83,7 @@ class AlbumMethods {
       'mbid': mbid,
       'autocorrect': (autoCorrect ? 1 : 0),
       'username': username,
-      'lang': lang,
+      'lang': lang?.code,
     };
 
     final request =

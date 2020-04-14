@@ -21,7 +21,7 @@ class Artist {
   List<Image> images;
 
   /// A list of tags assigned to the artist..
-  @JsonKey(name: 'tags')
+  @JsonKey(name: 'tags', fromJson: LastFMValueNormalizer.tagsExtractor)
   List<Tag> tags;
 
   /// Number of tags onto the artist.
@@ -36,7 +36,10 @@ class Artist {
   @JsonKey(name: 'bio')
   Bio bio;
 
-  // TODO: create Similar
+  /// A list of similar artists.
+  @JsonKey(
+      name: 'similar', fromJson: LastFMValueNormalizer.similarArtistsExtractor)
+  List<Artist> similarArtists;
 
   // TODO: Match meaning.
   @JsonKey(name: 'match')
@@ -55,10 +58,9 @@ class Artist {
   @JsonKey(name: 'playcount', fromJson: LastFMValueNormalizer.NumberToInt)
   int playCount;
 
-  // TODO: is this a bool?
   /// Information about ongoing Tours.
-  @JsonKey(name: 'ontour')
-  String onTour;
+  @JsonKey(name: 'ontour', fromJson: LastFMValueNormalizer.NumberToBool)
+  bool onTour;
 
   /// MusicBrainz ID.
   @JsonKey(name: 'mbid')
@@ -72,6 +74,7 @@ class Artist {
     this.tagCount,
     this.stats,
     this.bio,
+    this.similarArtists,
     this.match,
     this.isStreamable,
     this.listeners,

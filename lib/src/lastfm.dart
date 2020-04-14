@@ -15,6 +15,7 @@ part 'lastfm.g.dart';
 part 'package:scrobblenaut/src/lastfm/core/session.dart';
 
 // Enums.
+part 'package:scrobblenaut/src/lastfm/enums/languages.dart';
 part 'package:scrobblenaut/src/lastfm/enums/periods.dart';
 part 'package:scrobblenaut/src/lastfm/enums/size.dart';
 part 'package:scrobblenaut/src/lastfm/enums/tagging_type.dart';
@@ -23,6 +24,7 @@ part 'package:scrobblenaut/src/lastfm/enums/tagging_type.dart';
 part 'package:scrobblenaut/src/lastfm/album.dart';
 part 'package:scrobblenaut/src/lastfm/album_results.dart';
 part 'package:scrobblenaut/src/lastfm/artist.dart';
+part 'package:scrobblenaut/src/lastfm/artist_results.dart';
 part 'package:scrobblenaut/src/lastfm/bio.dart';
 part 'package:scrobblenaut/src/lastfm/chart.dart';
 part 'package:scrobblenaut/src/lastfm/date.dart';
