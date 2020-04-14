@@ -3,42 +3,54 @@
  * Copyright (c) 2020 Nebulino
  */
 
-import 'package:meta/meta.dart';
+part of lastfm_objects;
 
 /// This is a object that helps scrobbling multiple tracks.
+@JsonSerializable(includeIfNull: false)
 class Scrobble {
   /// The [Track] title to scrobble.
+  @JsonKey(name: 'track')
   String track;
 
   /// The [Album] name to scrobble.
+  @JsonKey(name: 'album')
   String album;
 
   /// The [Artist] name to scrobble.
+  @JsonKey(name: 'artist')
   String artist;
 
   /// The track number of the [Track] to scrobble.
+  @JsonKey(name: 'trackNumber')
   int trackNumber;
 
   /// The duration of the [Track] to scrobble.
+  @JsonKey(
+      name: 'duration', toJson: LastFMValueNormalizer.DurationToMilliseconds)
   Duration duration;
 
   /// The TimeStamp of the scrobble.
   /// If You're not doing strange stuff, you can use DateTime.now().
-  DateTime timeStamp;
+  @JsonKey(name: 'timestamp', toJson: LastFMValueNormalizer.DateTimeToUnixTime)
+  DateTime timestamp = DateTime.now();
 
   /// Sub-client version (not public, only enabled for certain API keys).
+  @JsonKey(name: 'context')
   String context;
 
   /// The stream id for this track received from the radio.getPlaylist service,
   /// if scrobbling Last.fm radio.
+  @JsonKey(name: 'streamId')
   String streamId;
 
   /// If the user chose this song, set on True,
   /// else (if the song was chosen by someone else, such as a radio station
   /// or recommendation service) set it to False.
+  @JsonKey(name: 'chosenByUser', toJson: LastFMValueNormalizer.BoolToIntBool)
   bool chosenByUser;
 
   /// MusicBrainz ID.
+  @JsonKey(name: 'mbid')
   String mbid;
 
   Scrobble({
@@ -47,25 +59,15 @@ class Scrobble {
     @required this.artist,
     this.trackNumber,
     this.duration,
-    @required this.timeStamp,
+    this.timestamp,
     this.context,
     this.streamId,
     this.chosenByUser,
     this.mbid,
   });
-}
 
-// THE RESPONSE
-// <?xml version="1.0" encoding="UTF-8"?>
-// <lfm status="ok">
-// <scrobbles ignored="0" accepted="1">
-// <scrobble>
-// <track corrected="0">Sunlight</track>
-// <artist corrected="0">PLEEG</artist>
-// <album corrected="0" />
-// <albumArtist corrected="0"></albumArtist>
-// <timestamp>1586879501</timestamp>
-// <ignoredMessage code="0"></ignoredMessage>
-// </scrobble>
-// </scrobbles>
-// </lfm>
+  factory Scrobble.fromJson(Map<String, dynamic> json) =>
+      _$ScrobbleFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ScrobbleToJson(this);
+}
