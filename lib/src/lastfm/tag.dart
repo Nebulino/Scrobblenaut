@@ -20,23 +20,21 @@ class Tag {
   @JsonKey(name: 'count')
   int count;
 
-  // TODO: what's this?
-  /// The total number of usage of this tag.
+  /// The total number of usage of this tag from a user.
   @JsonKey(name: 'total', fromJson: LastFMValueNormalizer.NumberToInt)
   int total;
 
-  // TODO: what's this?
+  /// The total number of usage of this tag.
   @JsonKey(name: 'reach', fromJson: LastFMValueNormalizer.NumberToInt)
   int reach;
 
-  // TODO: what's this?
   /// The number of usage applied from a user.
   @JsonKey(name: 'taggings', fromJson: LastFMValueNormalizer.NumberToInt)
   int taggings;
 
-  // TODO: another incoherency? is bool? 1 / 0
-  @JsonKey(name: 'streamable')
-  String streamable;
+  /// If True, this tag can be used as a Radio Station.
+  @JsonKey(name: 'streamable', fromJson: LastFMValueNormalizer.NumberToBool)
+  bool streamable;
 
   /// The wiki of the tag.
   @JsonKey(name: 'wiki')

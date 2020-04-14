@@ -1,3 +1,12 @@
+## 0.1.5
+#### Sixth Pre-Release. Still a long way...
+
+- Implemented Tag Methods.
+- Fixed Tag attributes.
+- Updated the changelog.
+- Added tag example.
+- Updated the README.
+
 ## 0.1.4
 #### Fifth Pre-Release. Still a long way...
 
