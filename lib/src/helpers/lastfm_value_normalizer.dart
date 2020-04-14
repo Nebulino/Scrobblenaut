@@ -187,6 +187,13 @@ class LastFMValueNormalizer {
           : List.generate((albums['album'] as List).length,
               (i) => Album.fromJson(albums['album'][i]));
 
+  /// Artists extractor.
+  static List<Artist> artistsExtractor(Map<String, dynamic> artists) =>
+      artists == null
+          ? null
+          : List.generate((artists['artist'] as List).length,
+              (i) => Artist.fromJson(artists['artist'][i]));
+
   /// SimilarArtists extractor.
   static List<Artist> similarArtistsExtractor(
           Map<String, dynamic> similarArtists) =>
