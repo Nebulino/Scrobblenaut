@@ -8,15 +8,15 @@ part of lastfm_objects;
 /// This object represents a bio.
 @JsonSerializable(includeIfNull: false)
 class Bio {
-  // TODO: what's this?
   /// A list of links.
-  @JsonKey(name: 'links')
+  @JsonKey(name: 'links', fromJson: LastFMValueNormalizer.linksExtractor)
   List<Link> links;
 
-  // TODO: is int?
-  // TODO: what's this?
-  @JsonKey(name: 'published', fromJson: LastFMValueNormalizer.NumberToInt)
-  int published;
+  /// A string that indicates the date of publishing.
+  /// **NOTE:** it's a string and it can't be transformed into a Dart DateTime.
+  /// Because it's different between different bio.
+  @JsonKey(name: 'published')
+  String published;
 
   /// A brief summary of the bio.
   @JsonKey(name: 'summary')

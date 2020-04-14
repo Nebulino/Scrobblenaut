@@ -194,4 +194,19 @@ class LastFMValueNormalizer {
           ? null
           : List.generate((similarArtists['artist'] as List).length,
               (i) => Artist.fromJson(similarArtists['artist'][i]));
+
+  /// Links extractor.
+  static List<Link> linksExtractor(Map<String, dynamic> links) {
+    final supposedLinksList = links;
+    if (links != null) {
+      if (supposedLinksList is List) {
+        List.generate((links['link'] as List).length,
+            (i) => Link.fromJson(links['link'][i]));
+      } else {
+        return [Link.fromJson(links['link'])];
+      }
+    } else {
+      return null;
+    }
+  }
 }
