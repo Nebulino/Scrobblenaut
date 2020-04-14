@@ -56,7 +56,7 @@ class SpaceShip {
         } else {
           if (response.data['error'] != null) {
             throw LastFMException(
-                errorCode: response.data['error'],
+                errorCode: response.data['error'].toString(),
                 description: response.data['message']);
           }
         }
