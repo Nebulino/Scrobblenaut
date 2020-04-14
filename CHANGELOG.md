@@ -1,3 +1,11 @@
+## 0.1.4
+#### Fifth Pre-Release. Still a long way...
+
+- Implemented Library Methods.
+- Updated the changelog.
+- Added library example.
+- Updated the README.
+
 ## 0.1.3
 #### Fourth Pre-Release. Still a long way...
 

@@ -65,8 +65,11 @@ For now, You have to download the repo and run *dartdoc* on the console,
 on the root of the package.
 
 #### WARNING 
-THIS IS NOT FULLY USABLE.
-IT'S A WORK IN PROGRESS, FEEL FREE TO SHARE YOUR THOUGHTS HOW TO MAKE IT BETTER. 
+Not all methods are available. Check the release page to check which one are.
+
+There's 2 type of usage:
+- with authentication;
+- without authentication.
 
 Please file feature requests and bugs at the [issue tracker][tracker].
 
