@@ -1,3 +1,11 @@
+## 0.1.3
+#### Fourth Pre-Release. Still a long way...
+
+- Implemented Geo Methods.
+- Updated the changelog.
+- Fixed the README.
+- Added geo example.
+
 ## 0.1.2
 #### Third Pre-Release. Still a long way...
 
