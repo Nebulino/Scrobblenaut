@@ -207,7 +207,7 @@ class LastFMValueNormalizer {
     final supposedLinksList = links;
     if (links != null) {
       if (supposedLinksList is List) {
-        List.generate((links['link'] as List).length,
+        return List.generate((links['link'] as List).length,
             (i) => Link.fromJson(links['link'][i]));
       } else {
         return [Link.fromJson(links['link'])];
@@ -216,4 +216,10 @@ class LastFMValueNormalizer {
       return null;
     }
   }
+
+  /// TimeStamp normalizer for POST methods.
+  static int timestampToSecondsSinceEpoch(DateTime timeStamp) =>
+      timeStamp == null
+          ? null
+          : (timeStamp.millisecondsSinceEpoch / 1000).round();
 }
