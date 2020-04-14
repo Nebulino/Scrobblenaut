@@ -15,6 +15,7 @@ part 'lastfm.g.dart';
 part 'package:scrobblenaut/src/lastfm/core/session.dart';
 
 // Enums.
+part 'package:scrobblenaut/src/lastfm/enums/languages.dart';
 part 'package:scrobblenaut/src/lastfm/enums/periods.dart';
 part 'package:scrobblenaut/src/lastfm/enums/size.dart';
 part 'package:scrobblenaut/src/lastfm/enums/tagging_type.dart';
