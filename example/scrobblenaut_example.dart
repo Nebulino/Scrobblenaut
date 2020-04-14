@@ -1,3 +1,8 @@
+/**
+ * Scrobblenaut - A deadly simple Last.FM API Wrapper for Dart.
+ * Copyright (c) 2020 Nebulino
+ */
+
 import 'package:scrobblenaut/lastfm.dart';
 import 'package:scrobblenaut/scrobblenaut.dart';
 import 'package:scrobblenaut/src/core/lastfm.dart';
