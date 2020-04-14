@@ -1,4 +1,4 @@
-## 0.1.1
+## 0.1.2
 #### Third Pre-Release. Still a long way...
 
 - Implemented Chart Methods.

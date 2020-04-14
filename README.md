@@ -32,8 +32,12 @@ A simple usage example:
 import 'package:scrobblenaut/scrobblenaut.dart';
 
 // A simple example...
+// For more, check the example folder.
 void main() async {
-  final scrobblenaut = Scrobblenaut(apiKey: 'Key', apiSecret: 'Secret');
+  final lastFMAuth = await LastFM.noAuth(apiKey: APIValues.API);
+  final scrobblenaut = Scrobblenaut(lastFM: lastFMAuth);
+  
+  // Start using the Wrapper...
 }
 
 ```
@@ -55,6 +59,10 @@ From pub.dev:
 ##### Coming soon... I hope...
 
 ## Features and bugs
+
+#### For the documentation:
+For now, You have to download the repo and run *dartdoc* on the console,
+on the root of the package.
 
 #### WARNING 
 THIS IS NOT FULLY USABLE.
