@@ -7,11 +7,14 @@
 library lastfm_objects;
 
 import 'package:json_annotation/json_annotation.dart';
+import 'package:meta/meta.dart';
 import 'package:scrobblenaut/src/helpers/lastfm_value_normalizer.dart';
 
 part 'lastfm.g.dart';
 
 // Core objects.
+part 'package:scrobblenaut/src/lastfm/core/now_playing_object.dart';
+part 'package:scrobblenaut/src/lastfm/core/scrobble_object.dart';
 part 'package:scrobblenaut/src/lastfm/core/session.dart';
 
 // Enums.
@@ -35,5 +38,6 @@ part 'package:scrobblenaut/src/lastfm/stats.dart';
 part 'package:scrobblenaut/src/lastfm/streamable.dart';
 part 'package:scrobblenaut/src/lastfm/tag.dart';
 part 'package:scrobblenaut/src/lastfm/track.dart';
+part 'package:scrobblenaut/src/lastfm/track_results.dart';
 part 'package:scrobblenaut/src/lastfm/user.dart';
 part 'package:scrobblenaut/src/lastfm/wiki.dart';

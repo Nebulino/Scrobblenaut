@@ -49,6 +49,10 @@ class LastFMValueNormalizer {
     }
   }
 
+  /// It transforms a bool into a LastFM 'bool' [0,1].
+  static int BoolToIntBool(bool booleanToTransform) =>
+      booleanToTransform == null ? null : booleanToTransform ? 1 : 0;
+
   /// It transforms a supposed artist into a real [Artist] object.
   /// This because sometimes LastFM returns an artist as Map,
   /// sometimes as String, which is the Artist name.
@@ -81,7 +85,7 @@ class LastFMValueNormalizer {
       } else {
         throw ScrobblenautException(
             description:
-                'The supposed duration in milliseconds is not recognized.');
+            'The supposed duration in milliseconds is not recognized.');
       }
     } else {
       return null;
@@ -107,6 +111,14 @@ class LastFMValueNormalizer {
       return null;
     }
   }
+
+  /// It transforms a Duration into Milliseconds.
+  static int DurationToMilliseconds(Duration duration) =>
+      duration == null ? null : duration.inMilliseconds;
+
+  /// It transforms a Duration into Seconds.
+  static int DurationToSeconds(Duration duration) =>
+      duration == null ? null : duration.inSeconds;
 
   /// It transforms a LastFM number received from [Artist][streamable]
   /// into a bool.
@@ -144,6 +156,11 @@ class LastFMValueNormalizer {
 
   /// It transforms a LastFM supposed unixTime into a DateTime.
   static DateTime DateTimeFromUnixTime(dynamic unixTime) {
+    // I've found a nil.
+    if (unixTime.toString() == 'nil') {
+      return null;
+    }
+
     if (unixTime != null) {
       if (unixTime is String) {
         return DateTime.fromMillisecondsSinceEpoch(int.parse(unixTime) * 1000);
@@ -159,9 +176,10 @@ class LastFMValueNormalizer {
   }
 
   /// It transforms a LastFM supposed unixTime from a DateTime.
-  static int DateTimeToUnixTime(DateTime dateTime) => dateTime == null
-      ? null
-      : (dateTime.millisecondsSinceEpoch / 1000).round();
+  static int DateTimeToUnixTime(DateTime dateTime) =>
+      dateTime == null
+          ? null
+          : (dateTime.millisecondsSinceEpoch / 1000).round();
 
   /// Makes a meaning-less number into a string.
   static String MeaninglessNumber(dynamic supposedText) =>
@@ -175,9 +193,10 @@ class LastFMValueNormalizer {
               (i) => Track.fromJson(tracks['track'][i]));
 
   /// Tags extractor.
-  static List<Tag> tagsExtractor(Map<String, dynamic> tags) => tags == null
-      ? null
-      : List.generate(
+  static List<Tag> tagsExtractor(Map<String, dynamic> tags) =>
+      tags == null
+          ? null
+          : List.generate(
           (tags['tag'] as List).length, (i) => Tag.fromJson(tags['tag'][i]));
 
   /// Albums extractor.
@@ -196,7 +215,7 @@ class LastFMValueNormalizer {
 
   /// SimilarArtists extractor.
   static List<Artist> similarArtistsExtractor(
-          Map<String, dynamic> similarArtists) =>
+      Map<String, dynamic> similarArtists) =>
       similarArtists == null
           ? null
           : List.generate((similarArtists['artist'] as List).length,
@@ -207,8 +226,8 @@ class LastFMValueNormalizer {
     final supposedLinksList = links;
     if (links != null) {
       if (supposedLinksList is List) {
-        List.generate((links['link'] as List).length,
-            (i) => Link.fromJson(links['link'][i]));
+        return List.generate((links['link'] as List).length,
+                (i) => Link.fromJson(links['link'][i]));
       } else {
         return [Link.fromJson(links['link'])];
       }
@@ -216,4 +235,10 @@ class LastFMValueNormalizer {
       return null;
     }
   }
+
+  /// TimeStamp normalizer for POST methods.
+  static int timestampToSecondsSinceEpoch(DateTime timestamp) =>
+      timestamp == null
+          ? null
+          : (timestamp.millisecondsSinceEpoch / 1000).round();
 }

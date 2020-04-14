@@ -1,3 +1,20 @@
+## 0.1.6
+### Huge update
+#### Seventh Pre-Release. One more to go...
+
+- Implemented Track Methods.
+- Fixed Artist toJson() missing method.
+- Updated the changelog.
+- Created NowPlayed Track helper.
+- Created NowPlaying Object.
+- Created Scrobble Response (renamed from Scrobble Response Helper).
+- Created Scrobbled Track helper.
+- Created helper library.
+- Created Track Result Object.
+- Added track example.
+- Added scrobble example.
+- Updated the README.
+
 ## 0.1.5
 #### Sixth Pre-Release. Still a long way...
 
