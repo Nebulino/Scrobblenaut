@@ -37,7 +37,8 @@ class LastFMException extends DioError {
     } else {
       // Else is a Json...
       return LastFMException(
-          errorCode: errorObject['error'], description: errorObject['message']);
+          errorCode: errorObject['error'].toString(),
+          description: errorObject['message']);
     }
   }
 
