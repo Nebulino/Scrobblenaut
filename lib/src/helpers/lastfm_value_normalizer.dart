@@ -29,6 +29,26 @@ class LastFMValueNormalizer {
     }
   }
 
+  /// It transforms a supposed number into a Dart bool.
+  /// This because LastFM sends int (0, 1) instead of a bool.
+  static bool NumberToBool(dynamic supposedBool) {
+    bool _intParser(int number) =>
+        number == null ? null : (number == 1 ? true : false);
+
+    if (supposedBool != null) {
+      if (supposedBool is String) {
+        return _intParser(int.parse(supposedBool));
+      } else if (supposedBool is int) {
+        return _intParser(supposedBool);
+      } else {
+        throw ScrobblenautException(
+            description: 'The supposed bool is not recognized.');
+      }
+    } else {
+      return null;
+    }
+  }
+
   /// It transforms a supposed artist into a real [Artist] object.
   /// This because sometimes LastFM returns an artist as Map,
   /// sometimes as String, which is the Artist name.
@@ -166,4 +186,12 @@ class LastFMValueNormalizer {
           ? null
           : List.generate((albums['album'] as List).length,
               (i) => Album.fromJson(albums['album'][i]));
+
+  /// SimilarArtists extractor.
+  static List<Artist> similarArtistsExtractor(
+          Map<String, dynamic> similarArtists) =>
+      similarArtists == null
+          ? null
+          : List.generate((similarArtists['artist'] as List).length,
+              (i) => Artist.fromJson(similarArtists['artist'][i]));
 }
