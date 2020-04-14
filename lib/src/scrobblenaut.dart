@@ -6,6 +6,7 @@
 import 'package:meta/meta.dart';
 import 'package:scrobblenaut/src/core/lastfm.dart';
 import 'package:scrobblenaut/src/methods/album_methods.dart';
+import 'package:scrobblenaut/src/methods/artist_methods.dart';
 
 /// This connects all the various methods [LastFM] can provide.
 ///
@@ -14,9 +15,11 @@ class Scrobblenaut {
   final LastFM _api;
 
   AlbumMethods _albumMethods;
+  ArtistMethods _artistMethods;
 
   Scrobblenaut._(this._api) {
     _albumMethods = AlbumMethods(_api);
+    _artistMethods = ArtistMethods(_api);
   }
 
   /// It creates a Scrobblenaut Session using a LastFM object.
@@ -27,4 +30,7 @@ class Scrobblenaut {
 
   /// Use this to use [Album]'s methods.
   AlbumMethods get album => _albumMethods;
+
+  /// Use this to use [Artist]'s methods.
+  ArtistMethods get artist => _artistMethods;
 }
