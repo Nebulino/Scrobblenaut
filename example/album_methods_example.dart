@@ -58,8 +58,10 @@ void main() async {
   print('########################album.getTopTags############################');
 
   // album.getTopTags
-  (await scrobblenaut.album
-      .getTopTags(album: 'Your Name.', artist: 'RADWIMPS'));
+  (await scrobblenaut.album.getTopTags(album: 'Your Name.', artist: 'RADWIMPS'))
+      ?.forEach((Tag tag) {
+        print('Tag Name: ${tag.name} | Tag URL: ${tag.url}');
+  });
 
   print('#########################album.removeTag############################');
 
