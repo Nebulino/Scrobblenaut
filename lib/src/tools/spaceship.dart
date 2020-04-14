@@ -9,8 +9,8 @@ import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 import 'package:meta/meta.dart';
 import 'package:scrobblenaut/scrobblenaut_exceptions.dart';
+import 'package:scrobblenaut/src/helpers/post_response_helper.dart';
 import 'package:scrobblenaut/src/helpers/utils.dart';
-import 'package:xml/xml.dart' as xml;
 
 /// It helps creating a Http Connection to [LastFM] APIs,
 /// for sending and receiving requests.
@@ -30,7 +30,8 @@ class SpaceShip {
           },
           contentType: Headers.formUrlEncodedContentType,
           responseType: ResponseType.json),
-    )..interceptors
+    )
+      ..interceptors
           .add(InterceptorsWrapper(onRequest: (RequestOptions options) {
         options.queryParameters?.removeWhere((key, value) => value == null);
 
@@ -46,11 +47,9 @@ class SpaceShip {
       }, onResponse: (response) {
         // Sometimes it responds without giving a error...
         if (isXml(response.data)) {
-          final xmlError = xml.parse(response.data);
+          final postResponse = PostResponseHelper.parse(response.data);
 
-          final statusNode = xmlError.findElements('lfm').first;
-
-          if (statusNode.getAttribute('status') == 'failed') {
+          if (!postResponse.status) {
             throw LastFMException.generate(response.data);
           }
         } else {

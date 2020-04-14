@@ -9,8 +9,8 @@ import 'package:scrobblenaut/src/core/lastfm.dart';
 import 'package:scrobblenaut/src/core/request.dart';
 import 'package:scrobblenaut/src/core/request_mode.dart';
 import 'package:scrobblenaut/src/exceptions/scrobblenaut_exception.dart';
+import 'package:scrobblenaut/src/helpers/post_response_helper.dart';
 import 'package:scrobblenaut/src/helpers/utils.dart';
-import 'package:xml/xml.dart' as xml;
 
 /// This contains all the methods about an [Album].
 class AlbumMethods {
@@ -46,16 +46,13 @@ class AlbumMethods {
         Request(api: _api, method: 'album.addTags', parameters: parameters)
           ..signRequest();
 
-    final response = (await request.send(mode: RequestMode.POST));
+    final response =
+        PostResponseHelper.parse(await request.send(mode: RequestMode.POST));
 
-    final statusNode = (xml.parse(response)).findElements('lfm').first;
-
-    if (statusNode.getAttribute('status') == 'ok') {
+    if (response.status) {
       return true;
-    } else if (statusNode.getAttribute('status') == 'failed') {
-      return false;
     } else {
-      throw ScrobblenautException(description: 'Response unrecognized.');
+      return false;
     }
   }
 
@@ -201,16 +198,13 @@ class AlbumMethods {
         Request(api: _api, method: 'album.removeTag', parameters: parameters)
           ..signRequest();
 
-    final response = (await request.send(mode: RequestMode.POST));
+    final response =
+        PostResponseHelper.parse(await request.send(mode: RequestMode.POST));
 
-    final statusNode = (xml.parse(response)).findElements('lfm').first;
-
-    if (statusNode.getAttribute('status') == 'ok') {
+    if (response.status) {
       return true;
-    } else if (statusNode.getAttribute('status') == 'failed') {
-      return false;
     } else {
-      throw ScrobblenautException(description: 'Response unrecognized.');
+      return false;
     }
   }
 
