@@ -35,7 +35,7 @@ class Track {
   List<Image> images;
 
   /// A list of Top Tags of the track.
-  @JsonKey(name: 'toptags')
+  @JsonKey(name: 'toptags', fromJson: LastFMValueNormalizer.tagsExtractor)
   List<Tag> topTags;
 
   // TODO: make it directly a Dart object?
