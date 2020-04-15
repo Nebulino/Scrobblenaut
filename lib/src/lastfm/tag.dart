@@ -17,7 +17,7 @@ class Tag {
   String url;
 
   /// The usage number of the tag.
-  @JsonKey(name: 'count')
+  @JsonKey(name: 'count', fromJson: LastFMValueNormalizer.NumberToInt)
   int count;
 
   /// The total number of usage of this tag from a user.

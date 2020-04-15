@@ -9,7 +9,7 @@ part of lastfm_objects;
 @JsonSerializable(includeIfNull: false)
 class Scrobble {
   /// The [Track] title to scrobble.
-  @JsonKey(name: 'track')
+  @JsonKey(name: 'track', required: true)
   String track;
 
   /// The [Album] name to scrobble.
@@ -17,7 +17,7 @@ class Scrobble {
   String album;
 
   /// The [Artist] name to scrobble.
-  @JsonKey(name: 'artist')
+  @JsonKey(name: 'artist', required: true)
   String artist;
 
   /// The track number of the [Track] to scrobble.
@@ -54,9 +54,9 @@ class Scrobble {
   String mbid;
 
   Scrobble({
-    @required this.track,
+    this.track,
     this.album,
-    @required this.artist,
+    this.artist,
     this.trackNumber,
     this.duration,
     this.timestamp,

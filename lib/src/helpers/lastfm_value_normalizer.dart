@@ -77,6 +77,9 @@ class LastFMValueNormalizer {
   /// circumstances the received duration is in seconds since epoch (unix time).
   /// Thanks LastFM, really appreciated.
   static Duration MillisecondsDurationParser(dynamic supposedMilliseconds) {
+    // Thanks LastFM: sometimes can contain 'FIX ME'.
+    if (supposedMilliseconds.toString() == 'FIXME') return null;
+
     if (supposedMilliseconds != null) {
       if (supposedMilliseconds is String) {
         return Duration(milliseconds: int.parse(supposedMilliseconds));
@@ -85,7 +88,7 @@ class LastFMValueNormalizer {
       } else {
         throw ScrobblenautException(
             description:
-            'The supposed duration in milliseconds is not recognized.');
+                'The supposed duration in milliseconds is not recognized.');
       }
     } else {
       return null;
@@ -176,10 +179,9 @@ class LastFMValueNormalizer {
   }
 
   /// It transforms a LastFM supposed unixTime from a DateTime.
-  static int DateTimeToUnixTime(DateTime dateTime) =>
-      dateTime == null
-          ? null
-          : (dateTime.millisecondsSinceEpoch / 1000).round();
+  static int DateTimeToUnixTime(DateTime dateTime) => dateTime == null
+      ? null
+      : (dateTime.millisecondsSinceEpoch / 1000).round();
 
   /// Makes a meaning-less number into a string.
   static String MeaninglessNumber(dynamic supposedText) =>
@@ -193,10 +195,9 @@ class LastFMValueNormalizer {
               (i) => Track.fromJson(tracks['track'][i]));
 
   /// Tags extractor.
-  static List<Tag> tagsExtractor(Map<String, dynamic> tags) =>
-      tags == null
-          ? null
-          : List.generate(
+  static List<Tag> tagsExtractor(Map<String, dynamic> tags) => tags == null
+      ? null
+      : List.generate(
           (tags['tag'] as List).length, (i) => Tag.fromJson(tags['tag'][i]));
 
   /// Albums extractor.
@@ -215,7 +216,7 @@ class LastFMValueNormalizer {
 
   /// SimilarArtists extractor.
   static List<Artist> similarArtistsExtractor(
-      Map<String, dynamic> similarArtists) =>
+          Map<String, dynamic> similarArtists) =>
       similarArtists == null
           ? null
           : List.generate((similarArtists['artist'] as List).length,
@@ -227,7 +228,7 @@ class LastFMValueNormalizer {
     if (links != null) {
       if (supposedLinksList is List) {
         return List.generate((links['link'] as List).length,
-                (i) => Link.fromJson(links['link'][i]));
+            (i) => Link.fromJson(links['link'][i]));
       } else {
         return [Link.fromJson(links['link'])];
       }

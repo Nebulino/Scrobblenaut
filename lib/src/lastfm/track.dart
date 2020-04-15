@@ -67,6 +67,10 @@ class Track {
   @JsonKey(name: 'mbid')
   String mbid;
 
+  /// If called from a [User] data, True if the user loved the track.
+  @JsonKey(name: 'loved', fromJson: LastFMValueNormalizer.NumberToBool)
+  bool loved;
+
   Track({
     this.name,
     this.album,
@@ -81,6 +85,7 @@ class Track {
     this.playCount,
     this.wiki,
     this.mbid,
+    this.loved,
   });
 
   factory Track.fromJson(Map<String, dynamic> json) => _$TrackFromJson(json);

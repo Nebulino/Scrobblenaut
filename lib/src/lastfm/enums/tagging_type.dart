@@ -10,7 +10,6 @@ enum TaggingType {
   artist,
   album,
   track,
-  None,
 }
 
 extension TaggingTypeExtension on TaggingType {

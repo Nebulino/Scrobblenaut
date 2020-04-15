@@ -57,15 +57,33 @@ dependencies:
 From pub.dev:
 
 ##### Coming soon... I hope...
+```yaml
+dependencies:
+  scrobblenaut: ^version-number
+```
 
 ## Features and bugs
 
-#### For the documentation:
-For now, You have to download the repo and run *dartdoc* on the console,
-on the root of the package.
+#### Status:
 
-#### WARNING 
-Not all methods are available. Check the release page to check which one are.
+All the methods are available.
+Needs more time to check for problems caused by a bad information management from the API side.
+For example: 
+- Tracks duration information taken from an album like method is different from a Track duration taken from a 
+track info query.
+- Some variables can have strange content such as FIXME on some Track duration.
+- Many more. For now with my tests, this is the best I can handle. I just need more track and usage of my package
+to track different type of errors that can occurs.
+
+#### Future of the package after all methods implemented:
+
+It's still a long way.
+I have some ideas, and I'm going to continue to support it, just stay tuned.
+
+#### For the documentation:
+
+For now, You have to download the repo and run *dartdoc* on the console,
+on the root of the package. When I upload this package on *pub.dev* you can use the documentation from there directly.
 
 There's 2 type of usage:
 - with authentication;

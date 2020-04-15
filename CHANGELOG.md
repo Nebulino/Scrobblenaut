@@ -1,3 +1,35 @@
+## 1.0.0
+### Finally! First Release!
+#### All methods implemented.
+##### Status:
+
+- Auth and No Auth method supported.
+- Album Methods supported.
+- Artist Methods supported.
+- Chart Methods supported.
+- Geo Methods supported.
+- Library Methods supported.
+- Tag Methods supported.
+- Track Methods supported.
+- User Methods supported.
+
+##### Dev Changelog:
+
+- Fixed Exception Handling on **Spaceship**.
+- Created **ScrobbleObject()** for helping in scrobbling.
+- Fixed **linksExtractor()** Helper.
+- Added **timestampToSecondsSinceEpoch()** for **TrackMethods.scrobble()** and derivatives.
+- Fixed **Track.topTags**.
+- Fixed **LastFMException.generate()**.
+- Created POSTResponse Helper and ScrobbleResponseHelper.
+- Added a 'FIXME' bypass on duration parsing in Tracks.
+- Fixed **Geo.getTopTracks()** for the Track Duration problem.
+- Fixed **Tag.count**.
+- Created **Taggings** for **User.getPersonalTags**.
+- Modified some examples. Watch them on *./example*.
+- Updated the **README.md** for First Release.
+- Updated the **CHANGELOG.md**. *This thing You're reading right now*
+
 ## 0.1.6
 ### Huge update
 #### Seventh Pre-Release. One more to go...
