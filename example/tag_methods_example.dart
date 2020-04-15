@@ -40,10 +40,6 @@ void main() async {
   // tag.getTopAlbums
   (await scrobblenaut.tag.getTopAlbums(tag: 'anime'))?.forEach((Album album) {
     print('Top Album Name: ${album.name}');
-    print('#### TRACKS: ####');
-    album.tracks.forEach((Track track) {
-      print('Track name: ${track.name} | Track Duration: ${track.duration}');
-    });
   });
 
   print('########################tag.getTopArtists###########################');

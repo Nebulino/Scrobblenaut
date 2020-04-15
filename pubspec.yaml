@@ -9,6 +9,8 @@ environment:
 
 dependencies:
   meta: ^1.1.8
+  json_annotation: ^3.0.1
+  convert: ^2.1.1
   dio: ^3.0.9
   crypto: ^2.1.4
   xml: ^4.1.0

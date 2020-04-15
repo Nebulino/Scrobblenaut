@@ -26,7 +26,7 @@ void main() async {
 
   // User.getFriends
   (await scrobblenaut.user.getFriends(user: 'nebulino'))?.forEach((User user) {
-    print('Friend Name: ${user.name} | Friend URL : ${user.url}');
+    print('Friend Name: ${user.name} | Friend URL: ${user.url}');
   });
 
   print('###########################user.getInfo#############################');
@@ -41,7 +41,7 @@ void main() async {
   // user.getLovedTracks
   (await scrobblenaut.user.getLovedTracks(user: 'nebulino'))
       ?.forEach((Track track) {
-    print('Track Name: ${track.name} | Track URL : ${track.url}');
+    print('Track Name: ${track.name} | Track URL: ${track.url}');
   });
 
   print('#########################user.getPersonalTags#######################');
@@ -51,7 +51,7 @@ void main() async {
           user: 'nebulino', tag: 'anime', taggingType: TaggingType.track))
       .tracks
       ?.forEach((Track track) {
-    print('Track Name: ${track.name} | Track URL : ${track.url}');
+    print('Track Name: ${track.name} | Track URL: ${track.url}');
   });
 
   print('#######################user.getRecentTracks#########################');
@@ -59,7 +59,7 @@ void main() async {
   // user.getRecentTracks
   (await scrobblenaut.user.getRecentTracks(user: 'nebulino'))
       ?.forEach((Track track) {
-    print('Track Name: ${track.name} | Track URL : ${track.url}');
+    print('Track Name: ${track.name} | Track URL: ${track.url}');
   });
 
   print('#########################user.getTopAlbums##########################');
@@ -75,14 +75,14 @@ void main() async {
   // user.getTopArtists
   (await scrobblenaut.user.getTopArtists(user: 'nebulino'))
       ?.forEach((Artist artist) {
-    print('Top Artist Name: ${artist.name} | Top Artist URL : ${artist.url}');
+    print('Top Artist Name: ${artist.name} | Top Artist URL: ${artist.url}');
   });
 
   print('#########################user.getTopTracks##########################');
 
   // user.getTopTags
   (await scrobblenaut.user.getTopTags(user: 'nebulino'))?.forEach((Tag tag) {
-    print('Top Tag Name: ${tag.name} | Top Tag URL : ${tag.url}');
+    print('Top Tag Name: ${tag.name} | Top Tag URL: ${tag.url}');
   });
 
   print('#####################user.getWeeklyAlbumChart#######################');
@@ -90,25 +90,44 @@ void main() async {
   // user.getTopTracks
   (await scrobblenaut.user.getTopTracks(user: 'nebulino'))
       ?.forEach((Track track) {
-    print('Top Tracks Name: ${track.name} | Top Tracks URL : ${track.url} |'
+    print('Top Tracks Name: ${track.name} | Top Tracks URL: ${track.url} |'
         ' Duration: ${track.duration}');
   });
 
   print('#####################user.getWeeklyArtistChart######################');
 
   // user.getWeeklyAlbumChart
+  (await scrobblenaut.user.getTopTracks(user: 'nebulino'))
+      ?.forEach((Track track) {
+    print('Top Tracks Name: ${track.name} | Top Tracks URL: ${track.url} |'
+        ' Duration: ${track.duration}');
+  });
 
-  print('######################user.getWeeklyChartList#######################');
+  print('#####################user.getWeeklyArtistChart######################');
 
   // user.getWeeklyArtistChart
+  (await scrobblenaut.user.getWeeklyArtistChart(user: 'nebulino'))
+      ?.forEach((Artist artist) {
+    print('Top Artist Name: ${artist.name} | Top Artist URL: ${artist.url}');
+  });
 
-  print('#####################user.getWeeklyTrackChart#######################');
+  print('#####################user.getWeeklyChartList########################');
 
   // user.getWeeklyChartList
+  (await scrobblenaut.user.getWeeklyChartList(user: 'nebulino'))
+      ?.forEach((Chart chart) {
+    print('From: ${chart.fromDate} | To: ${chart.toDate}');
+  });
 
   print('#####################user.getWeeklyTrackChart#######################');
 
   // user.getWeeklyTrackChart
+  (await scrobblenaut.user.getWeeklyTrackChart(user: 'nebulino'))
+      ?.forEach((Track track) {
+    print(
+        'Weekly Tracks Name: ${track.name} | Weekly Tracks URL: ${track.url} |'
+        ' Duration: ${track.duration}');
+  });
 
   print('####################################################################');
 }
