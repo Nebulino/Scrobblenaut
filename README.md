@@ -56,7 +56,6 @@ dependencies:
 
 From pub.dev:
 
-##### Coming soon... I hope...
 ```yaml
 dependencies:
   scrobblenaut: ^version-number
