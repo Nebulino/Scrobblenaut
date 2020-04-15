@@ -46,27 +46,43 @@ class Scrobblenaut {
   /// It returns the LastFM object created.
   LastFM get api => _api;
 
-  /// Use this to use [Album]'s methods.
+  /// Use this to use [Album's methods].
+  ///
+  /// [Album's methods]: [AlbumMethods]
   AlbumMethods get album => _albumMethods;
 
-  /// Use this to use [Artist]'s methods.
+  /// Use this to use [Artist's methods].
+  ///
+  /// [Artist's methods]: [ArtistMethods]
   ArtistMethods get artist => _artistMethods;
 
-  /// Use this to use [Chart]'s methods.
+  /// Use this to use [Chart's methods].
+  ///
+  /// [Chart's methods]: [ChartMethods]
   ChartMethods get chart => _chartMethods;
 
-  /// Use this to use [Geo]'s methods.
+  /// Use this to use [Geo's methods].
+  ///
+  /// [Geo's methods]: [GeoMethods]
   GeoMethods get geo => _geoMethods;
 
-  /// Use this to use [Library]'s methods.
+  /// Use this to use [Library's methods].
+  ///
+  /// [Library's methods]: [LibraryMethods]
   LibraryMethods get library => _libraryMethods;
 
-  /// Use this to use [Tag]'s methods.
+  /// Use this to use [Tag's methods].
+  ///
+  /// [Tag's methods]: [TagMethods]
   TagMethods get tag => _tagMethods;
 
-  /// Use this to use [Track]'s methods.
+  /// Use this to use [Track's methods].
+  ///
+  /// [Track's methods]: [TrackMethods]
   TrackMethods get track => _trackMethods;
 
-  /// Use this to use [User]'s methods.
+  /// Use this to use [User's methods].
+  ///
+  /// [User's methods]: [UserMethods]
   UserMethods get user => _userMethods;
 }
