@@ -1,0 +1,37 @@
+name: Dart CI - Publish
+
+on:
+  push:
+    branches: [ publish ]
+
+jobs:
+  publish_paperplane:
+    runs-on: ubuntu-latest
+
+    container:
+      image:  google/dart:latest
+
+    steps:
+    - uses: actions/checkout@v2
+      
+    - name: Install dependencies.
+      run: pub get
+      
+    - name: Clean the project if necessary
+      run: sh ./clean.sh
+      
+    - name: Generate .g.dart object files.
+      run: pub run build_runner build
+      
+    - name: Publish on pub.dev.  
+      id: publish_package
+      uses: k-paxian/dart-package-publisher@master
+      with:
+        credentialJson: ${{ secrets.CREDENTIAL_JSON }}
+      
+    - name: Commit release tag
+      if: steps.publish_package.outputs.success
+      uses: hole19/git-tag-action@master
+      env:
+        TAG: ${{steps.publish_package.outputs.package}}-${{steps.publish_package.outputs.localVersion}}
+        GITHUB_TOKEN: ${{ secrets.OAOTH_GITHUB_TOKEN }}
