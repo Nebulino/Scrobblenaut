@@ -12,6 +12,7 @@ import 'package:scrobblenaut/src/methods/geo_methods.dart';
 import 'package:scrobblenaut/src/methods/library_methods.dart';
 import 'package:scrobblenaut/src/methods/tag_methods.dart';
 import 'package:scrobblenaut/src/methods/track_methods.dart';
+import 'package:scrobblenaut/src/methods/user_methods.dart';
 
 /// This connects all the various methods [LastFM] can provide.
 ///
@@ -26,6 +27,7 @@ class Scrobblenaut {
   LibraryMethods _libraryMethods;
   TagMethods _tagMethods;
   TrackMethods _trackMethods;
+  UserMethods _userMethods;
 
   Scrobblenaut._(this._api) {
     _albumMethods = AlbumMethods(_api);
@@ -35,6 +37,7 @@ class Scrobblenaut {
     _libraryMethods = LibraryMethods(_api);
     _tagMethods = TagMethods(_api);
     _trackMethods = TrackMethods(_api);
+    _userMethods = UserMethods(_api);
   }
 
   /// It creates a Scrobblenaut Session using a LastFM object.
@@ -63,4 +66,7 @@ class Scrobblenaut {
 
   /// Use this to use [Track]'s methods.
   TrackMethods get track => _trackMethods;
+
+  /// Use this to use [User]'s methods.
+  UserMethods get user => _userMethods;
 }
