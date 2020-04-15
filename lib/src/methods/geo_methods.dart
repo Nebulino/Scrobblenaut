@@ -65,9 +65,17 @@ class GeoMethods {
 
     final topTracks = response['tracks']['track'];
 
-    return topTracks == null
-        ? null
-        : List.generate(
-            (topTracks as List).length, (i) => Track.fromJson(topTracks[i]));
+    if (topTracks == null) {
+      return [];
+    } else {
+      // This operation is necessary because the tracks have different duration.
+      var fixTopTracks = List.generate(
+          (topTracks as List).length, (i) => Track.fromJson(topTracks[i]));
+
+      fixTopTracks.forEach((Track track) {
+        track.duration = track.duration * 1000;
+      });
+      return fixTopTracks;
+    }
   }
 }

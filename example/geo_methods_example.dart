@@ -35,7 +35,9 @@ void main() async {
   // geo.getTopTracks
   (await scrobblenaut.geo.getTopTracks(country: 'canada'))
       ?.forEach((Track track) {
-    print('Top Track Name: ${track.name} | Top Track URL : ${track.url}');
+    print('Top Track Name: ${track.name} | Top Track URL : ${track.url} | '
+        'Top Track Duration: ${track.duration}');
+    // Check if the duration is correct.
   });
 
   print('####################################################################');

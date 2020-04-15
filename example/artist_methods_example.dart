@@ -52,8 +52,7 @@ void main() async {
   ));
 
   print(
-      'Artist Info Name: ${artistGetInfo.name} | Artist URL: ${artistGetInfo
-          .url}');
+      'Artist Info Name: ${artistGetInfo.name} | Artist URL: ${artistGetInfo.url}');
 
   print('########################artist.getSimilar###########################');
 

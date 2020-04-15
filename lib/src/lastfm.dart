@@ -37,6 +37,7 @@ part 'package:scrobblenaut/src/lastfm/registered.dart';
 part 'package:scrobblenaut/src/lastfm/stats.dart';
 part 'package:scrobblenaut/src/lastfm/streamable.dart';
 part 'package:scrobblenaut/src/lastfm/tag.dart';
+part 'package:scrobblenaut/src/lastfm/taggings.dart';
 part 'package:scrobblenaut/src/lastfm/track.dart';
 part 'package:scrobblenaut/src/lastfm/track_results.dart';
 part 'package:scrobblenaut/src/lastfm/user.dart';
