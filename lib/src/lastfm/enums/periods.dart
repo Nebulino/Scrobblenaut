@@ -13,7 +13,6 @@ enum Period {
   MONTHS6,
   YEAR,
   OVERALL,
-  None,
 }
 
 extension PeriodExtension on Period {
