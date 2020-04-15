@@ -5,14 +5,7 @@
 
 import 'package:meta/meta.dart';
 import 'package:scrobblenaut/src/core/lastfm.dart';
-import 'package:scrobblenaut/src/methods/album_methods.dart';
-import 'package:scrobblenaut/src/methods/artist_methods.dart';
-import 'package:scrobblenaut/src/methods/chart_methods.dart';
-import 'package:scrobblenaut/src/methods/geo_methods.dart';
-import 'package:scrobblenaut/src/methods/library_methods.dart';
-import 'package:scrobblenaut/src/methods/tag_methods.dart';
-import 'package:scrobblenaut/src/methods/track_methods.dart';
-import 'package:scrobblenaut/src/methods/user_methods.dart';
+import 'package:scrobblenaut/lastfm_methods.dart';
 
 /// This connects all the various methods [LastFM] can provide.
 ///
@@ -46,43 +39,27 @@ class Scrobblenaut {
   /// It returns the LastFM object created.
   LastFM get api => _api;
 
-  /// Use this to use [Album's methods].
-  ///
-  /// [Album's methods]: [AlbumMethods]
+  /// Use this to use [AlbumMethods].
   AlbumMethods get album => _albumMethods;
 
-  /// Use this to use [Artist's methods].
-  ///
-  /// [Artist's methods]: [ArtistMethods]
+  /// Use this to use [ArtistMethods].
   ArtistMethods get artist => _artistMethods;
 
-  /// Use this to use [Chart's methods].
-  ///
-  /// [Chart's methods]: [ChartMethods]
+  /// Use this to use [ChartMethods].
   ChartMethods get chart => _chartMethods;
 
-  /// Use this to use [Geo's methods].
-  ///
-  /// [Geo's methods]: [GeoMethods]
+  /// Use this to use [GeoMethods].
   GeoMethods get geo => _geoMethods;
 
-  /// Use this to use [Library's methods].
-  ///
-  /// [Library's methods]: [LibraryMethods]
+  /// Use this to use [LibraryMethods].
   LibraryMethods get library => _libraryMethods;
 
-  /// Use this to use [Tag's methods].
-  ///
-  /// [Tag's methods]: [TagMethods]
+  /// Use this to use [TagMethods].
   TagMethods get tag => _tagMethods;
 
-  /// Use this to use [Track's methods].
-  ///
-  /// [Track's methods]: [TrackMethods]
+  /// Use this to use [TrackMethods].
   TrackMethods get track => _trackMethods;
 
-  /// Use this to use [User's methods].
-  ///
-  /// [User's methods]: [UserMethods]
+  /// Use this to use [UserMethods].
   UserMethods get user => _userMethods;
 }
