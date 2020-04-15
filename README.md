@@ -46,7 +46,7 @@ void main() async {
 
 Add Scrobblenaut dependency on `pubspec.yaml`:
 
-From GitHub:
+From GitHub (for example: branch-name >> dev-build):
 ```yaml
 dependencies:
   scrobblenaut:
