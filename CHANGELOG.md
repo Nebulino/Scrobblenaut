@@ -1,12 +1,33 @@
+## 2.0.0
+### Major Update.
+#### In some objects You can apply object-related methods.
+##### Status:
+
+- Album object supported.
+- Artist object supported.
+- Tag object supported. (TagMethods.getTopTags not supported because is useless, no Tag attribute used)
+- Track object supported.
+- User object supported.
+
+##### Dev Changelog:
+
+- Add capability of applying TrackMethods in Track.
+- Created example-related. Watch them on *./example*.
+- Fixed clean.sh.
+- Added .g.dart to make possible the usage from *git* in pubspec.yaml 
+- Updated the **README.md** for Major Update.
+- Updated the **CHANGELOG.md**. *This thing You're reading right now*
+
 ## 1.0.5
 #### Add capability of applying TrackMethods in Track.
 
 - Created new track example.
+- Fixed TrackMethods.getTags.
 - Changed *lang* in Methods into *language*
 - Updated **CHANGELOG.md**.
-- TrackMethods.scrobbleOnce() into TrackMethods.scrobble()
-- TrackMethods.scrobbleOnceFromObject() into TrackMethods.scrobbleFromObject()  
-- TrackMethods.scrobble() into TrackMethods.multiScrobble()
+- *TrackMethods.scrobbleOnce()* **into** *TrackMethods.scrobble()*
+- *TrackMethods.scrobbleOnceFromObject()* **into** *TrackMethods.scrobbleFromObject()*
+- *TrackMethods.scrobble()* **into** *TrackMethods.multiScrobble()*
 
 ## 1.0.4
 #### Add capability of applying TagMethods in Tag.
