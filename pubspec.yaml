@@ -1,6 +1,6 @@
 name: scrobblenaut
 description: A deadly simple LastFM API Wrapper for Dart. So deadly simple that it's gonna hit the mark.
-version: 1.0.5
+version: 2.0.0
 homepage: https://github.com/Nebulino/Scrobblenaut
 issue_tracker: https://github.com/Nebulino/Scrobblenaut/issues
 
