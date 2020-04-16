@@ -20,11 +20,11 @@ class TagMethods {
   /// https://www.last.fm/api/show/tag.getInfo
   Future<Tag> getInfo({
     @required String tag,
-    Language lang = Language.en,
+    Language language = Language.en,
   }) async {
     final parameters = {
       'tag': tag,
-      'lang': lang?.code,
+      'lang': language?.code,
     };
 
     final request =

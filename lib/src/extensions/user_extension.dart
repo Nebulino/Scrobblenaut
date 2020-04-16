@@ -3,7 +3,12 @@
  * Copyright (c) 2020 Nebulino
  */
 
+import 'package:meta/meta.dart';
 import 'package:scrobblenaut/lastfm.dart';
+import 'package:scrobblenaut/lastfm_methods.dart';
+import 'package:scrobblenaut/scrobblenaut.dart';
 
-/// Give the ability of applying [UserMethods] on [Track].
-extension UserExtension on User {}
+/// Give the ability of applying [UserMethods] on [User].
+extension UserExtension on User {
+  UserMethods get _userMethods => Scrobblenaut.instance.user;
+}

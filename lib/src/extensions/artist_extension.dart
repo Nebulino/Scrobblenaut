@@ -32,14 +32,14 @@ extension ArtistExtension on Artist {
   /// [ArtistMethods.getInfo]
   Future<Artist> getInfo({
     String username,
-    Language lang = Language.en,
+    Language language = Language.en,
     bool autoCorrect = false,
   }) async {
     return await _artistMethods.getInfo(
       artist: name,
       mbid: mbid,
       username: username,
-      lang: lang,
+      language: language,
       autoCorrect: autoCorrect,
     );
   }

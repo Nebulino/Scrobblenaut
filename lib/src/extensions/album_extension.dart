@@ -24,7 +24,7 @@ extension AlbumExtension on Album {
   Future<Album> getInfo({
     bool autoCorrect = false,
     String username,
-    Language lang = Language.en,
+    Language language = Language.en,
   }) async {
     return await _albumMethods.getInfo(
       artist: artist.name,
@@ -32,7 +32,7 @@ extension AlbumExtension on Album {
       autoCorrect: autoCorrect,
       // TODO: make it took from user if authenticated?
       username: username,
-      lang: lang,
+      language: language,
     );
   }
 
