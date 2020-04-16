@@ -6,7 +6,7 @@
 import 'package:scrobblenaut/lastfm.dart';
 import 'package:scrobblenaut/scrobblenaut.dart';
 
-import 'api_values.dart';
+import '../api_values.dart';
 
 // Just an example of use.
 void main() async {

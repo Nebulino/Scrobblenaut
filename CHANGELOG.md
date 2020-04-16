@@ -1,3 +1,8 @@
+## 1.0.2
+#### Add capability of applying AlbumMethods in Albums.
+
+- Created new album example.
+
 ## 1.0.1
 #### Fix Documentation.
 

@@ -7,5 +7,9 @@
 /// This is the brain of my Wrapper.
 library scrobblenaut;
 
-export 'package:scrobblenaut/src/scrobblenaut.dart';
+// Core.
 export 'package:scrobblenaut/src/core/lastfm.dart';
+export 'package:scrobblenaut/src/scrobblenaut.dart';
+
+// Extensions.
+export 'package:scrobblenaut/src/extensions/album_extension.dart';
