@@ -61,8 +61,8 @@ class AlbumMethods {
   ///
   /// https://www.last.fm/api/show/album.getInfo
   Future<Album> getInfo({
-    String album,
     String artist,
+    String album,
     String mbid,
     bool autoCorrect = false,
     String username,
@@ -75,8 +75,8 @@ class AlbumMethods {
     }
 
     final parameters = {
-      'album': album,
       'artist': artist,
+      'album': album,
       'mbid': mbid,
       'autocorrect': (autoCorrect ? 1 : 0),
       'username': username,

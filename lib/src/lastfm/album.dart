@@ -8,11 +8,11 @@ part of lastfm_objects;
 /// This object represents an album.
 @JsonSerializable(includeIfNull: false)
 class Album {
+  // TODO: what's this?
   /// Title of the album.
   @JsonKey(name: 'title')
   String title;
 
-  // TODO: what's this?
   /// Name of the album.
   @JsonKey(name: 'name')
   String name;
