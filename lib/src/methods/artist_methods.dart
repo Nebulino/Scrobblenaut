@@ -227,7 +227,7 @@ class ArtistMethods {
   /// Get the top tags for an artist on Last.fm, ordered by popularity.
   ///
   /// https://www.last.fm/api/show/artist.getTopTags
-  Future<dynamic> getTopTags({
+  Future<List<Tag>> getTopTags({
     String artist,
     String mbid,
     bool autoCorrect = false,
@@ -328,7 +328,7 @@ class ArtistMethods {
   Future<ArtistSearchResults> search({
     @required String artist,
     int page = 1,
-    int limit,
+    int limit = 30,
   }) async {
     final parameters = {
       'artist': artist,

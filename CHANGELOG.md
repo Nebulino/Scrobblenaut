@@ -1,7 +1,17 @@
+## 1.0.3
+#### Add capability of applying ArtistMethods in Artist.
+
+- Created new artist example.
+- Fixed some Future<dynamic> left.
+- Fixed some *examples*.
+- Updated **CHANGELOG.md**.
+
 ## 1.0.2
 #### Add capability of applying AlbumMethods in Albums.
 
 - Created new album example.
+- Fixed version number
+- Updated **CHANGELOG.md**.
 
 ## 1.0.1
 #### Fix Documentation.
