@@ -205,7 +205,8 @@ class TrackMethods {
 
     return tags['tag'] == null
         ? null
-        : List.generate((tags as List).length, (i) => Tag.fromJson(tags[i]));
+        : List.generate(
+            (tags['tag'] as List).length, (i) => Tag.fromJson(tags['tag'][i]));
   }
 
   /// Get the top tags for this track on Last.fm, ordered by tag count.
