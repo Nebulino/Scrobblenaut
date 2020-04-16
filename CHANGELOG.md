@@ -11,7 +11,7 @@
 
 ##### Dev Changelog:
 
-- Add capability of applying TrackMethods in Track.
+- Add capability of applying UserMethods in User.
 - Created example-related. Watch them on *./example*.
 - Fixed clean.sh.
 - Added .g.dart to make possible the usage from *git* in pubspec.yaml 
