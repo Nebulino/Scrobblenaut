@@ -90,7 +90,7 @@ class ArtistMethods {
     String artist,
     String mbid,
     String username,
-    Language lang = Language.en,
+    Language language = Language.en,
     bool autoCorrect = false,
   }) async {
     if (artist == null && mbid == null) {
@@ -102,7 +102,7 @@ class ArtistMethods {
       'artist': artist,
       'mbid': mbid,
       'username': username,
-      'lang': lang?.code,
+      'lang': language?.code,
       'autocorrect': (autoCorrect ? 1 : 0),
     };
 

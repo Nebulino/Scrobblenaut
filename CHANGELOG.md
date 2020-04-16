@@ -1,3 +1,10 @@
+## 1.0.4
+#### Add capability of applying TagMethods in Tag.
+
+- Created new tag example.
+- Changed *lang* in Methods into *language*
+- Updated **CHANGELOG.md**.
+
 ## 1.0.3
 #### Add capability of applying ArtistMethods in Artist.
 
