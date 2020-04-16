@@ -2,7 +2,11 @@
 #### Add capability of applying TrackMethods in Track.
 
 - Created new track example.
+- Changed *lang* in Methods into *language*
 - Updated **CHANGELOG.md**.
+- TrackMethods.scrobbleOnce() into TrackMethods.scrobble()
+- TrackMethods.scrobbleOnceFromObject() into TrackMethods.scrobbleFromObject()  
+- TrackMethods.scrobble() into TrackMethods.multiScrobble()
 
 ## 1.0.4
 #### Add capability of applying TagMethods in Tag.
