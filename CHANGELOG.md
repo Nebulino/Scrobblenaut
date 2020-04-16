@@ -1,3 +1,9 @@
+## 1.0.5
+#### Add capability of applying TrackMethods in Track.
+
+- Created new track example.
+- Updated **CHANGELOG.md**.
+
 ## 1.0.4
 #### Add capability of applying TagMethods in Tag.
 
