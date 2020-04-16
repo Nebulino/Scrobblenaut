@@ -97,7 +97,7 @@ void main() async {
   print('#########################track.scrobble#############################');
 
   // track.scrobble
-  final scrobbleResponse = await scrobblenaut.track.scrobbleOnce(
+  final scrobbleResponse = await scrobblenaut.track.scrobble(
       track: 'Beautiful Moonlight',
       artist: 'QU4RTZ',
       timestamp: DateTime.now());
