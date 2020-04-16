@@ -23,19 +23,22 @@ void main() async {
 
   final scrobblenaut = Scrobblenaut(lastFM: lastFMAuth);
 
+  final trackInstance = (await scrobblenaut.track.getInfo(
+    track: 'Tomoyo',
+    artist: 'Zekk',
+    autoCorrect: true,
+  ));
+
   print('##########################track.addTags#############################');
 
   // track.addTags
   print('Result of addTag request: ' +
-      (await scrobblenaut.track
-              .addTags(track: 'Flay', artist: 'PLEEG', tags: ['anime']))
-          .toString());
+      (await trackInstance.addTags(tags: ['anime'])).toString());
 
   print('######################track.getCorrection###########################');
 
   // track.getCorrection
-  (await scrobblenaut.track.getCorrection(track: 'TOMOYO', artist: 'Zekk'))
-      ?.forEach((Track track) {
+  (await trackInstance.getCorrection())?.forEach((Track track) {
     print('Track Correction Name: ${track.name} |'
         ' Track Correction URL: ${track.url}');
   });
@@ -43,9 +46,7 @@ void main() async {
   print('#########################track.getInfo##############################');
 
   // track.getInfo
-  final trackGetInfo = (await scrobblenaut.track.getInfo(
-    track: 'Tomoyo',
-    artist: 'Zekk',
+  final trackGetInfo = (await trackInstance.getInfo(
     username: 'nebulino',
     autoCorrect: true,
   ));
@@ -57,50 +58,40 @@ void main() async {
   print('#########################track.getSimilar###########################');
 
   // track.getSimilar
-  (await scrobblenaut.track.getSimilar(track: 'Tomoyo', artist: 'Zekk'))
-      ?.forEach((Track track) {
+  (await trackInstance.getSimilar())?.forEach((Track track) {
     print('Similar Track Name: ${track.name}');
   });
 
   print('###########################track.getTags############################');
 
   // track.getTags
-  (await scrobblenaut.track
-          .getTags(track: 'Hells Bells', artist: 'AC/DC', user: 'nebulino'))
-      ?.forEach((Tag tag) {
+  (await trackInstance.getTags(user: 'nebulino'))?.forEach((Tag tag) {
     print('Tag name: ${tag.name} | Tag url: ${tag.url}');
   });
 
   print('#########################track.getTopTags###########################');
 
   // track.getTopTags
-  (await scrobblenaut.track.getTopTags(track: 'Hells Bells', artist: 'AC/DC'))
-      ?.forEach((Tag tag) {
+  (await trackInstance.getTopTags())?.forEach((Tag tag) {
     print('Tag name: ${tag.name} | Tag url: ${tag.url}');
   });
 
   print('#############################track.love#############################');
 
   // track.love
-  print('Result of love request: ' +
-      (await scrobblenaut.track.love(track: 'Sunlight', artist: 'PLEEG'))
-          .toString());
+  print('Result of love request: ' + (await trackInstance.love()).toString());
 
   print('########################track.removeTag#############################');
 
   // track.removeTag
   print('Result of removeTag request: ' +
-      (await scrobblenaut.track
-              .removeTag(track: 'Flay', artist: 'PLEEG', tag: 'anime'))
-          .toString());
+      (await trackInstance.removeTag(tag: 'anime')).toString());
 
   print('#########################track.scrobble#############################');
 
   // track.scrobble
-  final scrobbleResponse = await scrobblenaut.track.scrobble(
-      track: 'Beautiful Moonlight',
-      artist: 'QU4RTZ',
-      timestamp: DateTime.now());
+  final scrobbleResponse =
+      await trackInstance.scrobble(timestamp: DateTime.now());
   // YAY. IT WORKS!
 
   scrobbleResponse.scrobbleResponses?.forEach((ScrobbledTrack scrobbledTrack) {
@@ -110,24 +101,20 @@ void main() async {
   print('###########################track.search#############################');
 
   // track.search
-  (await scrobblenaut.track.search(track: 'Horizon', artist: 'PLEEG'))
-      .tracks
-      ?.forEach((Track track) {
+  (await trackInstance.search()).tracks?.forEach((Track track) {
     print('Track Name from search: ${track.name}');
   });
 
   print('##########################track.unlove##############################');
 
   // track.unlove
-  print('Result of unlove request: ' +
-      (await scrobblenaut.track.unLove(track: 'Sunlight', artist: 'PLEEG'))
-          .toString());
+  print(
+      'Result of unlove request: ' + (await trackInstance.unLove()).toString());
 
   print('#####################track.updateNowPlaying#########################');
 
   // track.updateNowPlaying
-  final nowPlayingResponse = await scrobblenaut.track
-      .updateNowPlaying(track: 'Beautiful Moonlight', artist: 'QU4RTZ');
+  final nowPlayingResponse = await trackInstance.updateNowPlaying();
   // YAY. IT WORKS!
 
   print('Result of updateNowPlaying request: ${nowPlayingResponse.status} | '

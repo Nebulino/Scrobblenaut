@@ -26,7 +26,7 @@ void main() async {
 
   print('Single scrobble.');
 
-  final response = await scrobblenaut.track.scrobbleOnce(
+  final response = await scrobblenaut.track.scrobble(
       track: 'Beautiful Moonlight',
       artist: 'QU4RTZ',
       timestamp: DateTime.now());
@@ -41,7 +41,7 @@ void main() async {
   final scrobble = Scrobble(track: 'Sunlight', artist: 'PLEEG');
 
   final anotherResponse =
-      await scrobblenaut.track.scrobbleOnceFromObject(scrobble: scrobble);
+      await scrobblenaut.track.scrobbleFromObject(scrobble: scrobble);
 
   anotherResponse.scrobbleResponses?.forEach((ScrobbledTrack scrobbledTrack) {
     print('Scrobbled Title: ${scrobbledTrack.track}');
@@ -51,7 +51,7 @@ void main() async {
   final scrobble2 = Scrobble(track: 'Missing', artist: 'HoneyComeBear');
 
   final lastResponse =
-      await scrobblenaut.track.scrobble(scrobbleList: [scrobble, scrobble2]);
+      await scrobblenaut.track.multiScrobble(scrobbleList: [scrobble, scrobble2]);
 
   lastResponse.scrobbleResponses?.forEach((ScrobbledTrack scrobbledTrack) {
     print('Scrobbled Title: ${scrobbledTrack.track}');
