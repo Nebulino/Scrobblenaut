@@ -15,3 +15,4 @@ export 'package:scrobblenaut/src/scrobblenaut.dart';
 export 'package:scrobblenaut/src/extensions/album_extension.dart';
 export 'package:scrobblenaut/src/extensions/artist_extension.dart';
 export 'package:scrobblenaut/src/extensions/tag_extension.dart';
+export 'package:scrobblenaut/src/extensions/track_extension.dart';

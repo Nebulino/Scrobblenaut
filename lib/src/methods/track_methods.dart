@@ -205,7 +205,8 @@ class TrackMethods {
 
     return tags['tag'] == null
         ? null
-        : List.generate((tags as List).length, (i) => Tag.fromJson(tags[i]));
+        : List.generate(
+            (tags['tag'] as List).length, (i) => Tag.fromJson(tags['tag'][i]));
   }
 
   /// Get the top tags for this track on Last.fm, ordered by tag count.
@@ -323,7 +324,7 @@ class TrackMethods {
   /// the now playing service as input for the scrobble request,
   /// unless they have been explicitly approved by the user.
   /// Parameter names are case sensitive.
-  Future<ScrobbleResponse> scrobbleOnce({
+  Future<ScrobbleResponse> scrobble({
     @required String track,
     String album,
     @required String artist,
@@ -365,8 +366,8 @@ class TrackMethods {
     return ScrobbleResponse.parse(response);
   }
 
-  /// See [TrackMethods.scrobbleOnce].
-  Future<ScrobbleResponse> scrobbleOnceFromObject(
+  /// See [TrackMethods.scrobble].
+  Future<ScrobbleResponse> scrobbleFromObject(
       {@required Scrobble scrobble}) async {
     if (!_api.isAuth) {
       return Future.error(ScrobblenautException(
@@ -400,8 +401,8 @@ class TrackMethods {
     return ScrobbleResponse.parse(response);
   }
 
-  /// See [TrackMethods.scrobbleOnce] and [Scrobble] for more information.
-  Future<ScrobbleResponse> scrobble(
+  /// See [TrackMethods.scrobble] and [Scrobble] for more information.
+  Future<ScrobbleResponse> multiScrobble(
       {@required List<Scrobble> scrobbleList}) async {
     // TODO: make a queue for scrobbleList longer than 50?
 
