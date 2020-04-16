@@ -196,7 +196,7 @@ class ArtistMethods {
   Future<List<Album>> getTopAlbums({
     String artist,
     String mbid,
-    int page,
+    int page = 1,
     int limit = 50,
   }) async {
     if (artist == null && mbid == null) {
@@ -227,7 +227,7 @@ class ArtistMethods {
   /// Get the top tags for an artist on Last.fm, ordered by popularity.
   ///
   /// https://www.last.fm/api/show/artist.getTopTags
-  Future<dynamic> getTopTags({
+  Future<List<Tag>> getTopTags({
     String artist,
     String mbid,
     bool autoCorrect = false,
@@ -261,7 +261,7 @@ class ArtistMethods {
   Future<List<Track>> getTopTracks({
     String artist,
     String mbid,
-    int page,
+    int page = 1,
     int limit = 50,
     bool autoCorrect = false,
   }) async {
@@ -327,8 +327,8 @@ class ArtistMethods {
   /// https://www.last.fm/api/show/artist.search.
   Future<ArtistSearchResults> search({
     @required String artist,
-    int page,
-    int limit,
+    int page = 1,
+    int limit = 30,
   }) async {
     final parameters = {
       'artist': artist,

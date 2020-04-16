@@ -428,7 +428,7 @@ class UserMethods {
   /// **NOTE:** the output list is already ordered by rank.
   ///
   /// https://www.last.fm/api/show/user.getWeeklyTrackChart
-  Future<dynamic> getWeeklyTrackChart({
+  Future<List<Track>> getWeeklyTrackChart({
     @required String user,
     DateTime fromDate,
     DateTime toDate,

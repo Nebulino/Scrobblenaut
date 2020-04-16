@@ -24,7 +24,7 @@ class TrackMethods {
   /// Tag a track using a list of user supplied tags.
   ///
   /// https://www.last.fm/api/show/track.addTags
-  Future<dynamic> addTags({
+  Future<bool> addTags({
     @required String track,
     @required String artist,
     @required List<String> tags,
@@ -212,7 +212,7 @@ class TrackMethods {
   /// Supply either track & artist name or mbid.
   ///
   /// https://www.last.fm/api/show/track.getTopTags
-  Future<dynamic> getTopTags({
+  Future<List<Tag>> getTopTags({
     String track,
     String artist,
     String mbid,
@@ -246,7 +246,7 @@ class TrackMethods {
   /// Love a track for a user profile.
   ///
   /// https://www.last.fm/api/show/track.love
-  Future<dynamic> love({
+  Future<bool> love({
     @required String track,
     @required String artist,
   }) async {
@@ -277,7 +277,7 @@ class TrackMethods {
   /// Remove a user's tag from a track.
   ///
   /// https://www.last.fm/api/show/track.removeTag
-  Future<dynamic> removeTag({
+  Future<bool> removeTag({
     @required String track,
     @required String artist,
     @required String tag,
