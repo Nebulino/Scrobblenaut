@@ -71,7 +71,7 @@ extension AlbumExtension on Album {
 
   /// [AlbumMethods.search]
   Future<AlbumSearchResults> search({
-    int page,
+    int page = 1,
     int limit = 30,
   }) async {
     return await _albumMethods.search(

@@ -213,7 +213,7 @@ class AlbumMethods {
   /// https://www.last.fm/api/show/album.search
   Future<AlbumSearchResults> search({
     @required String album,
-    int page,
+    int page = 1,
     int limit = 30,
   }) async {
     final parameters = {
