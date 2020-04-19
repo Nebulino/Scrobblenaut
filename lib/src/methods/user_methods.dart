@@ -11,6 +11,7 @@ import 'package:scrobblenaut/src/core/lastfm.dart';
 import 'package:scrobblenaut/src/core/request.dart';
 import 'package:scrobblenaut/src/core/request_mode.dart';
 import 'package:scrobblenaut/src/helpers/lastfm_value_normalizer.dart';
+import 'package:scrobblenaut/src/helpers/utils.dart';
 
 /// This contains all the methods about a [User].
 class UserMethods {
@@ -190,10 +191,22 @@ class UserMethods {
 
     final recentTracks = response['recenttracks']['track'];
 
-    return recentTracks == null
-        ? null
-        : List.generate((recentTracks as List).length,
-            (i) => Track.fromJson(recentTracks[i]));
+    // View Issue in Github.
+    // https://github.com/Nebulino/Scrobblenaut/issues/24
+    if (recentTracks == null) {
+      return null;
+    } else {
+      (recentTracks as List).forEach((track) {
+        // Fixing the track value.
+        track['artist']['name'] ??=
+            isValidParsableStringField(track['artist']['#text'])
+                ? track['artist']['#text']
+                : null; // If there's no #text field, don't touch the artist.
+      });
+
+      return List.generate((recentTracks as List).length,
+          (i) => Track.fromJson(recentTracks[i]));
+    }
   }
 
   /// Get the top albums listened to by a user.

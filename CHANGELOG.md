@@ -1,3 +1,7 @@
+## 2.0.1
+
+- Fix Artists in Tracks gained from user.getRecentTracks().
+
 ## 2.0.0
 ### Major Update.
 #### In some objects You can apply object-related methods.
