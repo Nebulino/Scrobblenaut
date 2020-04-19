@@ -5,7 +5,7 @@ on:
     branches: [ publish ]
 
 jobs:
-  publish_paperplane:
+  publish_scrobblenaut:
     runs-on: ubuntu-latest
 
     container:

@@ -30,8 +30,7 @@ class SpaceShip {
           },
           contentType: Headers.formUrlEncodedContentType,
           responseType: ResponseType.json),
-    )
-      ..interceptors
+    )..interceptors
           .add(InterceptorsWrapper(onRequest: (RequestOptions options) {
         options.queryParameters?.removeWhere((key, value) => value == null);
 
