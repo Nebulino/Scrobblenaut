@@ -202,7 +202,6 @@ class UserMethods {
             isValidParsableStringField(track['artist']['#text'])
                 ? track['artist']['#text']
                 : null; // If there's no #text field, don't touch the artist.
-        print('Track Artist: ${track['artist']['name']}');
       });
 
       return List.generate((recentTracks as List).length,
