@@ -1,3 +1,3 @@
-Write-Host "Cleaning .g.dart build objects."
+Write-Information "Cleaning .g.dart build objects."
 del lib\src\lastfm.g.dart
-Write-Host "Remember to run at least once build.ps1."
+Write-Information "Remember to run at least once build.ps1."
