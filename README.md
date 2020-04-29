@@ -63,7 +63,7 @@ dependencies:
 
 ## Features and bugs
 
-#### Status:
+#### Status
 
 All the methods are available.
 Needs more time to check for problems caused by a bad information management from the API side.
@@ -74,12 +74,12 @@ track info query.
 - Many more. For now with my tests, this is the best I can handle. I just need more track and usage of my package
 to track different type of errors that can occurs.
 
-#### Future of the package after all methods implemented:
+#### Future of the package after all methods implemented
 
 It's still a long way.
 I have some ideas, and I'm going to continue to support it, just stay tuned.
 
-#### For the documentation:
+#### For the documentation
 
 For now, You have to download the repo and run *dartdoc* on the console,
 on the root of the package. When I upload this package on *pub.dev* you can use the documentation from there directly.
@@ -90,6 +90,6 @@ There's 2 type of usage:
 
 Please file feature requests and bugs at the [issue tracker][tracker].
 
-[tracker]: https://github.com/Nebulino/Scrobblenaut/issues
-
 ##### Copyright © 2020 Nebulino
+
+[tracker]: https://github.com/Nebulino/Scrobblenaut/issues
