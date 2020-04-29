@@ -1,11 +1,20 @@
+## 2.0.2
+### Small bug-fix
+
+- Remove remained print().
+- Fix README.md.
+- Fix CHANGELOG.md.
+- Fix build.ps1.
+- Fix clean.ps1.  
+
 ## 2.0.1
 
-- Fix Artists in Tracks gained from user.getRecentTracks().
+  - Fix Artists in Tracks gained from user.getRecentTracks().
 
 ## 2.0.0
-### Major Update.
-#### In some objects You can apply object-related methods.
-##### Status:
+### Major Update
+#### In some objects You can apply object-related methods
+##### Status
 
 - Album object supported.
 - Artist object supported.
@@ -13,7 +22,7 @@
 - Track object supported.
 - User object supported.
 
-##### Dev Changelog:
+##### Dev Changelog
 
 - Add capability of applying UserMethods in User.
 - Created example-related. Watch them on *./example*.
@@ -23,7 +32,7 @@
 - Updated the **CHANGELOG.md**. *This thing You're reading right now*
 
 ## 1.0.5
-#### Add capability of applying TrackMethods in Track.
+### Add capability of applying TrackMethods in Track
 
 - Created new track example.
 - Fixed TrackMethods.getTags.
@@ -34,14 +43,14 @@
 - *TrackMethods.scrobble()* **into** *TrackMethods.multiScrobble()*
 
 ## 1.0.4
-#### Add capability of applying TagMethods in Tag.
+### Add capability of applying TagMethods in Tag
 
 - Created new tag example.
 - Changed *lang* in Methods into *language*
 - Updated **CHANGELOG.md**.
 
 ## 1.0.3
-#### Add capability of applying ArtistMethods in Artist.
+### Add capability of applying ArtistMethods in Artist
 
 - Created new artist example.
 - Fixed some Future<dynamic> left.
@@ -49,21 +58,21 @@
 - Updated **CHANGELOG.md**.
 
 ## 1.0.2
-#### Add capability of applying AlbumMethods in Albums.
+### Add capability of applying AlbumMethods in Albums
 
 - Created new album example.
 - Fixed version number
 - Updated **CHANGELOG.md**.
 
 ## 1.0.1
-#### Fix Documentation.
+### Fix Documentation
 
 - Created lastfm_methods library.
 
 ## 1.0.0
 ### Finally! First Release!
-#### All methods implemented.
-##### Status:
+#### All methods implemented
+##### Status
 
 - Auth and No Auth method supported.
 - Album Methods supported.
@@ -75,7 +84,7 @@
 - Track Methods supported.
 - User Methods supported.
 
-##### Dev Changelog:
+##### Dev Changelog
 
 - Fixed Exception Handling on **Spaceship**.
 - Created **ScrobbleObject()** for helping in scrobbling.
@@ -110,7 +119,7 @@
 - Updated the README.
 
 ## 0.1.5
-#### Sixth Pre-Release. Still a long way...
+### Sixth Pre-Release. Still, a long way...
 
 - Implemented Tag Methods.
 - Fixed Tag attributes.
@@ -119,7 +128,7 @@
 - Updated the README.
 
 ## 0.1.4
-#### Fifth Pre-Release. Still a long way...
+### Fifth Pre-Release. Still, a long way...
 
 - Implemented Library Methods.
 - Updated the changelog.
@@ -127,7 +136,7 @@
 - Updated the README.
 
 ## 0.1.3
-#### Fourth Pre-Release. Still a long way...
+### Fourth Pre-Release. Still, a long way...
 
 - Implemented Geo Methods.
 - Updated the changelog.
@@ -135,14 +144,14 @@
 - Added geo example.
 
 ## 0.1.2
-#### Third Pre-Release. Still a long way...
+### Third Pre-Release. Still, a long way...
 
-- Implemented Chart Methods.
-- Updated the changelog.
-- Added chart example.
+  - Implemented Chart Methods.
+  - Updated the changelog.
+  - Added chart example.
 
 ## 0.1.1
-#### Second Pre-Release. Still a long way...
+### Second Pre-Release. Still, a long way...
 
 - Implemented Artist Methods.
 - More documentation.
@@ -153,10 +162,10 @@
 - Added more Helpers.
 
 ## 0.1.0
-#### First Pre-Release. Still a long way...
+### First Pre-Release. Still, a long way...
 
 - Created a solid base for request. Now it's just a copy-paste, I hope.
-- Only Album Methods are implemented.
+- Only Album Methods implemented.
 - Fixed the methods that uses authentication in album_methods.dart.
 - Created first LastFM objects.
 - Modified the example.

@@ -1,5 +1,5 @@
-Write-Host "Getting dependencies."
+Write-Information "Getting dependencies."
 pub get
-Write-Host "Starting building .g.dart build objects."
+Write-Information "Starting building .g.dart build objects."
 pub run build_runner build
-Write-Host "Finished building."
+Write-Information "Finished building."
