@@ -1,11 +1,20 @@
+## 2.0.2
+### Small bug-fix
+
+  - Remove remained print().
+  - Fix README.md.
+  - Fix CHANGELOG.md.
+  - Fix build.ps1.
+  - Fix clean.ps1.  
+
 ## 2.0.1
 
   - Fix Artists in Tracks gained from user.getRecentTracks().
 
 ## 2.0.0
-### Major Update.
-#### In some objects You can apply object-related methods.
-##### Status:
+### Major Update
+#### In some objects You can apply object-related methods
+##### Status
 
   - Album object supported.
   - Artist object supported.
@@ -13,7 +22,7 @@
   - Track object supported.
   - User object supported.
 
-##### Dev Changelog:
+##### Dev Changelog
 
   - Add capability of applying UserMethods in User.
   - Created example-related. Watch them on *./example*.
@@ -23,7 +32,7 @@
   - Updated the **CHANGELOG.md**. *This thing You're reading right now*
 
 ## 1.0.5
-### Add capability of applying TrackMethods in Track.
+### Add capability of applying TrackMethods in Track
 
   - Created new track example.
   - Fixed TrackMethods.getTags.
@@ -34,14 +43,14 @@
   - *TrackMethods.scrobble()* **into** *TrackMethods.multiScrobble()*
 
 ## 1.0.4
-### Add capability of applying TagMethods in Tag.
+### Add capability of applying TagMethods in Tag
 
   - Created new tag example.
   - Changed *lang* in Methods into *language*
   - Updated **CHANGELOG.md**.
 
 ## 1.0.3
-### Add capability of applying ArtistMethods in Artist.
+### Add capability of applying ArtistMethods in Artist
 
   - Created new artist example.
   - Fixed some Future<dynamic> left.
@@ -49,21 +58,21 @@
   - Updated **CHANGELOG.md**.
 
 ## 1.0.2
-### Add capability of applying AlbumMethods in Albums.
+### Add capability of applying AlbumMethods in Albums
 
   - Created new album example.
   - Fixed version number
   - Updated **CHANGELOG.md**.
 
 ## 1.0.1
-### Fix Documentation.
+### Fix Documentation
 
   - Created lastfm_methods library.
 
 ## 1.0.0
 ### Finally! First Release!
-#### All methods implemented.
-##### Status:
+#### All methods implemented
+##### Status
 
   - Auth and No Auth method supported.
   - Album Methods supported.
@@ -75,7 +84,7 @@
   - Track Methods supported.
   - User Methods supported.
 
-##### Dev Changelog:
+##### Dev Changelog
 
   - Fixed Exception Handling on **Spaceship**.
   - Created **ScrobbleObject()** for helping in scrobbling.
