@@ -1,3 +1,9 @@
+## 2.0.3
+
+- Updated Copyright headline for a bump to Dart 2.8.0.
+- Updated the README.md.
+- Updated the pubspec.yaml.
+
 ## 2.0.2
 ### Small bug-fix
 
