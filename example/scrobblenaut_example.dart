@@ -11,11 +11,11 @@ import 'api_values.dart';
 
 // Just an example of use.
 void main() async {
-  final lastFM = await LastFM.noAuth(
+  var lastFM = await LastFM.noAuth(
     apiKey: APIValues.API,
   );
 
-  final scrobblenaut = Scrobblenaut(lastFM: lastFM);
+  var scrobblenaut = Scrobblenaut(lastFM: lastFM);
 
   final albumGetInfo = (await scrobblenaut.album.getInfo(
     album: 'Your Name.',
@@ -30,4 +30,19 @@ void main() async {
   albumGetInfo.tracks?.forEach((Track track) {
     print('Track Title: ${track.name} | Track Duration: ${track.duration}');
   });
+
+  lastFM = await LastFM.authenticate(
+    apiKey: APIValues.API,
+    apiSecret: APIValues.secret,
+    username: APIValues.username,
+    passwordHash: APIValues.passwordHash,
+  );
+
+  scrobblenaut = Scrobblenaut(lastFM: lastFM);
+
+  print(
+    'Username: ${(await scrobblenaut.user.getInfo(
+      user: APIValues.username,
+    )).name}',
+  );
 }
