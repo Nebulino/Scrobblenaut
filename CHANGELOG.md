@@ -1,3 +1,7 @@
+## 2.0.4
+
+- Add the possibility to login with already a md5 password.
+
 ## 2.0.3
 
 - Updated Copyright headline for a bump to Dart 2.8.0.

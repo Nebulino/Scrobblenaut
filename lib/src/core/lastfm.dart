@@ -4,6 +4,7 @@
 //                                                              //
 
 import 'package:meta/meta.dart';
+import 'package:scrobblenaut/scrobblenaut_exceptions.dart';
 import 'package:scrobblenaut/src/core/session_key_generator.dart';
 import 'package:scrobblenaut/src/helpers/utils.dart';
 import 'package:scrobblenaut/src/tools/spaceship.dart';
@@ -40,11 +41,22 @@ class LastFM {
     @required String apiKey,
     @required String apiSecret,
     @required String username,
-    @required String password,
+    String password,
+    String passwordHash,
     String sessionKey,
     String proxy,
   }) async {
-    final passwordHash = generateMD5(password);
+    if (password != null && passwordHash != null) {
+      return Future.error(ScrobblenautException(
+        description: 'You\'re using both password and passwordHash.',
+      ));
+    } else if (password == null && passwordHash == null) {
+      return Future.error(ScrobblenautException(
+        description: 'No password nor passwordHash used.',
+      ));
+    }
+
+    passwordHash ??= generateMD5(password);
 
     if ((apiKey != null && apiSecret != null) &&
         sessionKey == null &&
