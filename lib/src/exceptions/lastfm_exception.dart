@@ -22,7 +22,7 @@ class LastFMException extends DioError {
   factory LastFMException.generate(dynamic errorObject) {
     if (isXml(errorObject.toString())) {
       // Is a XML
-      final xmlError = xml.parse(errorObject);
+      final xmlError = xml.XmlDocument.parse(errorObject);
 
       final failedNode = xmlError.children
           .firstWhere((xmlNode) => xmlNode.getAttribute('status') == 'failed');

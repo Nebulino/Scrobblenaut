@@ -55,7 +55,7 @@ class NowPlayedTrack {
 
   factory NowPlayedTrack.parse(String response) {
     // It creates the document.
-    final responseXML = xml.parse(response);
+    final responseXML = xml.XmlDocument.parse(response);
 
     bool status;
     String track;

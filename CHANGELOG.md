@@ -1,6 +1,7 @@
 ## 2.0.4
 
 - Add the possibility to login with already a md5 password.
+- Removed deprecation.
 
 ## 2.0.3
 
