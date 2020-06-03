@@ -14,7 +14,8 @@ class PostResponseHelper {
   PostResponseHelper._(this._status);
 
   factory PostResponseHelper.parse(String response) {
-    final statusNode = xml.parse(response).findElements('lfm').first;
+    final statusNode =
+        xml.XmlDocument.parse(response).findElements('lfm').first;
 
     if (statusNode.getAttribute('status') == 'ok') {
       return PostResponseHelper._(true);

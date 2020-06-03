@@ -34,7 +34,7 @@ class ScrobbleResponse {
   // It helps creating a ScrobbleResponseHelper from a response in String.
   factory ScrobbleResponse.parse(String response) {
     // It creates the document.
-    final responseXML = xml.parse(response);
+    final responseXML = xml.XmlDocument.parse(response);
 
     bool status;
     var scrobbledTracks = <ScrobbledTrack>[];

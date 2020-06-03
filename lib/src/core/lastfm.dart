@@ -86,6 +86,54 @@ class LastFM {
     }
   }
 
+  static Future<LastFM> authenticateWithPasswordHash({
+    @required String apiKey,
+    @required String apiSecret,
+    @required String username,
+    @required String passwordHash,
+    String sessionKey,
+    String proxy,
+  }) async {
+    if ((apiKey != null && apiSecret != null) &&
+        sessionKey == null &&
+        (username != null && passwordHash != null)) {
+      final session = await SessionKeyGenerator(
+        LastFM._(
+          apiKey,
+          apiSecret,
+          null,
+          null,
+          null,
+          false,
+          proxy,
+        ),
+      ).getSessionKey(
+        username: username,
+        passwordHash: passwordHash,
+      );
+
+      return LastFM._(
+        apiKey,
+        apiSecret,
+        session.sessionKey,
+        username,
+        passwordHash,
+        true,
+        proxy,
+      );
+    } else {
+      return LastFM._(
+        apiKey,
+        apiSecret,
+        sessionKey,
+        username,
+        passwordHash,
+        true,
+        proxy,
+      );
+    }
+  }
+
   /// It returns the created client.
   SpaceShip get client => _client;
 

@@ -1,3 +1,10 @@
+## 2.0.4
+### Small version bump
+
+- Add the possibility to login with already a md5 password.
+- Removed deprecation.
+- Update example.
+
 ## 2.0.3
 
 - Updated Copyright headline for a bump to Dart 2.8.0.
