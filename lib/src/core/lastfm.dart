@@ -4,7 +4,6 @@
 //                                                              //
 
 import 'package:meta/meta.dart';
-import 'package:scrobblenaut/scrobblenaut_exceptions.dart';
 import 'package:scrobblenaut/src/core/session_key_generator.dart';
 import 'package:scrobblenaut/src/helpers/utils.dart';
 import 'package:scrobblenaut/src/tools/spaceship.dart';
@@ -41,26 +40,63 @@ class LastFM {
     @required String apiKey,
     @required String apiSecret,
     @required String username,
-    String password,
-    String passwordHash,
+    @required String password,
     String sessionKey,
     String proxy,
   }) async {
-    if (password != null && passwordHash != null) {
-      return Future.error(ScrobblenautException(
-        description: 'You\'re using both password and passwordHash.',
-      ));
-    } else if (password == null && passwordHash == null) {
-      return Future.error(ScrobblenautException(
-        description: 'No password nor passwordHash used.',
-      ));
-    }
-
-    passwordHash ??= generateMD5(password);
+    final passwordHash = generateMD5(password);
 
     if ((apiKey != null && apiSecret != null) &&
         sessionKey == null &&
         (username != null && password != null)) {
+      final session = await SessionKeyGenerator(
+        LastFM._(
+          apiKey,
+          apiSecret,
+          null,
+          null,
+          null,
+          false,
+          proxy,
+        ),
+      ).getSessionKey(
+        username: username,
+        passwordHash: passwordHash,
+      );
+
+      return LastFM._(
+        apiKey,
+        apiSecret,
+        session.sessionKey,
+        username,
+        passwordHash,
+        true,
+        proxy,
+      );
+    } else {
+      return LastFM._(
+        apiKey,
+        apiSecret,
+        sessionKey,
+        username,
+        passwordHash,
+        true,
+        proxy,
+      );
+    }
+  }
+
+  static Future<LastFM> authenticateWithPasswordHash({
+    @required String apiKey,
+    @required String apiSecret,
+    @required String username,
+    @required String passwordHash,
+    String sessionKey,
+    String proxy,
+  }) async {
+    if ((apiKey != null && apiSecret != null) &&
+        sessionKey == null &&
+        (username != null && passwordHash != null)) {
       final session = await SessionKeyGenerator(
         LastFM._(
           apiKey,
