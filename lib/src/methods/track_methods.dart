@@ -388,7 +388,9 @@ class TrackMethods {
       'streamId': scrobble.streamId,
       'chosenByUser': (scrobble.chosenByUser == null
           ? null
-          : scrobble.chosenByUser ? 1 : 0),
+          : scrobble.chosenByUser
+              ? 1
+              : 0),
       'mbid': scrobble.mbid,
     };
 
