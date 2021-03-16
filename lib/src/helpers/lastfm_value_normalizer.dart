@@ -51,7 +51,11 @@ class LastFMValueNormalizer {
 
   /// It transforms a bool into a LastFM 'bool' [0,1].
   static int BoolToIntBool(bool booleanToTransform) =>
-      booleanToTransform == null ? null : booleanToTransform ? 1 : 0;
+      booleanToTransform == null
+          ? null
+          : booleanToTransform
+              ? 1
+              : 0;
 
   /// It transforms a supposed artist into a real [Artist] object.
   /// This because sometimes LastFM returns an artist as Map,
