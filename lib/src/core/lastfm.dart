@@ -21,10 +21,9 @@ class LastFM {
 
   /// Default constructor.
   LastFM._(this._apiKey, this._apiSecret, this._sessionKey, this._username,
-      this._passwordHash, this._isAuth, String proxy) {
+      this._passwordHash, this._isAuth) {
     _client = SpaceShip(
       base_url: 'https://ws.audioscrobbler.com/2.0/',
-      proxy: proxy,
     );
   }
 
@@ -33,7 +32,7 @@ class LastFM {
   LastFM.noAuth({
     @required String apiKey,
     String proxy,
-  }) : this._(apiKey, null, null, null, null, false, proxy);
+  }) : this._(apiKey, null, null, null, null, false);
 
   /// It creates a LastFM object with auth mode.
   static Future<LastFM> authenticate({
@@ -57,7 +56,6 @@ class LastFM {
           null,
           null,
           false,
-          proxy,
         ),
       ).getSessionKey(
         username: username,
@@ -71,7 +69,6 @@ class LastFM {
         username,
         passwordHash,
         true,
-        proxy,
       );
     } else {
       return LastFM._(
@@ -81,7 +78,6 @@ class LastFM {
         username,
         passwordHash,
         true,
-        proxy,
       );
     }
   }
@@ -92,7 +88,6 @@ class LastFM {
     @required String username,
     @required String passwordHash,
     String sessionKey,
-    String proxy,
   }) async {
     if ((apiKey != null && apiSecret != null) &&
         sessionKey == null &&
@@ -105,7 +100,6 @@ class LastFM {
           null,
           null,
           false,
-          proxy,
         ),
       ).getSessionKey(
         username: username,
@@ -119,7 +113,6 @@ class LastFM {
         username,
         passwordHash,
         true,
-        proxy,
       );
     } else {
       return LastFM._(
@@ -129,7 +122,6 @@ class LastFM {
         username,
         passwordHash,
         true,
-        proxy,
       );
     }
   }

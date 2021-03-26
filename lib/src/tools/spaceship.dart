@@ -3,13 +3,11 @@
 //                  Copyright (c) 2020 Nebulino                 //
 //                                                              //
 
-import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 import 'package:meta/meta.dart';
 import 'package:scrobblenaut/scrobblenaut_exceptions.dart';
 import 'package:scrobblenaut/src/helpers/post_response_helper.dart';
 import 'package:scrobblenaut/src/helpers/utils.dart';
-import 'package:universal_io/io.dart';
 
 /// It helps creating a Http Connection to [LastFM] APIs,
 /// for sending and receiving requests.
@@ -18,7 +16,7 @@ import 'package:universal_io/io.dart';
 class SpaceShip {
   Dio _dio;
 
-  SpaceShip({@required String base_url, String proxy}) {
+  SpaceShip({@required String base_url}) {
     _dio = Dio(
       BaseOptions(
           baseUrl: '${base_url}',
@@ -66,15 +64,6 @@ class SpaceShip {
           return error;
         }
       }));
-
-    if (proxy != null) {
-      (_dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
-          (client) {
-        client.findProxy = (uri) => 'PROXY ${proxy}';
-        client.badCertificateCallback =
-            (X509Certificate cert, String host, int port) => true;
-      };
-    }
   }
 
   Future<dynamic> get({
