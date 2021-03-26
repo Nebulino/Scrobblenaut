@@ -35,7 +35,7 @@ void main() async {
     apiKey: APIValues.API,
     apiSecret: APIValues.secret,
     username: APIValues.username,
-    passwordHash: APIValues.passwordHash,
+    password: APIValues.password
   );
 
   scrobblenaut = Scrobblenaut(lastFM: lastFM);

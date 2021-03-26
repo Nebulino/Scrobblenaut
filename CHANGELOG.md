@@ -1,3 +1,10 @@
+## 2.0.5+1
+### Fix dio/adapters
+
+- Removed proxy support from dio.
+- Fixed support to Dart | Native & Js.
+- Updated dependencies.
+
 ## 2.0.5
 ### Small version bump
 
