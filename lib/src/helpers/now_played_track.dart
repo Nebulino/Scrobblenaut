@@ -26,19 +26,19 @@ class NowPlayedTrack {
   final String _albumArtist;
 
   /// True if is a corrected track.
-  final bool _tracksCorrected;
+  final bool? _tracksCorrected;
 
   /// True if is a corrected artist.
-  final bool _artistsCorrected;
+  final bool? _artistsCorrected;
 
   /// True if is a corrected album.
-  final bool _albumsCorrected;
+  final bool? _albumsCorrected;
 
   /// True if is a corrected album artist.
-  final bool _albumArtistsCorrected;
+  final bool? _albumArtistsCorrected;
 
   /// The received ignoreMessage code.
-  final bool _ignoredMessageCode;
+  final bool? _ignoredMessageCode;
 
   NowPlayedTrack._(
     this._status,
@@ -62,11 +62,11 @@ class NowPlayedTrack {
     String album;
     String artist;
     String albumArtist;
-    bool tracksCorrected;
-    bool artistsCorrected;
-    bool albumsCorrected;
-    bool albumArtistsCorrected;
-    bool ignoredMessageCode;
+    bool? tracksCorrected;
+    bool? artistsCorrected;
+    bool? albumsCorrected;
+    bool? albumArtistsCorrected;
+    bool? ignoredMessageCode;
 
     // Status node.
     final statusNode = responseXML.findElements('lfm').first;
@@ -79,7 +79,8 @@ class NowPlayedTrack {
       throw ScrobblenautException(description: 'Response unrecognized.');
     }
 
-    bool _s2b(supposedBool) => LastFMValueNormalizer.NumberToBool(supposedBool);
+    bool? _s2b(supposedBool) =>
+        LastFMValueNormalizer.NumberToBool(supposedBool);
 
     track = responseXML.findAllElements('track').first.text;
 
@@ -138,17 +139,17 @@ class NowPlayedTrack {
   String get albumArtist => _albumArtist;
 
   /// True if is a corrected track.
-  bool get tracksCorrected => _tracksCorrected;
+  bool? get tracksCorrected => _tracksCorrected;
 
   /// True if is a corrected artist.
-  bool get artistsCorrected => _artistsCorrected;
+  bool? get artistsCorrected => _artistsCorrected;
 
   /// True if is a corrected album.
-  bool get albumsCorrected => _albumsCorrected;
+  bool? get albumsCorrected => _albumsCorrected;
 
   /// True if is a corrected album artist.
-  bool get albumArtistsCorrected => _albumArtistsCorrected;
+  bool? get albumArtistsCorrected => _albumArtistsCorrected;
 
   /// The received ignoreMessage code.
-  bool get ignoredMessageCode => _ignoredMessageCode;
+  bool? get ignoredMessageCode => _ignoredMessageCode;
 }

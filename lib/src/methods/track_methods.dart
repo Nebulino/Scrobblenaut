@@ -3,7 +3,6 @@
 //                  Copyright (c) 2020 Nebulino                 //
 //                                                              //
 
-import 'package:meta/meta.dart';
 import 'package:scrobblenaut/lastfm.dart';
 import 'package:scrobblenaut/scrobblenaut_exceptions.dart';
 import 'package:scrobblenaut/src/core/lastfm.dart';
@@ -25,9 +24,9 @@ class TrackMethods {
   ///
   /// https://www.last.fm/api/show/track.addTags
   Future<bool> addTags({
-    @required String track,
-    @required String artist,
-    @required List<String> tags,
+    required String track,
+    required String artist,
+    required List<String> tags,
   }) async {
     if (!_api.isAuth) {
       return Future.error(ScrobblenautException(
@@ -64,8 +63,8 @@ class TrackMethods {
   ///
   /// https://www.last.fm/api/show/artist.getCorrection
   Future<List<Track>> getCorrection({
-    @required String track,
-    @required String artist,
+    required String track,
+    required String artist,
   }) async {
     final parameters = {
       'track': track,
@@ -95,16 +94,18 @@ class TrackMethods {
   ///
   /// https://www.last.fm/api/show/track.getInfo
   Future<Track> getInfo({
-    String track,
-    String artist,
-    String mbid,
-    String username,
+    String? track,
+    String? artist,
+    String? mbid,
+    String? username,
     bool autoCorrect = false,
   }) async {
     if ((track == null || artist == null) && mbid == null) {
-      return Future.error(ScrobblenautException(
-          description: 'At least mbid is required. '
-              'Can be used also track and artist.'));
+      return Future.error(
+        ScrobblenautException(
+            description: 'At least mbid is required. '
+                'Can be used also track and artist.'),
+      );
     }
 
     final parameters = {
@@ -118,24 +119,25 @@ class TrackMethods {
     final request =
         Request(api: _api, method: 'track.getInfo', parameters: parameters);
 
-    return (Track.fromJson(
-        (await request.send(mode: RequestMode.GET))['track']));
+    return Track.fromJson((await request.send(mode: RequestMode.GET))['track']);
   }
 
   /// Get the similar tracks for this track on Last.fm, based on listening data.
   ///
   /// https://www.last.fm/api/show/track.getSimilar
-  Future<List<Track>> getSimilar({
-    String track,
-    String artist,
-    String mbid,
-    int limit,
+  Future<List<Track>?> getSimilar({
+    String? track,
+    String? artist,
+    String? mbid,
+    int? limit,
     bool autoCorrect = false,
   }) async {
     if ((track == null || artist == null) && mbid == null) {
-      return Future.error(ScrobblenautException(
-          description: 'At least mbid is required. '
-              'Can be used also track and artist.'));
+      return Future.error(
+        ScrobblenautException(
+            description: 'At least mbid is required. '
+                'Can be used also track and artist.'),
+      );
     }
 
     final parameters = {
@@ -164,11 +166,11 @@ class TrackMethods {
   /// all users use track.getTopTags.
   ///
   /// https://www.last.fm/api/show/track.getTags
-  Future<List<Tag>> getTags({
-    String track,
-    String artist,
-    String mbid,
-    String user,
+  Future<List<Tag>?> getTags({
+    String? track,
+    String? artist,
+    String? mbid,
+    String? user,
     bool autoCorrect = false,
   }) async {
     if ((track == null || artist == null) && mbid == null) {
@@ -213,10 +215,10 @@ class TrackMethods {
   /// Supply either track & artist name or mbid.
   ///
   /// https://www.last.fm/api/show/track.getTopTags
-  Future<List<Tag>> getTopTags({
-    String track,
-    String artist,
-    String mbid,
+  Future<List<Tag>?> getTopTags({
+    String? track,
+    String? artist,
+    String? mbid,
     bool autoCorrect = false,
   }) async {
     if ((track == null || artist == null) && mbid == null) {
@@ -248,8 +250,8 @@ class TrackMethods {
   ///
   /// https://www.last.fm/api/show/track.love
   Future<bool> love({
-    @required String track,
-    @required String artist,
+    required String track,
+    required String artist,
   }) async {
     if (!_api.isAuth) {
       return Future.error(ScrobblenautException(
@@ -279,9 +281,9 @@ class TrackMethods {
   ///
   /// https://www.last.fm/api/show/track.removeTag
   Future<bool> removeTag({
-    @required String track,
-    @required String artist,
-    @required String tag,
+    required String track,
+    required String artist,
+    required String tag,
   }) async {
     if (!_api.isAuth) {
       return Future.error(ScrobblenautException(
@@ -325,16 +327,16 @@ class TrackMethods {
   /// unless they have been explicitly approved by the user.
   /// Parameter names are case sensitive.
   Future<ScrobbleResponse> scrobble({
-    @required String track,
-    String album,
-    @required String artist,
-    int trackNumber,
-    Duration duration,
-    DateTime timestamp,
-    String context,
-    String streamId,
+    required String track,
+    String? album,
+    required String artist,
+    int? trackNumber,
+    Duration? duration,
+    DateTime? timestamp,
+    String? context,
+    String? streamId,
     bool chosenByUser = false,
-    String mbid,
+    String? mbid,
   }) async {
     if (!_api.isAuth) {
       return Future.error(ScrobblenautException(
@@ -368,7 +370,7 @@ class TrackMethods {
 
   /// See [TrackMethods.scrobble].
   Future<ScrobbleResponse> scrobbleFromObject(
-      {@required Scrobble scrobble}) async {
+      {required Scrobble scrobble}) async {
     if (!_api.isAuth) {
       return Future.error(ScrobblenautException(
           description: "You can't use this method unless you Authenticate."));
@@ -380,15 +382,13 @@ class TrackMethods {
       'artist': scrobble.artist,
       'trackNumber': scrobble.trackNumber,
       'duration': scrobble.duration?.inSeconds,
-      'timestamp': scrobble.timestamp == null
-          ? LastFMValueNormalizer.timestampToSecondsSinceEpoch(DateTime.now())
-          : LastFMValueNormalizer.timestampToSecondsSinceEpoch(
-              scrobble.timestamp),
+      'timestamp': LastFMValueNormalizer.timestampToSecondsSinceEpoch(
+          scrobble.timestamp),
       'context': scrobble.context,
       'streamId': scrobble.streamId,
       'chosenByUser': (scrobble.chosenByUser == null
           ? null
-          : scrobble.chosenByUser
+          : scrobble.chosenByUser!
               ? 1
               : 0),
       'mbid': scrobble.mbid,
@@ -405,12 +405,14 @@ class TrackMethods {
 
   /// See [TrackMethods.scrobble] and [Scrobble] for more information.
   Future<ScrobbleResponse> multiScrobble(
-      {@required List<Scrobble> scrobbleList}) async {
+      {required List<Scrobble> scrobbleList}) async {
     // TODO: make a queue for scrobbleList longer than 50?
 
     if (scrobbleList.length > 50) {
-      return Future.error(ScrobblenautException(
-          description: "You've supplied more than 50 scrobbles."));
+      return Future.error(
+        ScrobblenautException(
+            description: "You've supplied more than 50 scrobbles."),
+      );
     }
 
     var parameters = <String, dynamic>{};
@@ -418,16 +420,18 @@ class TrackMethods {
     var i = 1;
 
     scrobbleList.forEach((Scrobble scrobble) {
-      parameters['track[${i}]'] = scrobble.track;
-      parameters['album[${i}]'] = scrobble.album;
-      parameters['artist[${i}]'] = scrobble.artist;
-      parameters['trackNumber[${i}]'] = scrobble.trackNumber;
-      parameters['duration[${i}]'] = scrobble.duration;
-      parameters['timestamp[${i}]'] = scrobble.timestamp;
-      parameters['context[${i}]'] = scrobble.context;
-      parameters['streamId[${i}]'] = scrobble.streamId;
-      parameters['chosenByUser[${i}]'] = scrobble.chosenByUser;
-      parameters['mbid[${i}]'] = scrobble.mbid;
+      parameters['track[$i]'] = scrobble.track;
+      parameters['album[$i]'] = scrobble.album;
+      parameters['artist[$i]'] = scrobble.artist;
+      parameters['trackNumber[$i]'] = scrobble.trackNumber;
+      parameters['duration[$i]'] = scrobble.duration;
+      parameters['timestamp[$i]'] =
+          LastFMValueNormalizer.timestampToSecondsSinceEpoch(
+              scrobble.timestamp);
+      parameters['context[$i]'] = scrobble.context;
+      parameters['streamId[$i]'] = scrobble.streamId;
+      parameters['chosenByUser[$i]'] = scrobble.chosenByUser;
+      parameters['mbid[$i]'] = scrobble.mbid;
 
       i++;
     });
@@ -446,8 +450,8 @@ class TrackMethods {
   ///
   /// https://www.last.fm/api/show/track.search
   Future<TrackSearchResults> search({
-    @required String track,
-    String artist,
+    required String track,
+    String? artist,
     int page = 1,
     int limit = 30,
   }) async {
@@ -470,8 +474,8 @@ class TrackMethods {
   ///
   /// https://www.last.fm/api/show/track.unlove
   Future<bool> unLove({
-    @required String track,
-    @required String artist,
+    required String track,
+    required String artist,
   }) async {
     if (!_api.isAuth) {
       return Future.error(ScrobblenautException(
@@ -502,16 +506,16 @@ class TrackMethods {
   ///
   /// https://www.last.fm/api/show/track.updateNowPlaying
   Future<NowPlayedTrack> updateNowPlaying({
-    @required String track,
-    String album,
-    @required String artist,
-    int trackNumber,
-    Duration duration,
-    DateTime timestamp,
-    String context,
-    String streamId,
+    required String track,
+    String? album,
+    required String artist,
+    int? trackNumber,
+    Duration? duration,
+    DateTime? timestamp,
+    String? context,
+    String? streamId,
     bool chosenByUser = false,
-    String mbid,
+    String? mbid,
   }) async {
     if (!_api.isAuth) {
       return Future.error(ScrobblenautException(
@@ -543,10 +547,12 @@ class TrackMethods {
 
   /// See [TrackMethods.updateNowPlaying].
   Future<NowPlayedTrack> updateNowPlayingFromObject(
-      {@required NowPlaying track}) async {
+      {required NowPlaying track}) async {
     if (!_api.isAuth) {
-      return Future.error(ScrobblenautException(
-          description: "You can't use this method unless you Authenticate."));
+      return Future.error(
+        ScrobblenautException(
+            description: "You can't use this method unless you Authenticate."),
+      );
     }
 
     final parameters = {

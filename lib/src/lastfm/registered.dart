@@ -14,11 +14,11 @@ class Registered {
       name: 'unixtime',
       fromJson: LastFMValueNormalizer.DateTimeFromUnixTime,
       toJson: LastFMValueNormalizer.DateTimeToUnixTime)
-  DateTime unixTime;
+  DateTime? unixTime;
 
   // TODO: what's this? is this necessary?
   @JsonKey(name: '#text', fromJson: LastFMValueNormalizer.MeaninglessNumber)
-  String text;
+  String? text;
 
   Registered({
     this.unixTime,

@@ -33,7 +33,7 @@ void main() async {
 
   // artist.getCorrection
   (await scrobblenaut.artist.getCorrection(artist: 'RADWIMPS'))
-      ?.forEach((Artist artist) {
+      .forEach((Artist artist) {
     print('Artist correction: ${artist.name}');
   });
 

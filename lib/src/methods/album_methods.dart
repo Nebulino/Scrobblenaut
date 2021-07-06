@@ -3,7 +3,6 @@
 //                  Copyright (c) 2020 Nebulino                 //
 //                                                              //
 
-import 'package:meta/meta.dart';
 import 'package:scrobblenaut/lastfm.dart';
 import 'package:scrobblenaut/src/core/lastfm.dart';
 import 'package:scrobblenaut/src/core/request.dart';
@@ -22,9 +21,9 @@ class AlbumMethods {
   ///
   /// https://www.last.fm/api/show/album.addTags
   Future<bool> addTags({
-    @required String artist,
-    @required String album,
-    @required List<String> tags,
+    required String artist,
+    required String album,
+    required List<String> tags,
   }) async {
     if (!_api.isAuth) {
       return Future.error(ScrobblenautException(
@@ -61,11 +60,11 @@ class AlbumMethods {
   ///
   /// https://www.last.fm/api/show/album.getInfo
   Future<Album> getInfo({
-    String artist,
-    String album,
-    String mbid,
+    String? artist,
+    String? album,
+    String? mbid,
     bool autoCorrect = false,
-    String username,
+    String? username,
     Language language = Language.en,
   }) async {
     if ((album == null || artist == null) && mbid == null) {
@@ -80,7 +79,7 @@ class AlbumMethods {
       'mbid': mbid,
       'autocorrect': (autoCorrect ? 1 : 0),
       'username': username,
-      'lang': language?.code,
+      'lang': language.code,
     };
 
     final request =
@@ -92,7 +91,7 @@ class AlbumMethods {
     // from [track.getInfo].
     var albumInfo = Album.fromJson(response['album']);
     albumInfo.tracks?.forEach((Track track) {
-      track.duration = track.duration * 1000;
+      track.duration = track.duration != null ? track.duration! * 1000 : null;
     });
 
     return albumInfo;
@@ -103,12 +102,12 @@ class AlbumMethods {
   /// album.getTopTags.
   ///
   /// https://www.last.fm/api/show/album.getTags
-  Future<List<Tag>> getTags({
-    String artist,
-    String album,
-    String mbid,
+  Future<List<Tag>?> getTags({
+    String? artist,
+    String? album,
+    String? mbid,
     bool autoCorrect = false,
-    String user,
+    String? user,
   }) async {
     if ((album == null || artist == null) && mbid == null) {
       return Future.error(ScrobblenautException(
@@ -125,7 +124,7 @@ class AlbumMethods {
       'artist': artist,
       'album': album,
       'mbid': mbid,
-      'user': user,
+      'user': user ?? _api.username,
       'autocorrect': (autoCorrect ? 1 : 0),
     };
 
@@ -144,10 +143,10 @@ class AlbumMethods {
   /// Get the top tags for an album on Last.fm, ordered by popularity.
   ///
   /// https://www.last.fm/api/show/album.getTopTags
-  Future<List<Tag>> getTopTags({
-    String artist,
-    String album,
-    String mbid,
+  Future<List<Tag>?> getTopTags({
+    String? artist,
+    String? album,
+    String? mbid,
     bool autoCorrect = false,
   }) async {
     if ((album == null || artist == null) && mbid == null) {
@@ -179,9 +178,9 @@ class AlbumMethods {
   ///
   /// https://www.last.fm/api/show/album.removeTag
   Future<bool> removeTag({
-    @required String artist,
-    @required String album,
-    @required String tag,
+    required String artist,
+    required String album,
+    required String tag,
   }) async {
     if (!_api.isAuth) {
       return Future.error(ScrobblenautException(
@@ -212,7 +211,7 @@ class AlbumMethods {
   ///
   /// https://www.last.fm/api/show/album.search
   Future<AlbumSearchResults> search({
-    @required String album,
+    required String album,
     int page = 1,
     int limit = 30,
   }) async {

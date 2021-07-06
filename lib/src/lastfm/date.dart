@@ -12,11 +12,11 @@ class Date {
   // TODO: needs to be transformed? or just delete and make Date a DateTime?
   /// Unix date in string.
   @JsonKey(name: 'uts')
-  String unixDate;
+  String? unixDate;
 
   // TODO: What's this? it's necessary?
   @JsonKey(name: '#text')
-  String text;
+  String? text;
 
   Date({
     this.unixDate,

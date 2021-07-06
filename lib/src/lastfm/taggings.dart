@@ -10,15 +10,15 @@ part of lastfm_objects;
 class Taggings {
   /// A list of tagged albums.
   @JsonKey(name: 'albums', fromJson: LastFMValueNormalizer.albumsExtractor)
-  List<Album> albums;
+  List<Album>? albums;
 
   /// A list of tagged artists.
   @JsonKey(name: 'artists', fromJson: LastFMValueNormalizer.artistsExtractor)
-  List<Artist> artists;
+  List<Artist>? artists;
 
   /// A list of tagged tracks.
   @JsonKey(name: 'tracks', fromJson: LastFMValueNormalizer.tracksExtractor)
-  List<Track> tracks;
+  List<Track>? tracks;
 
   Taggings({
     this.albums,

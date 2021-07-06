@@ -3,7 +3,6 @@
 //                  Copyright (c) 2020 Nebulino                 //
 //                                                              //
 
-import 'package:meta/meta.dart';
 import 'package:scrobblenaut/lastfm_methods.dart';
 import 'package:scrobblenaut/src/core/lastfm.dart';
 
@@ -12,7 +11,7 @@ import 'package:scrobblenaut/src/core/lastfm.dart';
 /// [LastFM]: https://www.last.fm/api/
 class Scrobblenaut {
   /// The Scrobblenaut instance.
-  static Scrobblenaut _instance;
+  static late Scrobblenaut _instance;
 
   /// The [LastFM] object. Helps creating each methods.
   final LastFM _api;
@@ -26,23 +25,22 @@ class Scrobblenaut {
   TrackMethods _trackMethods;
   UserMethods _userMethods;
 
-  Scrobblenaut._(this._api) {
-    _albumMethods = AlbumMethods(_api);
-    _artistMethods = ArtistMethods(_api);
-    _chartMethods = ChartMethods(_api);
-    _geoMethods = GeoMethods(_api);
-    _libraryMethods = LibraryMethods(_api);
-    _tagMethods = TagMethods(_api);
-    _trackMethods = TrackMethods(_api);
-    _userMethods = UserMethods(_api);
-
+  Scrobblenaut._(this._api)
+      : _albumMethods = AlbumMethods(_api),
+        _artistMethods = ArtistMethods(_api),
+        _chartMethods = ChartMethods(_api),
+        _geoMethods = GeoMethods(_api),
+        _libraryMethods = LibraryMethods(_api),
+        _tagMethods = TagMethods(_api),
+        _trackMethods = TrackMethods(_api),
+        _userMethods = UserMethods(_api) {
     _instance = this;
   }
 
   // TODO: create a [User] if _api.isAuth
 
   /// It creates a Scrobblenaut Session using a LastFM object.
-  Scrobblenaut({@required LastFM lastFM}) : this._(lastFM);
+  Scrobblenaut({required LastFM lastFM}) : this._(lastFM);
 
   /// It returns the created instance.
   static Scrobblenaut get instance => _instance;

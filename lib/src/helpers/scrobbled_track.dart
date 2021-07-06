@@ -22,22 +22,22 @@ class ScrobbledTrack {
   final String _albumArtist;
 
   /// True if is a corrected track.
-  final bool _tracksCorrected;
+  final bool? _tracksCorrected;
 
   /// True if is a corrected artist.
-  final bool _artistsCorrected;
+  final bool? _artistsCorrected;
 
   /// True if is a corrected album.
-  final bool _albumsCorrected;
+  final bool? _albumsCorrected;
 
   /// True if is a corrected album artist.
-  final bool _albumArtistsCorrected;
+  final bool? _albumArtistsCorrected;
 
   /// The timestamp of the scrobble.
-  final DateTime _timestamp;
+  final DateTime? _timestamp;
 
   /// The received ignoreMessage code.
-  final bool _ignoredMessageCode;
+  final bool? _ignoredMessageCode;
 
   ScrobbledTrack._(
     this._track,
@@ -57,14 +57,15 @@ class ScrobbledTrack {
     String album;
     String artist;
     String albumArtist;
-    bool tracksCorrected;
-    bool artistsCorrected;
-    bool albumsCorrected;
-    bool albumArtistsCorrected;
-    DateTime timestamp;
-    bool ignoredMessageCode;
+    bool? tracksCorrected;
+    bool? artistsCorrected;
+    bool? albumsCorrected;
+    bool? albumArtistsCorrected;
+    DateTime? timestamp;
+    bool? ignoredMessageCode;
 
-    bool _s2b(supposedBool) => LastFMValueNormalizer.NumberToBool(supposedBool);
+    bool? _s2b(supposedBool) =>
+        LastFMValueNormalizer.NumberToBool(supposedBool);
 
     track = scrobbleElement.findAllElements('track').first.text;
 
@@ -129,20 +130,20 @@ class ScrobbledTrack {
   String get albumArtist => _albumArtist;
 
   /// True if is a corrected track.
-  bool get tracksCorrected => _tracksCorrected;
+  bool? get tracksCorrected => _tracksCorrected;
 
   /// True if is a corrected artist.
-  bool get artistsCorrected => _artistsCorrected;
+  bool? get artistsCorrected => _artistsCorrected;
 
   /// True if is a corrected album.
-  bool get albumsCorrected => _albumsCorrected;
+  bool? get albumsCorrected => _albumsCorrected;
 
   /// True if is a corrected album artist.
-  bool get albumArtistsCorrected => _albumArtistsCorrected;
+  bool? get albumArtistsCorrected => _albumArtistsCorrected;
 
   /// The timestamp of the scrobble.
-  DateTime get timestamp => _timestamp;
+  DateTime? get timestamp => _timestamp;
 
   /// The received ignoreMessage code.
-  bool get ignoredMessageCode => _ignoredMessageCode;
+  bool? get ignoredMessageCode => _ignoredMessageCode;
 }

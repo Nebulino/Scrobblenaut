@@ -8,46 +8,45 @@ part of lastfm_objects;
 /// This object represents an album.
 @JsonSerializable(includeIfNull: false)
 class Album {
-  // TODO: what's this?
   /// Title of the album.
   @JsonKey(name: 'title')
-  String title;
+  String? title;
 
   /// Name of the album.
   @JsonKey(name: 'name')
-  String name;
+  String? name;
 
   /// Artist of the album.
   @JsonKey(name: 'artist', fromJson: LastFMValueNormalizer.ArtistParser)
-  Artist artist;
+  Artist? artist;
 
   /// LastFM url of the album.
   @JsonKey(name: 'url')
-  String url;
+  String? url;
 
   /// A list of different size of the album cover.
   @JsonKey(name: 'image')
-  List<Image> images;
+  List<Image>? images;
 
   /// A list of tracks of the album.
   @JsonKey(name: 'tracks', fromJson: LastFMValueNormalizer.tracksExtractor)
-  List<Track> tracks;
+  List<Track>? tracks;
 
   /// A list of tags assigned to the album.
   @JsonKey(name: 'tags', fromJson: LastFMValueNormalizer.tagsExtractor)
-  List<Tag> tags;
+  List<Tag>? tags;
 
   /// The number of listeners of the album.
   @JsonKey(name: 'listeners', fromJson: LastFMValueNormalizer.NumberToInt)
-  int listeners; // Last.FM treats this as String
+  int? listeners; // Last.FM treats this as String
 
   /// The number of plays of the album.
   @JsonKey(name: 'playcount', fromJson: LastFMValueNormalizer.NumberToInt)
-  int playCount; // Last.FM treats this as String
+  int? playCount; // Last.FM treats this as String
 
   /// MusicBrainz ID.
   @JsonKey(name: 'mbid')
-  String mbid;
+  String? mbid;
 
   Album({
     this.title,

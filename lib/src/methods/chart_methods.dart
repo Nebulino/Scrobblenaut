@@ -17,7 +17,7 @@ class ChartMethods {
   /// Get the top artists chart.
   ///
   /// https://www.last.fm/api/show/chart.getTopArtists
-  Future<List<Artist>> getTopArtists({
+  Future<List<Artist>?> getTopArtists({
     int page = 1,
     int limit = 50,
   }) async {
@@ -42,7 +42,7 @@ class ChartMethods {
   /// Get the top tags chart.
   ///
   /// https://www.last.fm/api/show/chart.getTopTags
-  Future<List<Tag>> getTopTags({
+  Future<List<Tag>?> getTopTags({
     int page = 1,
     int limit = 50,
   }) async {
@@ -67,7 +67,7 @@ class ChartMethods {
   /// Get the top tracks chart.
   ///
   /// https://www.last.fm/api/show/chart.getTopTracks
-  Future<List<Track>> getTopTracks({
+  Future<List<Track>?> getTopTracks({
     int page = 1,
     int limit = 50,
   }) async {

@@ -3,26 +3,22 @@
 //                  Copyright (c) 2020 Nebulino                 //
 //                                                              //
 
-import 'package:meta/meta.dart';
 import 'package:scrobblenaut/src/core/lastfm.dart';
 import 'package:scrobblenaut/src/core/request_mode.dart';
 import 'package:scrobblenaut/src/helpers/utils.dart';
 
 /// It's creates a request object for the method.
 class Request {
-  LastFM _api;
-  Map<String, dynamic> _parameters;
+  final LastFM _api;
+  final Map<String, dynamic> _parameters;
 
   Request({
-    @required LastFM api,
-    @required String method,
-    Map<String, dynamic> parameters,
-  }) {
+    required LastFM api,
+    required String method,
+    Map<String, dynamic>? parameters,
+  })  : _api = api,
+        _parameters = {} {
     parameters ?? {};
-
-    _api = api;
-
-    _parameters = {};
 
     parameters?.forEach((key, value) {
       if (value != null) {
@@ -56,13 +52,13 @@ class Request {
       signature += _parameters[key];
     }
 
-    signature += _api.apiSecret;
+    signature += _api.apiSecret ?? '';
 
     return generateMD5(signature);
   }
 
   /// It sends the request to the API.
-  Future<dynamic> send({@required RequestMode mode}) async {
+  Future<dynamic> send({required RequestMode mode}) async {
     switch (mode) {
       case RequestMode.GET:
         return await _api.client.get(parameters: _parameters);
