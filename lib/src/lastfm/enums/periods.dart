@@ -16,7 +16,7 @@ enum Period {
 }
 
 extension PeriodExtension on Period {
-  String get value {
+  String? get value {
     switch (this) {
       case Period.WEEK:
         return '7day';

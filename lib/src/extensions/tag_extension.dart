@@ -22,14 +22,14 @@ extension TagExtension on Tag {
   }
 
   /// [TagMethods.getSimilar]
-  Future<List<Tag>> getSimilar() async {
+  Future<List<Tag>?> getSimilar() async {
     return await _tagMethods.getSimilar(
       tag: name,
     );
   }
 
   /// [TagMethods.getTopAlbums]
-  Future<List<Album>> getTopAlbums({
+  Future<List<Album>?> getTopAlbums({
     int page = 1,
     int limit = 50,
   }) async {
@@ -41,7 +41,7 @@ extension TagExtension on Tag {
   }
 
   /// [TagMethods.getTopArtists]
-  Future<List<Artist>> getTopArtists({
+  Future<List<Artist>?> getTopArtists({
     int page = 1,
     int limit = 50,
   }) async {
@@ -53,7 +53,7 @@ extension TagExtension on Tag {
   }
 
   /// [TagMethods.getTopTracks]
-  Future<List<Track>> getTopTracks({
+  Future<List<Track>?> getTopTracks({
     int page = 1,
     int limit = 50,
   }) async {
@@ -65,7 +65,7 @@ extension TagExtension on Tag {
   }
 
   /// [TagMethods.getWeeklyChartList]
-  Future<List<Chart>> getWeeklyChartList() async {
+  Future<List<Chart>?> getWeeklyChartList() async {
     return await _tagMethods.getWeeklyChartList(
       tag: name,
     );

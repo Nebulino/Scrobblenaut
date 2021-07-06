@@ -14,54 +14,54 @@ class User {
 
   /// The real name of the user.
   @JsonKey(name: 'realname')
-  String realName;
+  String? realName;
 
   /// THe user's gender.
   @JsonKey(name: 'gender')
-  String gender;
+  String? gender;
 
   /// The age of the user.
   @JsonKey(name: 'age')
-  String age;
+  String? age;
 
   /// The user's country.
   @JsonKey(name: 'country')
-  String country;
+  String? country;
 
   // LastFM url of the user.
   @JsonKey(name: 'url')
-  String url;
+  String? url;
 
   /// A list of different size of the user profile picture.
   @JsonKey(name: 'image')
-  List<Image> image;
+  List<Image>? image;
 
   // If it's a subscriber.
   @JsonKey(name: 'subscriber', fromJson: LastFMValueNormalizer.NumberToBool)
-  bool subscriber;
+  bool? subscriber;
 
   // The number of playlist of the user.
   @JsonKey(name: 'playlists', fromJson: LastFMValueNormalizer.NumberToInt)
-  int playlists;
+  int? playlists;
 
   /// The play count of the user.
   @JsonKey(name: 'playcount', fromJson: LastFMValueNormalizer.NumberToInt)
-  int playCount;
+  int? playCount;
 
   /// The registration information of the user.
   @JsonKey(name: 'registered')
-  Registered registered;
+  Registered? registered;
 
   // TODO: what's this?
   @JsonKey(name: 'bootstrap')
-  String bootstrap;
+  String? bootstrap;
 
   /// The type of the user.
   @JsonKey(name: 'type')
-  String type;
+  String? type;
 
   User({
-    this.name,
+    required this.name,
     this.realName,
     this.gender,
     this.age,

@@ -10,7 +10,7 @@ import 'package:test/test.dart';
 // Some Scrobblenaut tests.
 void main() {
   group('A group of tests', () {
-    Scrobblenaut scrobblenaut;
+    late Scrobblenaut scrobblenaut;
     String token;
     LastFM lastFM;
 

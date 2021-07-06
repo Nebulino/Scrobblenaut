@@ -4,7 +4,6 @@
 //                                                              //
 
 import 'package:dio/dio.dart';
-import 'package:meta/meta.dart';
 import 'package:scrobblenaut/src/helpers/utils.dart';
 import 'package:xml/xml.dart' as xml;
 
@@ -14,9 +13,10 @@ class LastFMException extends DioError {
   final int _errorCode;
   final String _description;
 
-  LastFMException._(this._errorCode, this._description);
+  LastFMException._(this._errorCode, this._description)
+      : super(requestOptions: RequestOptions(path: ''));
 
-  LastFMException({@required String errorCode, @required String description})
+  LastFMException({required String errorCode, required String description})
       : this._(int.parse(errorCode), description);
 
   factory LastFMException.generate(dynamic errorObject) {
@@ -32,7 +32,7 @@ class LastFMException extends DioError {
           .firstWhere((xmlNode) => xmlNode.getAttribute('code') != null);
 
       return LastFMException(
-          errorCode: errorNode.getAttribute('code'),
+          errorCode: errorNode.getAttribute('code') ?? '',
           description: errorNode.text);
     } else {
       // Else is a Json...
@@ -43,6 +43,5 @@ class LastFMException extends DioError {
   }
 
   @override
-  String toString() =>
-      '[LastFMException] => [Code ${_errorCode}]: ${_description}';
+  String toString() => '[LastFMException] => [Code $_errorCode]: $_description';
 }

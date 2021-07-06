@@ -12,12 +12,8 @@ import '../api_values.dart';
 void main() async {
   print('####################################################################');
 
-  final lastFMAuth = await LastFM.authenticate(
+  final lastFMAuth = LastFM.noAuth(
     apiKey: APIValues.API,
-    apiSecret: APIValues.secret,
-    username: APIValues.username,
-    password: APIValues.password,
-    sessionKey: APIValues.sessionKey,
   );
 
   final scrobblenaut = Scrobblenaut(lastFM: lastFMAuth);
@@ -26,6 +22,7 @@ void main() async {
 
   // library.getArtist
   (await scrobblenaut.library.getArtists(user: 'nebulino'))
+      ?.artist
       ?.forEach((Artist artist) {
     print('Top Artist Name: ${artist.name} | Top Artist URL : ${artist.url}');
   });

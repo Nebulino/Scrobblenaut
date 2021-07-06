@@ -3,7 +3,6 @@
 //                  Copyright (c) 2020 Nebulino                 //
 //                                                              //
 
-import 'package:meta/meta.dart';
 import 'package:scrobblenaut/lastfm.dart';
 import 'package:scrobblenaut/src/core/lastfm.dart';
 import 'package:scrobblenaut/src/core/request.dart';
@@ -19,12 +18,12 @@ class TagMethods {
   ///
   /// https://www.last.fm/api/show/tag.getInfo
   Future<Tag> getInfo({
-    @required String tag,
+    required String tag,
     Language language = Language.en,
   }) async {
     final parameters = {
       'tag': tag,
-      'lang': language?.code,
+      'lang': language.code,
     };
 
     final request =
@@ -37,8 +36,8 @@ class TagMethods {
   /// Returns tags ranked by similarity, based on listening data.
   ///
   /// https://www.last.fm/api/show/tag.getSimilar
-  Future<List<Tag>> getSimilar({
-    @required String tag,
+  Future<List<Tag>?> getSimilar({
+    required String tag,
   }) async {
     final parameters = {
       'tag': tag,
@@ -60,8 +59,8 @@ class TagMethods {
   /// Get the top albums tagged by this tag, ordered by tag count.
   ///
   /// https://www.last.fm/api/show/tag.getTopAlbums
-  Future<List<Album>> getTopAlbums({
-    @required String tag,
+  Future<List<Album>?> getTopAlbums({
+    required String tag,
     int page = 1,
     int limit = 50,
   }) async {
@@ -87,8 +86,8 @@ class TagMethods {
   /// Get the top artists tagged by this tag, ordered by tag count.
   ///
   /// https://www.last.fm/api/show/tag.getTopArtists
-  Future<List<Artist>> getTopArtists({
-    @required String tag,
+  Future<List<Artist>?> getTopArtists({
+    required String tag,
     int page = 1,
     int limit = 50,
   }) async {
@@ -115,7 +114,7 @@ class TagMethods {
   /// sorted by popularity (number of times used).
   ///
   /// https://www.last.fm/api/show/tag.getTopTags
-  Future<List<Tag>> getTopTags() async {
+  Future<List<Tag>?> getTopTags() async {
     final request = Request(api: _api, method: 'tag.getTopTags');
 
     final response = await request.send(mode: RequestMode.GET);
@@ -131,8 +130,8 @@ class TagMethods {
   /// Get the top tracks tagged by this tag, ordered by tag count.
   ///
   /// https://www.last.fm/api/show/tag.getTopTracks
-  Future<List<Track>> getTopTracks({
-    @required String tag,
+  Future<List<Track>?> getTopTracks({
+    required String tag,
     int page = 1,
     int limit = 50,
   }) async {
@@ -159,8 +158,8 @@ class TagMethods {
   /// expressed as date ranges which can be sent to the chart services.
   ///
   /// https://www.last.fm/api/show/tag.getWeeklyChartList.
-  Future<List<Chart>> getWeeklyChartList({
-    @required String tag,
+  Future<List<Chart>?> getWeeklyChartList({
+    required String tag,
   }) async {
     final parameters = {
       'tag': tag,

@@ -3,7 +3,6 @@
 //                  Copyright (c) 2020 Nebulino                 //
 //                                                              //
 
-import 'package:meta/meta.dart';
 import 'package:scrobblenaut/src/core/session_key_generator.dart';
 import 'package:scrobblenaut/src/helpers/utils.dart';
 import 'package:scrobblenaut/src/tools/spaceship.dart';
@@ -13,41 +12,38 @@ class LastFM {
   SpaceShip _client;
 
   final String _apiKey;
-  final String _apiSecret;
-  final String _sessionKey;
-  final String _username;
-  final String _passwordHash;
+  final String? _apiSecret;
+  final String? _sessionKey;
+  final String? _username;
+  final String? _passwordHash;
   final bool _isAuth;
 
   /// Default constructor.
   LastFM._(this._apiKey, this._apiSecret, this._sessionKey, this._username,
-      this._passwordHash, this._isAuth) {
-    _client = SpaceShip(
-      base_url: 'https://ws.audioscrobbler.com/2.0/',
-    );
-  }
+      this._passwordHash, this._isAuth)
+      : _client = SpaceShip(
+          base_url: 'https://ws.audioscrobbler.com/2.0/',
+        );
 
   /// Default kind of API usage.
   /// You can use methods that does not required authentication.
   LastFM.noAuth({
-    @required String apiKey,
-    String proxy,
+    required String apiKey,
+    String? proxy,
   }) : this._(apiKey, null, null, null, null, false);
 
   /// It creates a LastFM object with auth mode.
   static Future<LastFM> authenticate({
-    @required String apiKey,
-    @required String apiSecret,
-    @required String username,
-    @required String password,
-    String sessionKey,
-    String proxy,
+    required String apiKey,
+    required String apiSecret,
+    required String username,
+    required String password,
+    String? sessionKey,
+    String? proxy,
   }) async {
     final passwordHash = generateMD5(password);
 
-    if ((apiKey != null && apiSecret != null) &&
-        sessionKey == null &&
-        (username != null && password != null)) {
+    if (sessionKey == null) {
       final session = await SessionKeyGenerator(
         LastFM._(
           apiKey,
@@ -83,15 +79,14 @@ class LastFM {
   }
 
   static Future<LastFM> authenticateWithPasswordHash({
-    @required String apiKey,
-    @required String apiSecret,
-    @required String username,
-    @required String passwordHash,
-    String sessionKey,
+    required String apiKey,
+    required String apiSecret,
+    required String username,
+    required String passwordHash,
+    String? sessionKey,
+    String? proxy,
   }) async {
-    if ((apiKey != null && apiSecret != null) &&
-        sessionKey == null &&
-        (username != null && passwordHash != null)) {
+    if (sessionKey == null) {
       final session = await SessionKeyGenerator(
         LastFM._(
           apiKey,
@@ -133,16 +128,16 @@ class LastFM {
   String get apiKey => _apiKey;
 
   /// It returns the apiSecret used.
-  String get apiSecret => _apiSecret;
+  String? get apiSecret => _apiSecret;
 
   /// It returns, if authenticated, the session key.
-  String get sessionKey => _sessionKey;
+  String? get sessionKey => _sessionKey;
 
   /// It returns, if authenticated, the username.
-  String get username => _username;
+  String? get username => _username;
 
   /// It returns, if authenticated, the passwordHash.
-  String get passwordHash => _passwordHash;
+  String? get passwordHash => _passwordHash;
 
   /// True if authenticated.
   bool get isAuth => _isAuth;

@@ -3,7 +3,6 @@
 //                  Copyright (c) 2020 Nebulino                 //
 //                                                              //
 
-import 'package:meta/meta.dart';
 import 'package:scrobblenaut/lastfm.dart';
 import 'package:scrobblenaut/lastfm_methods.dart';
 import 'package:scrobblenaut/scrobblenaut.dart';
@@ -14,35 +13,37 @@ extension AlbumExtension on Album {
 
   /// [AlbumMethods.addTags]
   Future<bool> addTags({
-    @required List<String> tags,
+    required List<String> tags,
   }) async {
     return await _albumMethods.addTags(
-        album: name, artist: artist.name, tags: tags);
+        album: name ?? '', artist: artist?.name ?? '', tags: tags);
   }
 
   /// [AlbumMethods.getInfo]
   Future<Album> getInfo({
     bool autoCorrect = false,
-    String username,
+    String? username,
     Language language = Language.en,
   }) async {
+    if (username == null && Scrobblenaut.instance.api.isAuth) {
+      username = Scrobblenaut.instance.api.username;
+    }
     return await _albumMethods.getInfo(
-      artist: artist.name,
+      artist: artist?.name,
       album: name,
       autoCorrect: autoCorrect,
-      // TODO: make it took from user if authenticated?
       username: username,
       language: language,
     );
   }
 
   /// [AlbumMethods.getTags]
-  Future<List<Tag>> getTags({
+  Future<List<Tag>?> getTags({
     bool autoCorrect = false,
-    String user,
+    String? user,
   }) async {
     return await _albumMethods.getTags(
-      artist: artist.name,
+      artist: artist?.name,
       album: name,
       mbid: mbid,
       autoCorrect: autoCorrect,
@@ -51,20 +52,23 @@ extension AlbumExtension on Album {
   }
 
   /// [AlbumMethods.getTopTags]
-  Future<List<Tag>> getTopTags({
+  Future<List<Tag>?> getTopTags({
     bool autoCorrect = false,
   }) async {
     return await _albumMethods.getTopTags(
-        artist: artist.name, album: name, mbid: mbid, autoCorrect: autoCorrect);
+        artist: artist?.name,
+        album: name,
+        mbid: mbid,
+        autoCorrect: autoCorrect);
   }
 
   /// [AlbumMethods.removeTag]
   Future<bool> removeTag({
-    @required String tag,
+    required String tag,
   }) async {
     return await _albumMethods.removeTag(
-      artist: artist.name,
-      album: name,
+      artist: artist?.name ?? '',
+      album: name ?? '',
       tag: tag,
     );
   }
@@ -75,7 +79,7 @@ extension AlbumExtension on Album {
     int limit = 30,
   }) async {
     return await _albumMethods.search(
-      album: name,
+      album: name ?? '',
       page: page,
       limit: limit,
     );

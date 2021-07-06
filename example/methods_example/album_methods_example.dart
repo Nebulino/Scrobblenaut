@@ -41,7 +41,7 @@ void main() async {
   ));
 
   print('Album Name: ${albumGetInfo.name} |'
-      ' Album Artist: ${albumGetInfo.artist.name}');
+      ' Album Artist: ${albumGetInfo.artist?.name}');
 
   albumGetInfo.tracks?.forEach((Track track) {
     print('Track Title: ${track.name} | Track Duration: ${track.duration}');
@@ -60,7 +60,7 @@ void main() async {
   // album.getTopTags
   (await scrobblenaut.album.getTopTags(album: 'Your Name.', artist: 'RADWIMPS'))
       ?.forEach((Tag tag) {
-        print('Tag Name: ${tag.name} | Tag URL: ${tag.url}');
+    print('Tag Name: ${tag.name} | Tag URL: ${tag.url}');
   });
 
   print('#########################album.removeTag############################');

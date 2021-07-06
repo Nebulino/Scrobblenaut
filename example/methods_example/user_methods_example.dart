@@ -12,12 +12,8 @@ import '../api_values.dart';
 void main() async {
   print('####################################################################');
 
-  final lastFMAuth = await LastFM.authenticate(
+  final lastFMAuth = LastFM.noAuth(
     apiKey: APIValues.API,
-    apiSecret: APIValues.secret,
-    username: APIValues.username,
-    password: APIValues.password,
-    sessionKey: APIValues.sessionKey,
   );
 
   final scrobblenaut = Scrobblenaut(lastFM: lastFMAuth);
@@ -89,7 +85,7 @@ void main() async {
 
   // user.getTopTracks
   (await scrobblenaut.user.getTopTracks(user: 'nebulino'))
-      ?.forEach((Track track) {
+      .forEach((Track track) {
     print('Top Tracks Name: ${track.name} | Top Tracks URL: ${track.url} |'
         ' Duration: ${track.duration}');
   });
@@ -98,7 +94,7 @@ void main() async {
 
   // user.getWeeklyAlbumChart
   (await scrobblenaut.user.getTopTracks(user: 'nebulino'))
-      ?.forEach((Track track) {
+      .forEach((Track track) {
     print('Top Tracks Name: ${track.name} | Top Tracks URL: ${track.url} |'
         ' Duration: ${track.duration}');
   });

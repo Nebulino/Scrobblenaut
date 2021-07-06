@@ -16,7 +16,7 @@ void main() async {
     apiSecret: APIValues.secret,
     username: APIValues.username,
     password: APIValues.password,
-    sessionKey: APIValues.sessionKey,
+    // sessionKey: APIValues.sessionKey,
   );
 
   // final lastFMnoAuth = await LastFM.noAuth(apiKey: APIValues.API);
@@ -32,7 +32,7 @@ void main() async {
       timestamp: DateTime.now());
   // YAY. IT WORKS!
 
-  response.scrobbleResponses?.forEach((ScrobbledTrack scrobbledTrack) {
+  response.scrobbleResponses.forEach((ScrobbledTrack scrobbledTrack) {
     print('Scrobbled Title: ${scrobbledTrack.track}');
   });
 
@@ -43,17 +43,17 @@ void main() async {
   final anotherResponse =
       await scrobblenaut.track.scrobbleFromObject(scrobble: scrobble);
 
-  anotherResponse.scrobbleResponses?.forEach((ScrobbledTrack scrobbledTrack) {
+  anotherResponse.scrobbleResponses.forEach((ScrobbledTrack scrobbledTrack) {
     print('Scrobbled Title: ${scrobbledTrack.track}');
   });
 
   print('Multiple scrobble.');
   final scrobble2 = Scrobble(track: 'Missing', artist: 'HoneyComeBear');
 
-  final lastResponse =
-      await scrobblenaut.track.multiScrobble(scrobbleList: [scrobble, scrobble2]);
+  final lastResponse = await scrobblenaut.track
+      .multiScrobble(scrobbleList: [scrobble, scrobble2]);
 
-  lastResponse.scrobbleResponses?.forEach((ScrobbledTrack scrobbledTrack) {
+  lastResponse.scrobbleResponses.forEach((ScrobbledTrack scrobbledTrack) {
     print('Scrobbled Title: ${scrobbledTrack.track}');
   });
 

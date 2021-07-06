@@ -3,7 +3,6 @@
 //                  Copyright (c) 2020 Nebulino                 //
 //                                                              //
 
-import 'package:meta/meta.dart';
 import 'package:scrobblenaut/lastfm.dart';
 import 'package:scrobblenaut/scrobblenaut_exceptions.dart';
 import 'package:scrobblenaut/src/core/lastfm.dart';
@@ -22,8 +21,8 @@ class ArtistMethods {
   ///
   /// https://www.last.fm/api/show/artist.addTags
   Future<bool> addTags({
-    @required String artist,
-    @required List<String> tags,
+    required String artist,
+    required List<String> tags,
   }) async {
     if (!_api.isAuth) {
       return Future.error(ScrobblenautException(
@@ -59,7 +58,7 @@ class ArtistMethods {
   ///
   /// https://www.last.fm/api/show/artist.getCorrection
   Future<List<Artist>> getCorrection({
-    @required String artist,
+    required String artist,
   }) async {
     final parameters = {
       'artist': artist,
@@ -87,9 +86,9 @@ class ArtistMethods {
   ///
   /// https://www.last.fm/api/show/artist.getInfo
   Future<Artist> getInfo({
-    String artist,
-    String mbid,
-    String username,
+    String? artist,
+    String? mbid,
+    String? username,
     Language language = Language.en,
     bool autoCorrect = false,
   }) async {
@@ -102,7 +101,7 @@ class ArtistMethods {
       'artist': artist,
       'mbid': mbid,
       'username': username,
-      'lang': language?.code,
+      'lang': language.code,
       'autocorrect': (autoCorrect ? 1 : 0),
     };
 
@@ -116,10 +115,10 @@ class ArtistMethods {
   /// Get all the artists similar to this artist.
   ///
   /// https://www.last.fm/api/show/artist.getSimilar
-  Future<List<Artist>> getSimilar({
-    String artist,
-    String mbid,
-    int limit,
+  Future<List<Artist>?> getSimilar({
+    String? artist,
+    String? mbid,
+    int? limit,
     bool autoCorrect = false,
   }) async {
     if (artist == null && mbid == null) {
@@ -155,26 +154,30 @@ class ArtistMethods {
   /// by all users use artist.getTopTags.
   ///
   /// https://www.last.fm/api/show/artist.getTags
-  Future<List<Tag>> getTags({
-    String artist,
-    String mbid,
-    String user,
+  Future<List<Tag>?> getTags({
+    String? artist,
+    String? mbid,
+    String? user,
     bool autoCorrect = false,
   }) async {
     if (artist == null && mbid == null) {
-      return Future.error(ScrobblenautException(
-          description: 'This method requires at least artist or mbid.'));
+      return Future.error(
+        ScrobblenautException(
+            description: 'This method requires at least artist or mbid.'),
+      );
     }
 
     if (!_api.isAuth && user == null) {
-      return Future.error(ScrobblenautException(
-          description: "You're not authenticated, you must use user."));
+      return Future.error(
+        ScrobblenautException(
+            description: "You're not authenticated, you must use user."),
+      );
     }
 
     final parameters = {
       'artist': artist,
       'mbid': mbid,
-      'user': user,
+      'user': user ?? _api.username,
       'autocorrect': (autoCorrect ? 1 : 0),
     };
 
@@ -193,9 +196,9 @@ class ArtistMethods {
   /// Get the top albums for an artist on Last.fm, ordered by popularity.
   ///
   /// https://www.last.fm/api/show/artist.getTopAlbums
-  Future<List<Album>> getTopAlbums({
-    String artist,
-    String mbid,
+  Future<List<Album>?> getTopAlbums({
+    String? artist,
+    String? mbid,
     int page = 1,
     int limit = 50,
   }) async {
@@ -227,9 +230,9 @@ class ArtistMethods {
   /// Get the top tags for an artist on Last.fm, ordered by popularity.
   ///
   /// https://www.last.fm/api/show/artist.getTopTags
-  Future<List<Tag>> getTopTags({
-    String artist,
-    String mbid,
+  Future<List<Tag>?> getTopTags({
+    String? artist,
+    String? mbid,
     bool autoCorrect = false,
   }) async {
     if (artist == null && mbid == null) {
@@ -258,9 +261,9 @@ class ArtistMethods {
   /// Get the top tracks by an artist on Last.fm, ordered by popularity.
   ///
   /// https://www.last.fm/api/show/artist.getTopTracks
-  Future<List<Track>> getTopTracks({
-    String artist,
-    String mbid,
+  Future<List<Track>?> getTopTracks({
+    String? artist,
+    String? mbid,
     int page = 1,
     int limit = 50,
     bool autoCorrect = false,
@@ -295,8 +298,8 @@ class ArtistMethods {
   ///
   /// https://www.last.fm/api/show/artist.removeTag
   Future<bool> removeTag({
-    @required String artist,
-    @required String tag,
+    required String artist,
+    required String tag,
   }) async {
     if (!_api.isAuth) {
       return Future.error(ScrobblenautException(
@@ -326,7 +329,7 @@ class ArtistMethods {
   ///
   /// https://www.last.fm/api/show/artist.search.
   Future<ArtistSearchResults> search({
-    @required String artist,
+    required String artist,
     int page = 1,
     int limit = 30,
   }) async {

@@ -11,25 +11,25 @@ class AlbumSearchResults {
   /// A list of matched albums from the search.
   @JsonKey(
       name: 'albummatches', fromJson: LastFMValueNormalizer.albumsExtractor)
-  List<Album> albums;
+  List<Album>? albums;
 
   /// The number of generated matches from the search.
   @JsonKey(
       name: 'opensearch:TotalResults',
       fromJson: LastFMValueNormalizer.NumberToInt)
-  int totalResults;
+  int? totalResults;
 
   /// A value that sign the starting index of the search.
   @JsonKey(
       name: 'opensearch:StartIndex',
       fromJson: LastFMValueNormalizer.NumberToInt)
-  int statingIndex;
+  int? statingIndex;
 
   /// Number of matches per page.
   @JsonKey(
       name: 'opensearch:ItemsPerPage',
       fromJson: LastFMValueNormalizer.NumberToInt)
-  int itemsPerPage;
+  int? itemsPerPage;
 
   AlbumSearchResults({
     this.albums,

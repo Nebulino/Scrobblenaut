@@ -8,23 +8,22 @@ part of lastfm_objects;
 /// This object represents a chart.
 @JsonSerializable(includeIfNull: false)
 class Chart {
-  // TODO: What is this?
   @JsonKey(name: '#text')
-  String text;
+  String? text;
 
   /// The starting date of the chart.
   @JsonKey(
       name: 'from',
       fromJson: LastFMValueNormalizer.DateTimeFromUnixTime,
       toJson: LastFMValueNormalizer.DateTimeToUnixTime)
-  DateTime fromDate;
+  DateTime? fromDate;
 
   /// The ending date of the chart.
   @JsonKey(
       name: 'to',
       fromJson: LastFMValueNormalizer.DateTimeFromUnixTime,
       toJson: LastFMValueNormalizer.DateTimeToUnixTime)
-  DateTime toDate;
+  DateTime? toDate;
 
   Chart({
     this.text,

@@ -3,7 +3,6 @@
 //                  Copyright (c) 2020 Nebulino                 //
 //                                                              //
 
-import 'package:meta/meta.dart';
 import 'package:scrobblenaut/lastfm.dart';
 import 'package:scrobblenaut/scrobblenaut.dart';
 import 'package:scrobblenaut/scrobblenaut_exceptions.dart';
@@ -22,8 +21,8 @@ class UserMethods {
   /// Get a list of the user's friends on Last.fm.
   ///
   /// https://www.last.fm/api/show/user.getFriends
-  Future<List<User>> getFriends({
-    @required String user,
+  Future<List<User>?> getFriends({
+    required String user,
     bool enableRecentTracks = false,
     int page = 1,
     int limit = 50,
@@ -52,7 +51,7 @@ class UserMethods {
   ///
   /// https://www.last.fm/api/show/user.getInfo
   Future<User> getInfo({
-    String user,
+    required String user,
   }) async {
     final parameters = {
       'user': user,
@@ -69,8 +68,8 @@ class UserMethods {
   /// Get the last 50 tracks loved by a user.
   ///
   /// https://www.last.fm/api/show/user.getLovedTracks
-  Future<List<Track>> getLovedTracks({
-    @required String user,
+  Future<List<Track>?> getLovedTracks({
+    required String user,
     int page = 1,
     int limit = 50,
   }) async {
@@ -97,16 +96,16 @@ class UserMethods {
   ///
   /// https://www.last.fm/api/show/user.getPersonalTags
   Future<Taggings> getPersonalTags({
-    @required String user,
-    @required String tag,
-    @required TaggingType taggingType,
+    required String user,
+    required String tag,
+    required TaggingType taggingType,
     int page = 1,
     int limit = 50,
   }) async {
     final parameters = {
       'user': user,
       'tag': tag,
-      'taggingtype': taggingType?.type,
+      'taggingtype': taggingType.type,
       'page': page,
       'limit': limit,
     };
@@ -154,20 +153,17 @@ class UserMethods {
   }
 
   /// Get a list of the recent tracks listened to by this user.
-  /// Also includes the currently playing track with the nowPlaying="true"
-  /// attribute if the user is currently listening.
   ///
   /// **NOTE:** the output list is already ordered by last listened first.
   ///
   /// https://www.last.fm/api/show/user.getRecentTracks
-  Future<List<Track>> getRecentTracks({
-    @required String user,
+  Future<List<Track>?> getRecentTracks({
+    required String user,
     int page = 1,
     int limit = 50, // MAX 200
-    DateTime fromDate,
-    DateTime toDate,
+    DateTime? fromDate,
+    DateTime? toDate,
     bool extended = false,
-    bool nowPlaying = false,
   }) async {
     if (limit > 200) {
       return Future.error(
@@ -181,7 +177,6 @@ class UserMethods {
       'from': LastFMValueNormalizer.DateTimeToUnixTime(fromDate),
       'to': LastFMValueNormalizer.DateTimeToUnixTime(toDate),
       'extended': (extended ? 1 : 0),
-      'nowplaying': (nowPlaying ? 1 : 0),
     };
 
     final request = Request(
@@ -204,8 +199,8 @@ class UserMethods {
                 : null; // If there's no #text field, don't touch the artist.
       });
 
-      return List.generate((recentTracks as List).length,
-          (i) => Track.fromJson(recentTracks[i]));
+      return List.generate(
+          recentTracks.length, (i) => Track.fromJson(recentTracks[i]));
     }
   }
 
@@ -215,9 +210,9 @@ class UserMethods {
   /// **NOTE:** the output list is already ordered by rank.
   ///
   /// https://www.last.fm/api/show/user.getTopAlbums
-  Future<List<Album>> getTopAlbums({
-    @required String user,
-    Period period,
+  Future<List<Album>?> getTopAlbums({
+    required String user,
+    Period? period,
     int page = 1,
     int limit = 50,
   }) async {
@@ -248,9 +243,9 @@ class UserMethods {
   /// **NOTE:** the output list is already ordered by rank.
   ///
   /// https://www.last.fm/api/show/user.getTopArtists
-  Future<List<Artist>> getTopArtists({
-    @required String user,
-    Period period,
+  Future<List<Artist>?> getTopArtists({
+    required String user,
+    Period? period,
     int page = 1,
     int limit = 50,
   }) async {
@@ -279,9 +274,9 @@ class UserMethods {
   /// **NOTE:** the output list is already ordered by rank.
   ///
   /// https://www.last.fm/api/show/user.getTopTags
-  Future<List<Tag>> getTopTags({
-    @required String user,
-    int limit,
+  Future<List<Tag>?> getTopTags({
+    required String user,
+    int? limit,
   }) async {
     final parameters = {
       'user': user,
@@ -309,8 +304,8 @@ class UserMethods {
   ///
   /// https://www.last.fm/api/show/user.getTopTracks
   Future<List<Track>> getTopTracks({
-    @required String user,
-    Period period,
+    required String user,
+    Period? period,
     int page = 1,
     int limit = 50,
   }) async {
@@ -338,7 +333,9 @@ class UserMethods {
           (topTracks as List).length, (i) => Track.fromJson(topTracks[i]));
 
       fixTopTracks.forEach((Track track) {
-        track.duration = track.duration * 1000;
+        if (track.duration != null) {
+          track.duration = track.duration! * 1000;
+        }
       });
       return fixTopTracks;
     }
@@ -351,10 +348,10 @@ class UserMethods {
   /// **NOTE:** the output list is already ordered by rank.
   ///
   /// https://www.last.fm/api/show/user.getWeeklyAlbumChart
-  Future<List<Album>> getWeeklyAlbumChart({
-    @required String user,
-    DateTime fromDate,
-    DateTime toDate,
+  Future<List<Album>?> getWeeklyAlbumChart({
+    required String user,
+    DateTime? fromDate,
+    DateTime? toDate,
   }) async {
     final parameters = {
       'user': user,
@@ -384,10 +381,10 @@ class UserMethods {
   /// **NOTE:** the output list is already ordered by rank.
   ///
   /// https://www.last.fm/api/show/user.getWeeklyArtistChart
-  Future<List<Artist>> getWeeklyArtistChart({
-    @required String user,
-    DateTime fromDate,
-    DateTime toDate,
+  Future<List<Artist>?> getWeeklyArtistChart({
+    required String user,
+    DateTime? fromDate,
+    DateTime? toDate,
   }) async {
     final parameters = {
       'user': user,
@@ -402,7 +399,7 @@ class UserMethods {
 
     final response = await request.send(mode: RequestMode.GET);
 
-    final weeklyArtistChart = response['weeklyartistchart']['track'];
+    final weeklyArtistChart = response['weeklyartistchart']['artist'];
 
     return weeklyArtistChart == null
         ? null
@@ -414,8 +411,8 @@ class UserMethods {
   /// expressed as date ranges which can be sent to the chart services.
   ///
   /// https://www.last.fm/api/show/user.getWeeklyChartList
-  Future<List<Chart>> getWeeklyChartList({
-    @required String user,
+  Future<List<Chart>?> getWeeklyChartList({
+    required String user,
   }) async {
     final parameters = {
       'user': user,
@@ -441,10 +438,10 @@ class UserMethods {
   /// **NOTE:** the output list is already ordered by rank.
   ///
   /// https://www.last.fm/api/show/user.getWeeklyTrackChart
-  Future<List<Track>> getWeeklyTrackChart({
-    @required String user,
-    DateTime fromDate,
-    DateTime toDate,
+  Future<List<Track>?> getWeeklyTrackChart({
+    required String user,
+    DateTime? fromDate,
+    DateTime? toDate,
   }) async {
     final parameters = {
       'user': user,
