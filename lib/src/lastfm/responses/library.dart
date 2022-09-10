@@ -1,10 +1,13 @@
 part of lastfm_objects;
 
+/// This object represents a response about an artist library from a search.
 @JsonSerializable(includeIfNull: false)
 class LibraryGetArtistsResponse {
+  /// A list of artists.
   @JsonKey(name: 'artist')
   List<Artist>? artist;
 
+  /// The attributes related to the response.
   @JsonKey(name: '@attr')
   Attr? attr;
 
