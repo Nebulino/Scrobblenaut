@@ -18,7 +18,7 @@ void main() async {
     apiSecret: APIValues.secret,
     username: APIValues.username,
     password: APIValues.password,
-    sessionKey: APIValues.sessionKey,
+    // sessionKey: APIValues.sessionKey,
   );
 
   final scrobblenaut = Scrobblenaut(lastFM: lastFMAuth);
@@ -35,7 +35,7 @@ void main() async {
 
   // track.getCorrection
   (await scrobblenaut.track.getCorrection(track: 'TOMOYO', artist: 'Zekk'))
-      ?.forEach((Track track) {
+      .forEach((Track track) {
     print('Track Correction Name: ${track.name} |'
         ' Track Correction URL: ${track.url}');
   });
@@ -103,7 +103,7 @@ void main() async {
       timestamp: DateTime.now());
   // YAY. IT WORKS!
 
-  scrobbleResponse.scrobbleResponses?.forEach((ScrobbledTrack scrobbledTrack) {
+  scrobbleResponse.scrobbleResponses.forEach((ScrobbledTrack scrobbledTrack) {
     print('Scrobbled Title: ${scrobbledTrack.track}');
   });
 

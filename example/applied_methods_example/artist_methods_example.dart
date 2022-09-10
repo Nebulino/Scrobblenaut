@@ -37,7 +37,7 @@ void main() async {
   print('#######################artist.getCorrection#########################');
 
   // artist.getCorrection
-  (await artistInstance.getCorrection())?.forEach((Artist artist) {
+  (await artistInstance.getCorrection()).forEach((Artist artist) {
     print('Artist correction: ${artist.name}');
   });
 

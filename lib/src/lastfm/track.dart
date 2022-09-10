@@ -14,65 +14,65 @@ class Track {
 
   /// The album that contains the track.
   @JsonKey(name: 'album')
-  Album album;
+  Album? album;
 
   /// The artist that has created the track.
   @JsonKey(name: 'artist', fromJson: LastFMValueNormalizer.ArtistParser)
-  Artist artist;
+  Artist? artist;
 
   // LastFM url of the track.
   @JsonKey(name: 'url')
-  String url;
+  String? url;
 
   /// The duration of the track.
   @JsonKey(
       name: 'duration',
       fromJson: LastFMValueNormalizer.MillisecondsDurationParser)
-  Duration duration;
+  Duration? duration;
 
   /// A list of different size of the track cover.
   @JsonKey(name: 'image')
-  List<Image> images;
+  List<Image>? images;
 
   /// A list of Top Tags of the track.
   @JsonKey(name: 'toptags', fromJson: LastFMValueNormalizer.tagsExtractor)
-  List<Tag> topTags;
+  List<Tag>? topTags;
 
   // TODO: make it directly a Dart object?
   /// The date of publishing of the track.
   @JsonKey(name: 'date')
-  Date date;
+  Date? date;
 
   // TODO: what's this for real?
   /// Streamable object of the track.
   @JsonKey(name: 'streamable', fromJson: LastFMValueNormalizer.StreamableParser)
-  Streamable streamable;
+  Streamable? streamable;
 
   /// The number of listeners of the track.
   @JsonKey(
     name: 'listeners',
     fromJson: LastFMValueNormalizer.NumberToInt,
   )
-  int listeners;
+  int? listeners;
 
   /// The number of plays of the track.
   @JsonKey(name: 'playcount', fromJson: LastFMValueNormalizer.NumberToInt)
-  int playCount;
+  int? playCount;
 
   /// The wiki of the track.
   @JsonKey(name: 'wiki')
-  Wiki wiki;
+  Wiki? wiki;
 
   /// MusicBrainz ID.
   @JsonKey(name: 'mbid')
-  String mbid;
+  String? mbid;
 
   /// If called from a [User] data, True if the user loved the track.
   @JsonKey(name: 'loved', fromJson: LastFMValueNormalizer.NumberToBool)
-  bool loved;
+  bool? loved;
 
   Track({
-    this.name,
+    required this.name,
     this.album,
     this.artist,
     this.url,

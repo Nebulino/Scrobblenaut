@@ -13,7 +13,7 @@ enum TaggingType {
 }
 
 extension TaggingTypeExtension on TaggingType {
-  String get type {
+  String? get type {
     switch (this) {
       case TaggingType.artist:
         return 'artist';

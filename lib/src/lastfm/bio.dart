@@ -10,21 +10,21 @@ part of lastfm_objects;
 class Bio {
   /// A list of links.
   @JsonKey(name: 'links', fromJson: LastFMValueNormalizer.linksExtractor)
-  List<Link> links;
+  List<Link>? links;
 
   /// A string that indicates the date of publishing.
   /// **NOTE:** it's a string and it can't be transformed into a Dart DateTime.
   /// Because it's different between different bio.
   @JsonKey(name: 'published')
-  String published;
+  String? published;
 
   /// A brief summary of the bio.
   @JsonKey(name: 'summary')
-  String summary;
+  String? summary;
 
   /// The real content of the bio.
   @JsonKey(name: 'content')
-  String content;
+  String? content;
 
   Bio({
     this.links,

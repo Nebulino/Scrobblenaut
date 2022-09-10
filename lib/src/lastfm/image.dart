@@ -14,14 +14,13 @@ class Image {
       name: 'size',
       defaultValue: null,
       disallowNullValue: false,
-      nullable: true,
       unknownEnumValue: Size.None)
-  Size size;
+  Size? size;
 
   // TODO: change the name?
   /// The link of the image.
   @JsonKey(name: '#text')
-  String text;
+  String? text;
 
   Image({
     this.size,

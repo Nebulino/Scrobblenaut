@@ -3,7 +3,6 @@
 //                  Copyright (c) 2020 Nebulino                 //
 //                                                              //
 
-import 'package:meta/meta.dart';
 import 'package:scrobblenaut/lastfm.dart';
 import 'package:scrobblenaut/src/core/lastfm.dart';
 import 'package:scrobblenaut/src/core/request.dart';
@@ -24,7 +23,7 @@ class SessionKeyGenerator {
   ///
   /// [auth.getMobileSession]: https://www.last.fm/api/show/auth.getMobileSession
   Future<Session> getSessionKey(
-      {@required String username, String passwordHash}) async {
+      {required String username, required String passwordHash}) async {
     final parameters = {
       'username': username,
       'authToken': generateMD5(username + passwordHash)

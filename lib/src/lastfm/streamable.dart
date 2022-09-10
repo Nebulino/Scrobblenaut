@@ -10,11 +10,11 @@ part of lastfm_objects;
 class Streamable {
   // TODO: what's this?
   @JsonKey(name: '#text')
-  String text;
+  String? text;
 
   // TODO: what's this?
   @JsonKey(name: 'fulltrack')
-  String fullTrack;
+  String? fullTrack;
 
   Streamable({
     this.text,

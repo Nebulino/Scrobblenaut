@@ -6,9 +6,10 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:convert/convert.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:crypto/crypto.dart' show md5;
-import 'package:meta/meta.dart';
 
 /// Generate a MD5 string by a given value.
 String generateMD5(String value) {
@@ -24,7 +25,7 @@ String generateStringFromList(List list) {
 }
 
 /// Format the text in unicode
-String formatUnicode({@required dynamic text}) {
+String formatUnicode({required dynamic text}) {
   if (text is Uint8List) {
     return utf8.decode(text);
   } else if (text is String) {

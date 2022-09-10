@@ -3,7 +3,6 @@
 //                  Copyright (c) 2020 Nebulino                 //
 //                                                              //
 
-import 'package:meta/meta.dart';
 import 'package:scrobblenaut/lastfm.dart';
 import 'package:scrobblenaut/src/core/lastfm.dart';
 import 'package:scrobblenaut/src/core/request.dart';
@@ -18,8 +17,8 @@ class GeoMethods {
   /// Get the most popular artists on Last.fm by country.
   ///
   /// https://www.last.fm/api/show/geo.getTopArtists
-  Future<List<Artist>> getTopArtists({
-    @required String country,
+  Future<List<Artist>?> getTopArtists({
+    required String country,
     int page = 1,
     int limit = 50,
   }) async {
@@ -46,8 +45,8 @@ class GeoMethods {
   ///
   /// https://www.last.fm/api/show/geo.getTopTracks
   Future<List<Track>> getTopTracks({
-    @required String country,
-    String location,
+    required String country,
+    String? location,
     int page = 1,
     int limit = 50,
   }) async {
@@ -73,7 +72,7 @@ class GeoMethods {
           (topTracks as List).length, (i) => Track.fromJson(topTracks[i]));
 
       fixTopTracks.forEach((Track track) {
-        track.duration = track.duration * 1000;
+        track.duration = track.duration != null ? track.duration! * 1000 : null;
       });
       return fixTopTracks;
     }

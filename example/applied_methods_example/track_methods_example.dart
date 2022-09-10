@@ -38,7 +38,7 @@ void main() async {
   print('######################track.getCorrection###########################');
 
   // track.getCorrection
-  (await trackInstance.getCorrection())?.forEach((Track track) {
+  (await trackInstance.getCorrection()).forEach((Track track) {
     print('Track Correction Name: ${track.name} |'
         ' Track Correction URL: ${track.url}');
   });
@@ -94,7 +94,7 @@ void main() async {
       await trackInstance.scrobble(timestamp: DateTime.now());
   // YAY. IT WORKS!
 
-  scrobbleResponse.scrobbleResponses?.forEach((ScrobbledTrack scrobbledTrack) {
+  scrobbleResponse.scrobbleResponses.forEach((ScrobbledTrack scrobbledTrack) {
     print('Scrobbled Title: ${scrobbledTrack.track}');
   });
 

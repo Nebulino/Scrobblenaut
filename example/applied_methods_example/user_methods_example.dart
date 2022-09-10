@@ -86,7 +86,7 @@ void main() async {
   print('#####################user.getWeeklyAlbumChart#######################');
 
   // user.getTopTracks
-  (await userInstance.getTopTracks())?.forEach((Track track) {
+  (await userInstance.getTopTracks()).forEach((Track track) {
     print('Top Tracks Name: ${track.name} | Top Tracks URL: ${track.url} |'
         ' Duration: ${track.duration}');
   });
@@ -94,7 +94,7 @@ void main() async {
   print('#####################user.getWeeklyArtistChart######################');
 
   // user.getWeeklyAlbumChart
-  (await userInstance.getTopTracks())?.forEach((Track track) {
+  (await userInstance.getTopTracks()).forEach((Track track) {
     print('Top Tracks Name: ${track.name} | Top Tracks URL: ${track.url} |'
         ' Duration: ${track.duration}');
   });

@@ -10,15 +10,15 @@ class Wiki {
   // TODO: is this a date?
   /// The publication information of the wiki.
   @JsonKey(name: 'published')
-  String published;
+  String? published;
 
   /// A brief summary of the wiki.
   @JsonKey(name: 'summary')
-  String summary;
+  String? summary;
 
   /// The real content of the wiki.
   @JsonKey(name: 'content')
-  String content;
+  String? content;
 
   Wiki({
     this.published,
