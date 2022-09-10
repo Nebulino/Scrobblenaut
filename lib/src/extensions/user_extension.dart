@@ -140,7 +140,7 @@ extension UserExtension on User {
     );
   }
 
-  /// [UserMethods.]
+  /// [UserMethods.getWeeklyArtistChart]
   Future<List<Artist>?> getWeeklyArtistChart({
     DateTime? fromDate,
     DateTime? toDate,
@@ -152,14 +152,14 @@ extension UserExtension on User {
     );
   }
 
-  /// [UserMethods.]
+  /// [UserMethods.getWeeklyChartList]
   Future<List<Chart>?> getWeeklyChartList() async {
     return await _userMethods.getWeeklyChartList(
       user: name,
     );
   }
 
-  /// [UserMethods.]
+  /// [UserMethods.getWeeklyTrackChart]
   Future<List<Track>?> getWeeklyTrackChart({
     DateTime? fromDate,
     DateTime? toDate,
