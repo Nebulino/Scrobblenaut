@@ -3,7 +3,7 @@
 //                  Copyright (c) 2020 Nebulino                 //
 //                                                              //
 
-part of lastfm_objects;
+part of '../../lastfm.dart';
 
 /// This is a object that helps scrobbling multiple tracks.
 @JsonSerializable(includeIfNull: false)
@@ -34,7 +34,9 @@ class NowPlaying {
 
   /// The duration of the [Track] to scrobble.
   @JsonKey(
-      name: 'duration', toJson: LastFMValueNormalizer.DurationToMilliseconds)
+    name: 'duration',
+    toJson: LastFMValueNormalizer.DurationToMilliseconds,
+  )
   Duration? duration;
 
   /// The album artist - if this differs from the track artist.

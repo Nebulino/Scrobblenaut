@@ -19,18 +19,19 @@ class LastFM {
   final bool _isAuth;
 
   /// Default constructor.
-  LastFM._(this._apiKey, this._apiSecret, this._sessionKey, this._username,
-      this._passwordHash, this._isAuth)
-      : _client = SpaceShip(
-          base_url: 'https://ws.audioscrobbler.com/2.0/',
-        );
+  LastFM._(
+    this._apiKey,
+    this._apiSecret,
+    this._sessionKey,
+    this._username,
+    this._passwordHash,
+    this._isAuth,
+  ) : _client = SpaceShip(baseUrl: 'https://ws.audioscrobbler.com/2.0/');
 
   /// Default kind of API usage.
   /// You can use methods that does not required authentication.
-  LastFM.noAuth({
-    required String apiKey,
-    String? proxy,
-  }) : this._(apiKey, null, null, null, null, false);
+  LastFM.noAuth({required String apiKey, String? proxy})
+    : this._(apiKey, null, null, null, null, false);
 
   /// It creates a LastFM object with auth mode.
   static Future<LastFM> authenticate({
@@ -45,18 +46,8 @@ class LastFM {
 
     if (sessionKey == null) {
       final session = await SessionKeyGenerator(
-        LastFM._(
-          apiKey,
-          apiSecret,
-          null,
-          null,
-          null,
-          false,
-        ),
-      ).getSessionKey(
-        username: username,
-        passwordHash: passwordHash,
-      );
+        LastFM._(apiKey, apiSecret, null, null, null, false),
+      ).getSessionKey(username: username, passwordHash: passwordHash);
 
       return LastFM._(
         apiKey,
@@ -88,18 +79,8 @@ class LastFM {
   }) async {
     if (sessionKey == null) {
       final session = await SessionKeyGenerator(
-        LastFM._(
-          apiKey,
-          apiSecret,
-          null,
-          null,
-          null,
-          false,
-        ),
-      ).getSessionKey(
-        username: username,
-        passwordHash: passwordHash,
-      );
+        LastFM._(apiKey, apiSecret, null, null, null, false),
+      ).getSessionKey(username: username, passwordHash: passwordHash);
 
       return LastFM._(
         apiKey,

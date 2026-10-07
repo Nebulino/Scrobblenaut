@@ -3,26 +3,11 @@
 //                  Copyright (c) 2020 Nebulino                 //
 //                                                              //
 
-part of lastfm_objects;
+part of '../../lastfm.dart';
 
 /// Tagging type for [User.getPersonalTags].
-enum TaggingType {
-  artist,
-  album,
-  track,
-}
+enum TaggingType { artist, album, track }
 
 extension TaggingTypeExtension on TaggingType {
-  String? get type {
-    switch (this) {
-      case TaggingType.artist:
-        return 'artist';
-      case TaggingType.album:
-        return 'album';
-      case TaggingType.track:
-        return 'track';
-      default:
-        return null;
-    }
-  }
+  String get type => name;
 }

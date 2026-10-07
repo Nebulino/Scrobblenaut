@@ -8,8 +8,6 @@ import 'package:scrobblenaut/src/core/lastfm.dart';
 import 'package:scrobblenaut/src/core/request.dart';
 import 'package:scrobblenaut/src/core/request_mode.dart';
 
-import '../../lastfm.dart';
-
 /// This contains all the methods about a [Library].
 class LibraryMethods {
   final LastFM _api;
@@ -25,14 +23,13 @@ class LibraryMethods {
     int limit = 50,
     int? page,
   }) async {
-    final parameters = {
-      'user': user,
-      'limit': limit,
-      'page': page,
-    };
+    final parameters = {'user': user, 'limit': limit, 'page': page};
 
     final request = Request(
-        api: _api, method: 'library.getArtists', parameters: parameters);
+      api: _api,
+      method: 'library.getArtists',
+      parameters: parameters,
+    );
 
     final response = await request.send(mode: RequestMode.GET);
 

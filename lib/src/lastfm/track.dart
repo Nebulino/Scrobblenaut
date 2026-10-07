@@ -3,7 +3,7 @@
 //                  Copyright (c) 2020 Nebulino                 //
 //                                                              //
 
-part of lastfm_objects;
+part of '../lastfm.dart';
 
 /// This object represents a track.
 @JsonSerializable(includeIfNull: false)
@@ -26,8 +26,9 @@ class Track {
 
   /// The duration of the track.
   @JsonKey(
-      name: 'duration',
-      fromJson: LastFMValueNormalizer.MillisecondsDurationParser)
+    name: 'duration',
+    fromJson: LastFMValueNormalizer.MillisecondsDurationParser,
+  )
   Duration? duration;
 
   /// A list of different size of the track cover.
@@ -49,10 +50,7 @@ class Track {
   Streamable? streamable;
 
   /// The number of listeners of the track.
-  @JsonKey(
-    name: 'listeners',
-    fromJson: LastFMValueNormalizer.NumberToInt,
-  )
+  @JsonKey(name: 'listeners', fromJson: LastFMValueNormalizer.NumberToInt)
   int? listeners;
 
   /// The number of plays of the track.

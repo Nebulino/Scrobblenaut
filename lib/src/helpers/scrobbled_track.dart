@@ -64,44 +64,48 @@ class ScrobbledTrack {
     DateTime? timestamp;
     bool? ignoredMessageCode;
 
-    bool? _s2b(supposedBool) =>
-        LastFMValueNormalizer.NumberToBool(supposedBool);
+    bool? s2b(supposedBool) => LastFMValueNormalizer.NumberToBool(supposedBool);
 
-    track = scrobbleElement.findAllElements('track').first.text;
+    track = scrobbleElement.findAllElements('track').first.innerText;
 
-    album = scrobbleElement.findAllElements('album').first.text;
+    album = scrobbleElement.findAllElements('album').first.innerText;
 
-    artist = scrobbleElement.findAllElements('artist').first.text;
+    artist = scrobbleElement.findAllElements('artist').first.innerText;
 
-    albumArtist = scrobbleElement.findAllElements('albumArtist').first.text;
-
-    tracksCorrected = _s2b(scrobbleElement
-        .findAllElements('track')
-        .first
-        .getAttribute('corrected'));
-
-    artistsCorrected = _s2b(scrobbleElement
-        .findAllElements('artist')
-        .first
-        .getAttribute('corrected'));
-
-    albumsCorrected = _s2b(scrobbleElement
-        .findAllElements('album')
-        .first
-        .getAttribute('corrected'));
-
-    albumArtistsCorrected = _s2b(scrobbleElement
+    albumArtist = scrobbleElement
         .findAllElements('albumArtist')
         .first
-        .getAttribute('corrected'));
+        .innerText;
+
+    tracksCorrected = s2b(
+      scrobbleElement.findAllElements('track').first.getAttribute('corrected'),
+    );
+
+    artistsCorrected = s2b(
+      scrobbleElement.findAllElements('artist').first.getAttribute('corrected'),
+    );
+
+    albumsCorrected = s2b(
+      scrobbleElement.findAllElements('album').first.getAttribute('corrected'),
+    );
+
+    albumArtistsCorrected = s2b(
+      scrobbleElement
+          .findAllElements('albumArtist')
+          .first
+          .getAttribute('corrected'),
+    );
 
     timestamp = LastFMValueNormalizer.DateTimeFromUnixTime(
-        scrobbleElement.findAllElements('timestamp').first.text);
+      scrobbleElement.findAllElements('timestamp').first.innerText,
+    );
 
-    ignoredMessageCode = _s2b(scrobbleElement
-        .findAllElements('ignoredMessage')
-        .first
-        .getAttribute('code'));
+    ignoredMessageCode = s2b(
+      scrobbleElement
+          .findAllElements('ignoredMessage')
+          .first
+          .getAttribute('code'),
+    );
 
     return ScrobbledTrack._(
       track,

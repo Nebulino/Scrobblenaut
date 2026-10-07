@@ -27,16 +27,11 @@ extension UserExtension on User {
 
   /// [UserMethods.getInfo]
   Future<User> getInfo() async {
-    return await _userMethods.getInfo(
-      user: name,
-    );
+    return await _userMethods.getInfo(user: name);
   }
 
   /// [UserMethods.getLovedTracks]
-  Future<List<Track>?> getLovedTracks({
-    int page = 1,
-    int limit = 50,
-  }) async {
+  Future<List<Track>?> getLovedTracks({int page = 1, int limit = 50}) async {
     return await _userMethods.getLovedTracks(
       user: name,
       page: page,
@@ -105,13 +100,8 @@ extension UserExtension on User {
   }
 
   /// [UserMethods.getTopTags]
-  Future<List<Tag>?> getTopTags({
-    int? limit,
-  }) async {
-    return await _userMethods.getTopTags(
-      user: name,
-      limit: limit,
-    );
+  Future<List<Tag>?> getTopTags({int? limit}) async {
+    return await _userMethods.getTopTags(user: name, limit: limit);
   }
 
   /// [UserMethods.getTopTracks]
@@ -154,9 +144,7 @@ extension UserExtension on User {
 
   /// [UserMethods.getWeeklyChartList]
   Future<List<Chart>?> getWeeklyChartList() async {
-    return await _userMethods.getWeeklyChartList(
-      user: name,
-    );
+    return await _userMethods.getWeeklyChartList(user: name);
   }
 
   /// [UserMethods.getWeeklyTrackChart]

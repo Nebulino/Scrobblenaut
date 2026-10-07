@@ -4,7 +4,4 @@
 //                                                              //
 
 /// Helps managing each request mode inside each methods.
-enum RequestMode {
-  GET,
-  POST,
-}
+enum RequestMode { GET, POST }

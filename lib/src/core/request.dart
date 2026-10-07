@@ -16,8 +16,8 @@ class Request {
     required LastFM api,
     required String method,
     Map<String, dynamic>? parameters,
-  })  : _api = api,
-        _parameters = {} {
+  }) : _api = api,
+       _parameters = {} {
     parameters ?? {};
 
     parameters?.forEach((key, value) {

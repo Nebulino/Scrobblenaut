@@ -56,10 +56,12 @@ class ScrobbleResponse {
     final scrobblesNode = responseXML.findAllElements('scrobbles').first;
 
     scrobbleAccepted = LastFMValueNormalizer.NumberToInt(
-        scrobblesNode.getAttribute('accepted'));
+      scrobblesNode.getAttribute('accepted'),
+    );
 
     scrobbleIgnored = LastFMValueNormalizer.NumberToInt(
-        scrobblesNode.getAttribute('ignored'));
+      scrobblesNode.getAttribute('ignored'),
+    );
 
     final scrobbleListNode = responseXML.findAllElements('scrobble');
 
@@ -68,7 +70,11 @@ class ScrobbleResponse {
     });
 
     return ScrobbleResponse._(
-        status, scrobbledTracks, scrobbleAccepted, scrobbleIgnored);
+      status,
+      scrobbledTracks,
+      scrobbleAccepted,
+      scrobbleIgnored,
+    );
   }
 
   /// Returns the status.

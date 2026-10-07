@@ -14,6 +14,5 @@ class ScrobblenautException implements Exception {
 
   @override
   String toString() =>
-      '[ScrobblenautException]' +
-      (_description != null ? ': $_description' : '');
+      '[ScrobblenautException]${_description != null ? ': $_description' : ''}';
 }

@@ -12,18 +12,16 @@ import '../api_values.dart';
 void main() async {
   print('####################################################################');
 
-  final lastFMAuth = LastFM.noAuth(
-    apiKey: APIValues.API,
-  );
+  final lastFMAuth = LastFM.noAuth(apiKey: APIValues.API);
 
   final scrobblenaut = Scrobblenaut(lastFM: lastFMAuth);
 
   print('#########################library.getArtists#########################');
 
   // library.getArtist
-  (await scrobblenaut.library.getArtists(user: 'nebulino'))
-      ?.artist
-      ?.forEach((Artist artist) {
+  (await scrobblenaut.library.getArtists(user: 'nebulino'))?.artist?.forEach((
+    Artist artist,
+  ) {
     print('Top Artist Name: ${artist.name} | Top Artist URL : ${artist.url}');
   });
 

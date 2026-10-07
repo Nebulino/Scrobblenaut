@@ -25,17 +25,18 @@ void main() async {
   print('#########################artist.addTags#############################');
 
   // artist.addTags
-  print('Result of addTag request: ' +
-      (await scrobblenaut.artist.addTags(artist: 'RADWIMPS', tags: ['anime']))
-          .toString());
+  print(
+    'Result of addTag request: ${await scrobblenaut.artist.addTags(artist: 'RADWIMPS', tags: ['anime'])}',
+  );
 
   print('#######################artist.getCorrection#########################');
 
   // artist.getCorrection
-  (await scrobblenaut.artist.getCorrection(artist: 'RADWIMPS'))
-      .forEach((Artist artist) {
+  for (var artist in (await scrobblenaut.artist.getCorrection(
+    artist: 'RADWIMPS',
+  ))) {
     print('Artist correction: ${artist.name}');
-  });
+  }
 
   print('#########################artist.getInfo#############################');
 
@@ -47,13 +48,15 @@ void main() async {
   ));
 
   print(
-      'Artist Info Name: ${artistGetInfo.name} | Artist URL: ${artistGetInfo.url}');
+    'Artist Info Name: ${artistGetInfo.name} | Artist URL: ${artistGetInfo.url}',
+  );
 
   print('########################artist.getSimilar###########################');
 
   // artist.getSimilar
-  (await scrobblenaut.artist.getSimilar(artist: 'RADWIMPS'))
-      ?.forEach((Artist artist) {
+  (await scrobblenaut.artist.getSimilar(artist: 'RADWIMPS'))?.forEach((
+    Artist artist,
+  ) {
     print('Similar Artist Name: ${artist.name}');
   });
 
@@ -67,40 +70,43 @@ void main() async {
   print('#######################artist.getTopAlbums##########################');
 
   // artist.getTopAlbums
-  (await scrobblenaut.artist.getTopAlbums(artist: 'RADWIMPS'))
-      ?.forEach((Album album) {
+  (await scrobblenaut.artist.getTopAlbums(artist: 'RADWIMPS'))?.forEach((
+    Album album,
+  ) {
     print('Album Name: ${album.name} | Album URL: ${album.url}');
   });
 
   print('########################artist.getTopTags###########################');
 
   // artist.getTopTags
-  (await scrobblenaut.artist.getTopTags(artist: 'RADWIMPS'))
-      ?.forEach((Tag tag) {
+  (await scrobblenaut.artist.getTopTags(artist: 'RADWIMPS'))?.forEach((
+    Tag tag,
+  ) {
     print('Tag Name: ${tag.name} | Tag URL: ${tag.url}');
   });
 
   print('####################artist.getTopTracks#############################');
 
   // artist.getTopTracks
-  (await scrobblenaut.artist.getTopTracks(artist: 'RADWIMPS'))
-      ?.forEach((Track track) {
+  (await scrobblenaut.artist.getTopTracks(artist: 'RADWIMPS'))?.forEach((
+    Track track,
+  ) {
     print('Track Name: ${track.name}');
   });
 
   print('########################artist.removeTag############################');
 
   // artist.removeTag
-  print('Result of removeTag request: ' +
-      (await scrobblenaut.artist.removeTag(artist: 'RADWIMPS', tag: 'anime'))
-          .toString());
+  print(
+    'Result of removeTag request: ${await scrobblenaut.artist.removeTag(artist: 'RADWIMPS', tag: 'anime')}',
+  );
 
   print('##########################artist.search#############################');
 
   // artist.search
-  (await scrobblenaut.artist.search(artist: 'RADWIMPS'))
-      .artists
-      ?.forEach((Artist artist) {
+  (await scrobblenaut.artist.search(artist: 'RADWIMPS')).artists?.forEach((
+    Artist artist,
+  ) {
     print('Artist name from search: ${artist.name}');
   });
 

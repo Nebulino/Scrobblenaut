@@ -47,5 +47,5 @@ bool isXml(dynamic object) {
 /// It helps checking if a field can be parsed in a known way.
 bool isValidParsableStringField(dynamic value) =>
     (value != null || value.toString() != 'null' || value.toString() != '')
-        ? true
-        : false;
+    ? true
+    : false;

@@ -3,7 +3,7 @@
 //                  Copyright (c) 2020 Nebulino                 //
 //                                                              //
 
-part of lastfm_objects;
+part of '../lastfm.dart';
 
 /// This object represents an artist.
 @JsonSerializable(includeIfNull: false)
@@ -38,7 +38,9 @@ class Artist {
 
   /// A list of similar artists.
   @JsonKey(
-      name: 'similar', fromJson: LastFMValueNormalizer.similarArtistsExtractor)
+    name: 'similar',
+    fromJson: LastFMValueNormalizer.similarArtistsExtractor,
+  )
   List<Artist>? similarArtists;
 
   // TODO: Match meaning.
@@ -47,7 +49,9 @@ class Artist {
 
   /// True if the Artist is streamable.
   @JsonKey(
-      name: 'streamable', fromJson: LastFMValueNormalizer.isArtistStreamable)
+    name: 'streamable',
+    fromJson: LastFMValueNormalizer.isArtistStreamable,
+  )
   bool? isStreamable;
 
   /// The number of listeners.

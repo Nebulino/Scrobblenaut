@@ -22,15 +22,20 @@ class SessionKeyGenerator {
   /// It uses [auth.getMobileSession]
   ///
   /// [auth.getMobileSession]: https://www.last.fm/api/show/auth.getMobileSession
-  Future<Session> getSessionKey(
-      {required String username, required String passwordHash}) async {
+  Future<Session> getSessionKey({
+    required String username,
+    required String passwordHash,
+  }) async {
     final parameters = {
       'username': username,
-      'authToken': generateMD5(username + passwordHash)
+      'authToken': generateMD5(username + passwordHash),
     };
 
     final request = Request(
-        api: _api, method: 'auth.getMobileSession', parameters: parameters);
+      api: _api,
+      method: 'auth.getMobileSession',
+      parameters: parameters,
+    );
 
     request.signRequest();
 

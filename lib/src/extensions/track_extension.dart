@@ -31,10 +31,7 @@ extension TrackExtension on Track {
   }
 
   /// [TrackMethods.getInfo]
-  Future<Track> getInfo({
-    String? username,
-    bool autoCorrect = false,
-  }) async {
+  Future<Track> getInfo({String? username, bool autoCorrect = false}) async {
     return await _trackMethods.getInfo(
       track: name,
       artist: artist?.name,
@@ -59,10 +56,7 @@ extension TrackExtension on Track {
   }
 
   /// [TrackMethods.getTags]
-  Future<List<Tag>?> getTags({
-    String? user,
-    bool autoCorrect = false,
-  }) async {
+  Future<List<Tag>?> getTags({String? user, bool autoCorrect = false}) async {
     return await _trackMethods.getTags(
       track: name,
       artist: artist?.name,
@@ -73,9 +67,7 @@ extension TrackExtension on Track {
   }
 
   /// [TrackMethods.getTopTags]
-  Future<List<Tag>?> getTopTags({
-    bool autoCorrect = false,
-  }) async {
+  Future<List<Tag>?> getTopTags({bool autoCorrect = false}) async {
     return await _trackMethods.getTopTags(
       track: name,
       artist: artist?.name,
@@ -86,16 +78,11 @@ extension TrackExtension on Track {
 
   /// [TrackMethods.love]
   Future<bool> love() async {
-    return await _trackMethods.love(
-      track: name,
-      artist: artist?.name ?? '',
-    );
+    return await _trackMethods.love(track: name, artist: artist?.name ?? '');
   }
 
   /// [TrackMethods.removeTag]
-  Future<bool> removeTag({
-    required String tag,
-  }) async {
+  Future<bool> removeTag({required String tag}) async {
     return await _trackMethods.removeTag(
       track: name,
       artist: artist?.name ?? '',
@@ -146,10 +133,7 @@ extension TrackExtension on Track {
 
   /// [TrackMethods.unLove]
   Future<bool> unLove() async {
-    return await _trackMethods.unLove(
-      track: name,
-      artist: artist?.name ?? '',
-    );
+    return await _trackMethods.unLove(track: name, artist: artist?.name ?? '');
   }
 
   /// [TrackMethods.updateNowPlaying]

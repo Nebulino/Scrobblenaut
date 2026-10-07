@@ -26,14 +26,14 @@ class Scrobblenaut {
   UserMethods _userMethods;
 
   Scrobblenaut._(this._api)
-      : _albumMethods = AlbumMethods(_api),
-        _artistMethods = ArtistMethods(_api),
-        _chartMethods = ChartMethods(_api),
-        _geoMethods = GeoMethods(_api),
-        _libraryMethods = LibraryMethods(_api),
-        _tagMethods = TagMethods(_api),
-        _trackMethods = TrackMethods(_api),
-        _userMethods = UserMethods(_api) {
+    : _albumMethods = AlbumMethods(_api),
+      _artistMethods = ArtistMethods(_api),
+      _chartMethods = ChartMethods(_api),
+      _geoMethods = GeoMethods(_api),
+      _libraryMethods = LibraryMethods(_api),
+      _tagMethods = TagMethods(_api),
+      _trackMethods = TrackMethods(_api),
+      _userMethods = UserMethods(_api) {
     _instance = this;
   }
 

@@ -3,7 +3,7 @@
 //                  Copyright (c) 2020 Nebulino                 //
 //                                                              //
 
-part of lastfm_objects;
+part of '../lastfm.dart';
 
 /// This object represents the user stats of a determined LastFM object.
 @JsonSerializable(includeIfNull: false)
@@ -20,11 +20,7 @@ class Stats {
   @JsonKey(name: 'userplaycount', fromJson: LastFMValueNormalizer.NumberToInt)
   int? userPlayCount; // Last.FM treats this as String
 
-  Stats({
-    this.listeners,
-    this.playCount,
-    this.userPlayCount,
-  });
+  Stats({this.listeners, this.playCount, this.userPlayCount});
 
   factory Stats.fromJson(Map<String, dynamic> json) => _$StatsFromJson(json);
 

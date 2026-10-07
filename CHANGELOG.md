@@ -1,3 +1,15 @@
+## 3.0.0
+### Major Update - Dart 3 & Sound Null Safety
+
+- Migrated to Dart 3 (SDK `^3.8.0`) and sound null safety.
+- Upgraded dependencies:
+  - `dio` to `^5.4.0` (using `DioException` and modern interceptor handlers)
+  - `xml` to `^6.5.0` (migrated to `innerText`)
+  - `json_annotation` to `^4.12.0` and `json_serializable` to `^6.8.0`
+  - `lints` to `^3.0.0` (replacing deprecated `pedantic`)
+- Regenerated code objects via `build_runner`.
+- Formatted and modernized codebase according to Dart 3 standards.
+
 ## 2.0.5+1
 ### Fix dio/adapters
 

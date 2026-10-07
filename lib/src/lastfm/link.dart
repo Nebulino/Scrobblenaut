@@ -3,7 +3,7 @@
 //                  Copyright (c) 2020 Nebulino                 //
 //                                                              //
 
-part of lastfm_objects;
+part of '../lastfm.dart';
 
 /// This object represents a link.
 @JsonSerializable(includeIfNull: false)
@@ -21,11 +21,7 @@ class Link {
   @JsonKey(name: 'href')
   String? webLink;
 
-  Link({
-    this.text,
-    this.rel,
-    this.webLink,
-  });
+  Link({this.text, this.rel, this.webLink});
 
   factory Link.fromJson(Map<String, dynamic> json) => _$LinkFromJson(json);
 

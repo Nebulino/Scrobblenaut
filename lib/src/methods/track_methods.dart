@@ -29,13 +29,19 @@ class TrackMethods {
     required List<String> tags,
   }) async {
     if (!_api.isAuth) {
-      return Future.error(ScrobblenautException(
-          description: "You can't use this method unless you Authenticate."));
+      return Future.error(
+        ScrobblenautException(
+          description: "You can't use this method unless you Authenticate.",
+        ),
+      );
     }
 
     if (tags.length > 10) {
-      return Future.error(ScrobblenautException(
-          description: "You've supplied more than 10 tags."));
+      return Future.error(
+        ScrobblenautException(
+          description: "You've supplied more than 10 tags.",
+        ),
+      );
     }
 
     final parameters = {
@@ -44,12 +50,15 @@ class TrackMethods {
       'tags': generateStringFromList(tags),
     };
 
-    final request =
-        Request(api: _api, method: 'track.addTags', parameters: parameters)
-          ..signRequest();
+    final request = Request(
+      api: _api,
+      method: 'track.addTags',
+      parameters: parameters,
+    )..signRequest();
 
-    final response =
-        PostResponseHelper.parse(await request.send(mode: RequestMode.POST));
+    final response = PostResponseHelper.parse(
+      await request.send(mode: RequestMode.POST),
+    );
 
     if (response.status) {
       return true;
@@ -66,13 +75,13 @@ class TrackMethods {
     required String track,
     required String artist,
   }) async {
-    final parameters = {
-      'track': track,
-      'artist': artist,
-    };
+    final parameters = {'track': track, 'artist': artist};
 
     final request = Request(
-        api: _api, method: 'track.getCorrection', parameters: parameters);
+      api: _api,
+      method: 'track.getCorrection',
+      parameters: parameters,
+    );
 
     final response = await request.send(mode: RequestMode.GET);
 
@@ -80,9 +89,10 @@ class TrackMethods {
 
     if (corrections is List) {
       return List.generate(
-          corrections.length,
-          (i) => Track.fromJson(
-              response['corrections']['correction']['track'][i]));
+        corrections.length,
+        (i) =>
+            Track.fromJson(response['corrections']['correction']['track'][i]),
+      );
     }
 
     // A list of a single correction.
@@ -103,8 +113,10 @@ class TrackMethods {
     if ((track == null || artist == null) && mbid == null) {
       return Future.error(
         ScrobblenautException(
-            description: 'At least mbid is required. '
-                'Can be used also track and artist.'),
+          description:
+              'At least mbid is required. '
+              'Can be used also track and artist.',
+        ),
       );
     }
 
@@ -116,8 +128,11 @@ class TrackMethods {
       'autocorrect': (autoCorrect ? 1 : 0),
     };
 
-    final request =
-        Request(api: _api, method: 'track.getInfo', parameters: parameters);
+    final request = Request(
+      api: _api,
+      method: 'track.getInfo',
+      parameters: parameters,
+    );
 
     return Track.fromJson((await request.send(mode: RequestMode.GET))['track']);
   }
@@ -135,8 +150,10 @@ class TrackMethods {
     if ((track == null || artist == null) && mbid == null) {
       return Future.error(
         ScrobblenautException(
-            description: 'At least mbid is required. '
-                'Can be used also track and artist.'),
+          description:
+              'At least mbid is required. '
+              'Can be used also track and artist.',
+        ),
       );
     }
 
@@ -148,8 +165,11 @@ class TrackMethods {
       'autocorrect': (autoCorrect ? 1 : 0),
     };
 
-    final request =
-        Request(api: _api, method: 'track.getSimilar', parameters: parameters);
+    final request = Request(
+      api: _api,
+      method: 'track.getSimilar',
+      parameters: parameters,
+    );
 
     final response = await request.send(mode: RequestMode.GET);
 
@@ -157,8 +177,10 @@ class TrackMethods {
 
     return similarTracks == null
         ? null
-        : List.generate((similarTracks as List).length,
-            (i) => Track.fromJson(similarTracks[i]));
+        : List.generate(
+            (similarTracks as List).length,
+            (i) => Track.fromJson(similarTracks[i]),
+          );
   }
 
   /// Get the tags applied by an individual user to a track on Last.fm.
@@ -174,14 +196,21 @@ class TrackMethods {
     bool autoCorrect = false,
   }) async {
     if ((track == null || artist == null) && mbid == null) {
-      return Future.error(ScrobblenautException(
-          description: 'At least mbid is required. '
-              'Can be used also track and artist.'));
+      return Future.error(
+        ScrobblenautException(
+          description:
+              'At least mbid is required. '
+              'Can be used also track and artist.',
+        ),
+      );
     }
 
     if (!_api.isAuth && user == null) {
-      return Future.error(ScrobblenautException(
-          description: "You're not authenticated, you must use user."));
+      return Future.error(
+        ScrobblenautException(
+          description: "You're not authenticated, you must use user.",
+        ),
+      );
     }
 
     final parameters = {
@@ -192,8 +221,11 @@ class TrackMethods {
       'autocorrect': (autoCorrect ? 1 : 0),
     };
 
-    final request =
-        Request(api: _api, method: 'track.getTags', parameters: parameters);
+    final request = Request(
+      api: _api,
+      method: 'track.getTags',
+      parameters: parameters,
+    );
 
     final response = await request.send(mode: RequestMode.GET);
 
@@ -201,14 +233,18 @@ class TrackMethods {
     final tags = response.toString() == '{}'
         ? throw LastFMException(
             errorCode: '0',
-            description: "There's a problem with Your request."
-                " Check You're input data such as artist-track / mbid.")
+            description:
+                "There's a problem with Your request."
+                " Check You're input data such as artist-track / mbid.",
+          )
         : response['tags'];
 
     return tags['tag'] == null
         ? null
         : List.generate(
-            (tags['tag'] as List).length, (i) => Tag.fromJson(tags['tag'][i]));
+            (tags['tag'] as List).length,
+            (i) => Tag.fromJson(tags['tag'][i]),
+          );
   }
 
   /// Get the top tags for this track on Last.fm, ordered by tag count.
@@ -222,9 +258,13 @@ class TrackMethods {
     bool autoCorrect = false,
   }) async {
     if ((track == null || artist == null) && mbid == null) {
-      return Future.error(ScrobblenautException(
-          description: 'At least mbid is required. '
-              'Can be used also track and artist.'));
+      return Future.error(
+        ScrobblenautException(
+          description:
+              'At least mbid is required. '
+              'Can be used also track and artist.',
+        ),
+      );
     }
 
     final parameters = {
@@ -234,8 +274,11 @@ class TrackMethods {
       'autocorrect': (autoCorrect ? 1 : 0),
     };
 
-    final request =
-        Request(api: _api, method: 'track.getTopTags', parameters: parameters);
+    final request = Request(
+      api: _api,
+      method: 'track.getTopTags',
+      parameters: parameters,
+    );
 
     final response = await request.send(mode: RequestMode.GET);
 
@@ -249,13 +292,13 @@ class TrackMethods {
   /// Love a track for a user profile.
   ///
   /// https://www.last.fm/api/show/track.love
-  Future<bool> love({
-    required String track,
-    required String artist,
-  }) async {
+  Future<bool> love({required String track, required String artist}) async {
     if (!_api.isAuth) {
-      return Future.error(ScrobblenautException(
-          description: "You can't use this method unless you Authenticate."));
+      return Future.error(
+        ScrobblenautException(
+          description: "You can't use this method unless you Authenticate.",
+        ),
+      );
     }
 
     final parameters = {
@@ -263,12 +306,15 @@ class TrackMethods {
       'artist': formatUnicode(text: artist),
     };
 
-    final request =
-        Request(api: _api, method: 'track.love', parameters: parameters)
-          ..signRequest();
+    final request = Request(
+      api: _api,
+      method: 'track.love',
+      parameters: parameters,
+    )..signRequest();
 
-    final response =
-        PostResponseHelper.parse(await request.send(mode: RequestMode.POST));
+    final response = PostResponseHelper.parse(
+      await request.send(mode: RequestMode.POST),
+    );
 
     if (response.status) {
       return true;
@@ -286,22 +332,24 @@ class TrackMethods {
     required String tag,
   }) async {
     if (!_api.isAuth) {
-      return Future.error(ScrobblenautException(
-          description: "You can't use this method unless you Authenticate."));
+      return Future.error(
+        ScrobblenautException(
+          description: "You can't use this method unless you Authenticate.",
+        ),
+      );
     }
 
-    final parameters = {
-      'track': track,
-      'artist': artist,
-      'tag': tag,
-    };
+    final parameters = {'track': track, 'artist': artist, 'tag': tag};
 
-    final request =
-        Request(api: _api, method: 'track.removeTag', parameters: parameters)
-          ..signRequest();
+    final request = Request(
+      api: _api,
+      method: 'track.removeTag',
+      parameters: parameters,
+    )..signRequest();
 
-    final response =
-        PostResponseHelper.parse(await request.send(mode: RequestMode.POST));
+    final response = PostResponseHelper.parse(
+      await request.send(mode: RequestMode.POST),
+    );
 
     if (response.status) {
       return true;
@@ -339,8 +387,11 @@ class TrackMethods {
     String? mbid,
   }) async {
     if (!_api.isAuth) {
-      return Future.error(ScrobblenautException(
-          description: "You can't use this method unless you Authenticate."));
+      return Future.error(
+        ScrobblenautException(
+          description: "You can't use this method unless you Authenticate.",
+        ),
+      );
     }
 
     timestamp ??= DateTime.now();
@@ -351,17 +402,20 @@ class TrackMethods {
       'artist': artist,
       'trackNumber': trackNumber,
       'duration': duration?.inSeconds,
-      'timestamp':
-          LastFMValueNormalizer.timestampToSecondsSinceEpoch(timestamp),
+      'timestamp': LastFMValueNormalizer.timestampToSecondsSinceEpoch(
+        timestamp,
+      ),
       'context': context,
       'streamId': streamId,
       'chosenByUser': (chosenByUser ? 1 : 0),
       'mbid': mbid,
     };
 
-    final request =
-        Request(api: _api, method: 'track.scrobble', parameters: parameters)
-          ..signRequest();
+    final request = Request(
+      api: _api,
+      method: 'track.scrobble',
+      parameters: parameters,
+    )..signRequest();
 
     final response = (await request.send(mode: RequestMode.POST));
 
@@ -369,11 +423,15 @@ class TrackMethods {
   }
 
   /// See [TrackMethods.scrobble].
-  Future<ScrobbleResponse> scrobbleFromObject(
-      {required Scrobble scrobble}) async {
+  Future<ScrobbleResponse> scrobbleFromObject({
+    required Scrobble scrobble,
+  }) async {
     if (!_api.isAuth) {
-      return Future.error(ScrobblenautException(
-          description: "You can't use this method unless you Authenticate."));
+      return Future.error(
+        ScrobblenautException(
+          description: "You can't use this method unless you Authenticate.",
+        ),
+      );
     }
 
     final parameters = {
@@ -383,20 +441,23 @@ class TrackMethods {
       'trackNumber': scrobble.trackNumber,
       'duration': scrobble.duration?.inSeconds,
       'timestamp': LastFMValueNormalizer.timestampToSecondsSinceEpoch(
-          scrobble.timestamp),
+        scrobble.timestamp,
+      ),
       'context': scrobble.context,
       'streamId': scrobble.streamId,
       'chosenByUser': (scrobble.chosenByUser == null
           ? null
           : scrobble.chosenByUser!
-              ? 1
-              : 0),
+          ? 1
+          : 0),
       'mbid': scrobble.mbid,
     };
 
-    final request =
-        Request(api: _api, method: 'track.scrobble', parameters: parameters)
-          ..signRequest();
+    final request = Request(
+      api: _api,
+      method: 'track.scrobble',
+      parameters: parameters,
+    )..signRequest();
 
     final response = (await request.send(mode: RequestMode.POST));
 
@@ -404,14 +465,16 @@ class TrackMethods {
   }
 
   /// See [TrackMethods.scrobble] and [Scrobble] for more information.
-  Future<ScrobbleResponse> multiScrobble(
-      {required List<Scrobble> scrobbleList}) async {
+  Future<ScrobbleResponse> multiScrobble({
+    required List<Scrobble> scrobbleList,
+  }) async {
     // TODO: make a queue for scrobbleList longer than 50?
 
     if (scrobbleList.length > 50) {
       return Future.error(
         ScrobblenautException(
-            description: "You've supplied more than 50 scrobbles."),
+          description: "You've supplied more than 50 scrobbles.",
+        ),
       );
     }
 
@@ -419,7 +482,7 @@ class TrackMethods {
 
     var i = 1;
 
-    scrobbleList.forEach((Scrobble scrobble) {
+    for (var scrobble in scrobbleList) {
       parameters['track[$i]'] = scrobble.track;
       parameters['album[$i]'] = scrobble.album;
       parameters['artist[$i]'] = scrobble.artist;
@@ -427,18 +490,21 @@ class TrackMethods {
       parameters['duration[$i]'] = scrobble.duration;
       parameters['timestamp[$i]'] =
           LastFMValueNormalizer.timestampToSecondsSinceEpoch(
-              scrobble.timestamp);
+            scrobble.timestamp,
+          );
       parameters['context[$i]'] = scrobble.context;
       parameters['streamId[$i]'] = scrobble.streamId;
       parameters['chosenByUser[$i]'] = scrobble.chosenByUser;
       parameters['mbid[$i]'] = scrobble.mbid;
 
       i++;
-    });
+    }
 
-    final request =
-        Request(api: _api, method: 'track.scrobble', parameters: parameters)
-          ..signRequest();
+    final request = Request(
+      api: _api,
+      method: 'track.scrobble',
+      parameters: parameters,
+    )..signRequest();
 
     final response = await request.send(mode: RequestMode.POST);
 
@@ -462,8 +528,11 @@ class TrackMethods {
       'limit': limit,
     };
 
-    final request =
-        Request(api: _api, method: 'track.search', parameters: parameters);
+    final request = Request(
+      api: _api,
+      method: 'track.search',
+      parameters: parameters,
+    );
 
     final response = await request.send(mode: RequestMode.GET);
 
@@ -473,26 +542,26 @@ class TrackMethods {
   /// UnLove a track for a user profile.
   ///
   /// https://www.last.fm/api/show/track.unlove
-  Future<bool> unLove({
-    required String track,
-    required String artist,
-  }) async {
+  Future<bool> unLove({required String track, required String artist}) async {
     if (!_api.isAuth) {
-      return Future.error(ScrobblenautException(
-          description: "You can't use this method unless you Authenticate."));
+      return Future.error(
+        ScrobblenautException(
+          description: "You can't use this method unless you Authenticate.",
+        ),
+      );
     }
 
-    final parameters = {
-      'track': track,
-      'artist': artist,
-    };
+    final parameters = {'track': track, 'artist': artist};
 
-    final request =
-        Request(api: _api, method: 'track.unlove', parameters: parameters)
-          ..signRequest();
+    final request = Request(
+      api: _api,
+      method: 'track.unlove',
+      parameters: parameters,
+    )..signRequest();
 
-    final response =
-        PostResponseHelper.parse(await request.send(mode: RequestMode.POST));
+    final response = PostResponseHelper.parse(
+      await request.send(mode: RequestMode.POST),
+    );
 
     if (response.status) {
       return true;
@@ -518,8 +587,11 @@ class TrackMethods {
     String? mbid,
   }) async {
     if (!_api.isAuth) {
-      return Future.error(ScrobblenautException(
-          description: "You can't use this method unless you Authenticate."));
+      return Future.error(
+        ScrobblenautException(
+          description: "You can't use this method unless you Authenticate.",
+        ),
+      );
     }
 
     final parameters = {
@@ -528,8 +600,9 @@ class TrackMethods {
       'artist': artist,
       'trackNumber': trackNumber,
       'duration': duration?.inSeconds,
-      'timestamp':
-          LastFMValueNormalizer.timestampToSecondsSinceEpoch(timestamp),
+      'timestamp': LastFMValueNormalizer.timestampToSecondsSinceEpoch(
+        timestamp,
+      ),
       'context': context,
       'streamId': streamId,
       'chosenByUser': (chosenByUser ? 1 : 0),
@@ -537,8 +610,10 @@ class TrackMethods {
     };
 
     final request = Request(
-        api: _api, method: 'track.updateNowPlaying', parameters: parameters)
-      ..signRequest();
+      api: _api,
+      method: 'track.updateNowPlaying',
+      parameters: parameters,
+    )..signRequest();
 
     final response = (await request.send(mode: RequestMode.POST));
 
@@ -546,12 +621,14 @@ class TrackMethods {
   }
 
   /// See [TrackMethods.updateNowPlaying].
-  Future<NowPlayedTrack> updateNowPlayingFromObject(
-      {required NowPlaying track}) async {
+  Future<NowPlayedTrack> updateNowPlayingFromObject({
+    required NowPlaying track,
+  }) async {
     if (!_api.isAuth) {
       return Future.error(
         ScrobblenautException(
-            description: "You can't use this method unless you Authenticate."),
+          description: "You can't use this method unless you Authenticate.",
+        ),
       );
     }
 
@@ -566,8 +643,10 @@ class TrackMethods {
     };
 
     final request = Request(
-        api: _api, method: 'track.updateNowPlaying', parameters: parameters)
-      ..signRequest();
+      api: _api,
+      method: 'track.updateNowPlaying',
+      parameters: parameters,
+    )..signRequest();
 
     final response = (await request.send(mode: RequestMode.POST));
 

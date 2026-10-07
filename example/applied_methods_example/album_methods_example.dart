@@ -31,8 +31,9 @@ void main() async {
   print('###########################album.addTags############################');
 
   // album.addTags
-  print('Result of addTag request: ' +
-      (await albumInstance.addTags(tags: ['Anime'])).toString());
+  print(
+    'Result of addTag request: ${await albumInstance.addTags(tags: ['Anime'])}',
+  );
 
   print('#########################album.getInfo##############################');
 
@@ -42,8 +43,10 @@ void main() async {
     autoCorrect: true,
   ));
 
-  print('Album Name: ${albumGetInfo.name} |'
-      ' Album Artist: ${albumGetInfo.artist?.name}');
+  print(
+    'Album Name: ${albumGetInfo.name} |'
+    ' Album Artist: ${albumGetInfo.artist?.name}',
+  );
 
   albumGetInfo.tracks?.forEach((Track track) {
     print('Track Title: ${track.name} | Track Duration: ${track.duration}');
@@ -66,8 +69,9 @@ void main() async {
   print('#########################album.removeTag############################');
 
   // album.removeTag
-  print('Result of removeTag request: ' +
-      (await albumInstance.removeTag(tag: 'anime')).toString());
+  print(
+    'Result of removeTag request: ${await albumInstance.removeTag(tag: 'anime')}',
+  );
 
   print('########################album.search################################');
 

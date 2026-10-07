@@ -5,7 +5,6 @@
 
 import 'package:scrobblenaut/lastfm.dart';
 import 'package:scrobblenaut/scrobblenaut.dart';
-import 'package:scrobblenaut/scrobblenaut_helpers.dart';
 
 import '../api_values.dart';
 
@@ -32,16 +31,19 @@ void main() async {
   print('##########################track.addTags#############################');
 
   // track.addTags
-  print('Result of addTag request: ' +
-      (await trackInstance.addTags(tags: ['anime'])).toString());
+  print(
+    'Result of addTag request: ${await trackInstance.addTags(tags: ['anime'])}',
+  );
 
   print('######################track.getCorrection###########################');
 
   // track.getCorrection
-  (await trackInstance.getCorrection()).forEach((Track track) {
-    print('Track Correction Name: ${track.name} |'
-        ' Track Correction URL: ${track.url}');
-  });
+  for (var track in (await trackInstance.getCorrection())) {
+    print(
+      'Track Correction Name: ${track.name} |'
+      ' Track Correction URL: ${track.url}',
+    );
+  }
 
   print('#########################track.getInfo##############################');
 
@@ -51,9 +53,11 @@ void main() async {
     autoCorrect: true,
   ));
 
-  print('Track Info Name: ${trackGetInfo.name} '
-      '| Track URL: ${trackGetInfo.url} '
-      '| Track Duration: ${trackGetInfo.duration}');
+  print(
+    'Track Info Name: ${trackGetInfo.name} '
+    '| Track URL: ${trackGetInfo.url} '
+    '| Track Duration: ${trackGetInfo.duration}',
+  );
 
   print('#########################track.getSimilar###########################');
 
@@ -79,24 +83,26 @@ void main() async {
   print('#############################track.love#############################');
 
   // track.love
-  print('Result of love request: ' + (await trackInstance.love()).toString());
+  print('Result of love request: ${await trackInstance.love()}');
 
   print('########################track.removeTag#############################');
 
   // track.removeTag
-  print('Result of removeTag request: ' +
-      (await trackInstance.removeTag(tag: 'anime')).toString());
+  print(
+    'Result of removeTag request: ${await trackInstance.removeTag(tag: 'anime')}',
+  );
 
   print('#########################track.scrobble#############################');
 
   // track.scrobble
-  final scrobbleResponse =
-      await trackInstance.scrobble(timestamp: DateTime.now());
+  final scrobbleResponse = await trackInstance.scrobble(
+    timestamp: DateTime.now(),
+  );
   // YAY. IT WORKS!
 
-  scrobbleResponse.scrobbleResponses.forEach((ScrobbledTrack scrobbledTrack) {
+  for (var scrobbledTrack in scrobbleResponse.scrobbleResponses) {
     print('Scrobbled Title: ${scrobbledTrack.track}');
-  });
+  }
 
   print('###########################track.search#############################');
 
@@ -108,8 +114,7 @@ void main() async {
   print('##########################track.unlove##############################');
 
   // track.unlove
-  print(
-      'Result of unlove request: ' + (await trackInstance.unLove()).toString());
+  print('Result of unlove request: ${await trackInstance.unLove()}');
 
   print('#####################track.updateNowPlaying#########################');
 
@@ -117,8 +122,10 @@ void main() async {
   final nowPlayingResponse = await trackInstance.updateNowPlaying();
   // YAY. IT WORKS!
 
-  print('Result of updateNowPlaying request: ${nowPlayingResponse.status} | '
-      '${nowPlayingResponse.track}');
+  print(
+    'Result of updateNowPlaying request: ${nowPlayingResponse.status} | '
+    '${nowPlayingResponse.track}',
+  );
 
   print('####################################################################');
 }

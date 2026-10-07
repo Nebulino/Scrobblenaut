@@ -25,20 +25,22 @@ void main() async {
   print('#########################geo.getTopArtists##########################');
 
   // geo.getTopArtists
-  (await scrobblenaut.geo.getTopArtists(country: 'canada'))
-      ?.forEach((Artist artist) {
+  (await scrobblenaut.geo.getTopArtists(country: 'canada'))?.forEach((
+    Artist artist,
+  ) {
     print('Top Artist Name: ${artist.name} | Top Artist URL : ${artist.url}');
   });
 
   print('#########################geo.getTopTracks###########################');
 
   // geo.getTopTracks
-  (await scrobblenaut.geo.getTopTracks(country: 'canada'))
-      .forEach((Track track) {
-    print('Top Track Name: ${track.name} | Top Track URL : ${track.url} | '
-        'Top Track Duration: ${track.duration}');
+  for (var track in (await scrobblenaut.geo.getTopTracks(country: 'canada'))) {
+    print(
+      'Top Track Name: ${track.name} | Top Track URL : ${track.url} | '
+      'Top Track Duration: ${track.duration}',
+    );
     // Check if the duration is correct.
-  });
+  }
 
   print('####################################################################');
 }

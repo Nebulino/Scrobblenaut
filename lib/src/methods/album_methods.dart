@@ -26,13 +26,19 @@ class AlbumMethods {
     required List<String> tags,
   }) async {
     if (!_api.isAuth) {
-      return Future.error(ScrobblenautException(
-          description: "You can't use this method unless you Authenticate."));
+      return Future.error(
+        ScrobblenautException(
+          description: "You can't use this method unless you Authenticate.",
+        ),
+      );
     }
 
     if (tags.length > 10) {
-      return Future.error(ScrobblenautException(
-          description: "You've supplied more than 10 tags."));
+      return Future.error(
+        ScrobblenautException(
+          description: "You've supplied more than 10 tags.",
+        ),
+      );
     }
 
     final parameters = {
@@ -41,12 +47,15 @@ class AlbumMethods {
       'tags': generateStringFromList(tags),
     };
 
-    final request =
-        Request(api: _api, method: 'album.addTags', parameters: parameters)
-          ..signRequest();
+    final request = Request(
+      api: _api,
+      method: 'album.addTags',
+      parameters: parameters,
+    )..signRequest();
 
-    final response =
-        PostResponseHelper.parse(await request.send(mode: RequestMode.POST));
+    final response = PostResponseHelper.parse(
+      await request.send(mode: RequestMode.POST),
+    );
 
     if (response.status) {
       return true;
@@ -68,9 +77,13 @@ class AlbumMethods {
     Language language = Language.en,
   }) async {
     if ((album == null || artist == null) && mbid == null) {
-      return Future.error(ScrobblenautException(
-          description: 'At least mbid is required. '
-              'Can be used also album and artist.'));
+      return Future.error(
+        ScrobblenautException(
+          description:
+              'At least mbid is required. '
+              'Can be used also album and artist.',
+        ),
+      );
     }
 
     final parameters = {
@@ -82,8 +95,11 @@ class AlbumMethods {
       'lang': language.code,
     };
 
-    final request =
-        Request(api: _api, method: 'album.getInfo', parameters: parameters);
+    final request = Request(
+      api: _api,
+      method: 'album.getInfo',
+      parameters: parameters,
+    );
 
     final response = await request.send(mode: RequestMode.GET);
 
@@ -110,14 +126,21 @@ class AlbumMethods {
     String? user,
   }) async {
     if ((album == null || artist == null) && mbid == null) {
-      return Future.error(ScrobblenautException(
-          description: 'At least mbid is required. '
-              'Can be used also album and artist.'));
+      return Future.error(
+        ScrobblenautException(
+          description:
+              'At least mbid is required. '
+              'Can be used also album and artist.',
+        ),
+      );
     }
 
     if (!_api.isAuth && user == null) {
-      return Future.error(ScrobblenautException(
-          description: "You're not authenticated, you must use user."));
+      return Future.error(
+        ScrobblenautException(
+          description: "You're not authenticated, you must use user.",
+        ),
+      );
     }
 
     final parameters = {
@@ -128,8 +151,11 @@ class AlbumMethods {
       'autocorrect': (autoCorrect ? 1 : 0),
     };
 
-    final request =
-        Request(api: _api, method: 'album.getTags', parameters: parameters);
+    final request = Request(
+      api: _api,
+      method: 'album.getTags',
+      parameters: parameters,
+    );
 
     final response = await request.send(mode: RequestMode.GET);
 
@@ -150,9 +176,13 @@ class AlbumMethods {
     bool autoCorrect = false,
   }) async {
     if ((album == null || artist == null) && mbid == null) {
-      return Future.error(ScrobblenautException(
-          description: 'At least mbid is required. '
-              'Can be used also album and artist.'));
+      return Future.error(
+        ScrobblenautException(
+          description:
+              'At least mbid is required. '
+              'Can be used also album and artist.',
+        ),
+      );
     }
 
     final parameters = {
@@ -162,8 +192,11 @@ class AlbumMethods {
       'autocorrect': (autoCorrect ? 1 : 0),
     };
 
-    final request =
-        Request(api: _api, method: 'album.getTopTags', parameters: parameters);
+    final request = Request(
+      api: _api,
+      method: 'album.getTopTags',
+      parameters: parameters,
+    );
 
     final response = await request.send(mode: RequestMode.GET);
 
@@ -183,22 +216,24 @@ class AlbumMethods {
     required String tag,
   }) async {
     if (!_api.isAuth) {
-      return Future.error(ScrobblenautException(
-          description: "You can't use this method unless you Authenticate."));
+      return Future.error(
+        ScrobblenautException(
+          description: "You can't use this method unless you Authenticate.",
+        ),
+      );
     }
 
-    final parameters = {
-      'artist': artist,
-      'album': album,
-      'tag': tag,
-    };
+    final parameters = {'artist': artist, 'album': album, 'tag': tag};
 
-    final request =
-        Request(api: _api, method: 'album.removeTag', parameters: parameters)
-          ..signRequest();
+    final request = Request(
+      api: _api,
+      method: 'album.removeTag',
+      parameters: parameters,
+    )..signRequest();
 
-    final response =
-        PostResponseHelper.parse(await request.send(mode: RequestMode.POST));
+    final response = PostResponseHelper.parse(
+      await request.send(mode: RequestMode.POST),
+    );
 
     if (response.status) {
       return true;
@@ -215,14 +250,13 @@ class AlbumMethods {
     int page = 1,
     int limit = 30,
   }) async {
-    final parameters = {
-      'album': album,
-      'page': page,
-      'limit': limit,
-    };
+    final parameters = {'album': album, 'page': page, 'limit': limit};
 
-    final request =
-        Request(api: _api, method: 'album.search', parameters: parameters);
+    final request = Request(
+      api: _api,
+      method: 'album.search',
+      parameters: parameters,
+    );
 
     final response = await request.send(mode: RequestMode.GET);
 

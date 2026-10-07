@@ -12,11 +12,12 @@ extension AlbumExtension on Album {
   AlbumMethods get _albumMethods => Scrobblenaut.instance.album;
 
   /// [AlbumMethods.addTags]
-  Future<bool> addTags({
-    required List<String> tags,
-  }) async {
+  Future<bool> addTags({required List<String> tags}) async {
     return await _albumMethods.addTags(
-        album: name ?? '', artist: artist?.name ?? '', tags: tags);
+      album: name ?? '',
+      artist: artist?.name ?? '',
+      tags: tags,
+    );
   }
 
   /// [AlbumMethods.getInfo]
@@ -38,10 +39,7 @@ extension AlbumExtension on Album {
   }
 
   /// [AlbumMethods.getTags]
-  Future<List<Tag>?> getTags({
-    bool autoCorrect = false,
-    String? user,
-  }) async {
+  Future<List<Tag>?> getTags({bool autoCorrect = false, String? user}) async {
     return await _albumMethods.getTags(
       artist: artist?.name,
       album: name,
@@ -52,20 +50,17 @@ extension AlbumExtension on Album {
   }
 
   /// [AlbumMethods.getTopTags]
-  Future<List<Tag>?> getTopTags({
-    bool autoCorrect = false,
-  }) async {
+  Future<List<Tag>?> getTopTags({bool autoCorrect = false}) async {
     return await _albumMethods.getTopTags(
-        artist: artist?.name,
-        album: name,
-        mbid: mbid,
-        autoCorrect: autoCorrect);
+      artist: artist?.name,
+      album: name,
+      mbid: mbid,
+      autoCorrect: autoCorrect,
+    );
   }
 
   /// [AlbumMethods.removeTag]
-  Future<bool> removeTag({
-    required String tag,
-  }) async {
+  Future<bool> removeTag({required String tag}) async {
     return await _albumMethods.removeTag(
       artist: artist?.name ?? '',
       album: name ?? '',
@@ -74,10 +69,7 @@ extension AlbumExtension on Album {
   }
 
   /// [AlbumMethods.search]
-  Future<AlbumSearchResults> search({
-    int page = 1,
-    int limit = 30,
-  }) async {
+  Future<AlbumSearchResults> search({int page = 1, int limit = 30}) async {
     return await _albumMethods.search(
       album: name ?? '',
       page: page,

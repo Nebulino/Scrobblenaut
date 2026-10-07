@@ -3,7 +3,7 @@
 //                  Copyright (c) 2020 Nebulino                 //
 //                                                              //
 
-part of lastfm_objects;
+part of '../../lastfm.dart';
 
 /// This is a Session for Last FM.
 @JsonSerializable(includeIfNull: false)
@@ -20,11 +20,7 @@ class Session {
   @JsonKey(name: 'subscriber')
   int? subscriber;
 
-  Session({
-    this.name,
-    this.sessionKey,
-    this.subscriber,
-  });
+  Session({this.name, this.sessionKey, this.subscriber});
 
   factory Session.fromJson(Map<String, dynamic> json) =>
       _$SessionFromJson(json);

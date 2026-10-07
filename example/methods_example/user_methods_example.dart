@@ -12,9 +12,7 @@ import '../api_values.dart';
 void main() async {
   print('####################################################################');
 
-  final lastFMAuth = LastFM.noAuth(
-    apiKey: APIValues.API,
-  );
+  final lastFMAuth = LastFM.noAuth(apiKey: APIValues.API);
 
   final scrobblenaut = Scrobblenaut(lastFM: lastFMAuth);
 
@@ -35,8 +33,9 @@ void main() async {
   print('########################user.getLovedTracks#########################');
 
   // user.getLovedTracks
-  (await scrobblenaut.user.getLovedTracks(user: 'nebulino'))
-      ?.forEach((Track track) {
+  (await scrobblenaut.user.getLovedTracks(user: 'nebulino'))?.forEach((
+    Track track,
+  ) {
     print('Track Name: ${track.name} | Track URL: ${track.url}');
   });
 
@@ -44,33 +43,37 @@ void main() async {
 
   // user.getPersonalTags
   (await scrobblenaut.user.getPersonalTags(
-          user: 'nebulino', tag: 'anime', taggingType: TaggingType.track))
-      .tracks
-      ?.forEach((Track track) {
+    user: 'nebulino',
+    tag: 'anime',
+    taggingType: TaggingType.track,
+  )).tracks?.forEach((Track track) {
     print('Track Name: ${track.name} | Track URL: ${track.url}');
   });
 
   print('#######################user.getRecentTracks#########################');
 
   // user.getRecentTracks
-  (await scrobblenaut.user.getRecentTracks(user: 'nebulino'))
-      ?.forEach((Track track) {
+  (await scrobblenaut.user.getRecentTracks(user: 'nebulino'))?.forEach((
+    Track track,
+  ) {
     print('Track Name: ${track.name} | Track URL: ${track.url}');
   });
 
   print('#########################user.getTopAlbums##########################');
 
   // user.getTopAlbums
-  (await scrobblenaut.user.getTopAlbums(user: 'nebulino'))
-      ?.forEach((Album album) {
+  (await scrobblenaut.user.getTopAlbums(user: 'nebulino'))?.forEach((
+    Album album,
+  ) {
     print('Top Album Name: ${album.name} | Top Album URL : ${album.url}');
   });
 
   print('#######################user.getTopArtists###########################');
 
   // user.getTopArtists
-  (await scrobblenaut.user.getTopArtists(user: 'nebulino'))
-      ?.forEach((Artist artist) {
+  (await scrobblenaut.user.getTopArtists(user: 'nebulino'))?.forEach((
+    Artist artist,
+  ) {
     print('Top Artist Name: ${artist.name} | Top Artist URL: ${artist.url}');
   });
 
@@ -84,45 +87,51 @@ void main() async {
   print('#####################user.getWeeklyAlbumChart#######################');
 
   // user.getTopTracks
-  (await scrobblenaut.user.getTopTracks(user: 'nebulino'))
-      .forEach((Track track) {
-    print('Top Tracks Name: ${track.name} | Top Tracks URL: ${track.url} |'
-        ' Duration: ${track.duration}');
-  });
+  for (var track in (await scrobblenaut.user.getTopTracks(user: 'nebulino'))) {
+    print(
+      'Top Tracks Name: ${track.name} | Top Tracks URL: ${track.url} |'
+      ' Duration: ${track.duration}',
+    );
+  }
 
   print('#####################user.getWeeklyArtistChart######################');
 
   // user.getWeeklyAlbumChart
-  (await scrobblenaut.user.getTopTracks(user: 'nebulino'))
-      .forEach((Track track) {
-    print('Top Tracks Name: ${track.name} | Top Tracks URL: ${track.url} |'
-        ' Duration: ${track.duration}');
-  });
+  for (var track in (await scrobblenaut.user.getTopTracks(user: 'nebulino'))) {
+    print(
+      'Top Tracks Name: ${track.name} | Top Tracks URL: ${track.url} |'
+      ' Duration: ${track.duration}',
+    );
+  }
 
   print('#####################user.getWeeklyArtistChart######################');
 
   // user.getWeeklyArtistChart
-  (await scrobblenaut.user.getWeeklyArtistChart(user: 'nebulino'))
-      ?.forEach((Artist artist) {
+  (await scrobblenaut.user.getWeeklyArtistChart(user: 'nebulino'))?.forEach((
+    Artist artist,
+  ) {
     print('Top Artist Name: ${artist.name} | Top Artist URL: ${artist.url}');
   });
 
   print('#####################user.getWeeklyChartList########################');
 
   // user.getWeeklyChartList
-  (await scrobblenaut.user.getWeeklyChartList(user: 'nebulino'))
-      ?.forEach((Chart chart) {
+  (await scrobblenaut.user.getWeeklyChartList(user: 'nebulino'))?.forEach((
+    Chart chart,
+  ) {
     print('From: ${chart.fromDate} | To: ${chart.toDate}');
   });
 
   print('#####################user.getWeeklyTrackChart#######################');
 
   // user.getWeeklyTrackChart
-  (await scrobblenaut.user.getWeeklyTrackChart(user: 'nebulino'))
-      ?.forEach((Track track) {
+  (await scrobblenaut.user.getWeeklyTrackChart(user: 'nebulino'))?.forEach((
+    Track track,
+  ) {
     print(
-        'Weekly Tracks Name: ${track.name} | Weekly Tracks URL: ${track.url} |'
-        ' Duration: ${track.duration}');
+      'Weekly Tracks Name: ${track.name} | Weekly Tracks URL: ${track.url} |'
+      ' Duration: ${track.duration}',
+    );
   });
 
   print('####################################################################');

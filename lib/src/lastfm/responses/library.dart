@@ -1,4 +1,4 @@
-part of lastfm_objects;
+part of '../../lastfm.dart';
 
 /// This object represents a response about an artist library from a search.
 @JsonSerializable(includeIfNull: false)

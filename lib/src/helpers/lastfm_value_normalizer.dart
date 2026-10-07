@@ -22,7 +22,8 @@ class LastFMValueNormalizer {
         return supposedNumber;
       } else {
         throw ScrobblenautException(
-            description: 'The supposed number is not recognized.');
+          description: 'The supposed number is not recognized.',
+        );
       }
     } else {
       return null;
@@ -32,17 +33,18 @@ class LastFMValueNormalizer {
   /// It transforms a supposed number into a Dart bool.
   /// This because LastFM sends int (0, 1) instead of a bool.
   static bool? NumberToBool(dynamic supposedBool) {
-    bool? _intParser(int? number) =>
+    bool? intParser(int? number) =>
         number == null ? null : (number == 1 ? true : false);
 
     if (supposedBool != null) {
       if (supposedBool is String) {
-        return _intParser(int.parse(supposedBool));
+        return intParser(int.parse(supposedBool));
       } else if (supposedBool is int) {
-        return _intParser(supposedBool);
+        return intParser(supposedBool);
       } else {
         throw ScrobblenautException(
-            description: 'The supposed bool is not recognized.');
+          description: 'The supposed bool is not recognized.',
+        );
       }
     } else {
       return null;
@@ -52,10 +54,10 @@ class LastFMValueNormalizer {
   /// It transforms a bool into a LastFM 'bool' [0,1].
   static int? BoolToIntBool(bool? booleanToTransform) =>
       booleanToTransform == null
-          ? null
-          : booleanToTransform
-              ? 1
-              : 0;
+      ? null
+      : booleanToTransform
+      ? 1
+      : 0;
 
   /// It transforms a supposed artist into a real [Artist] object.
   /// This because sometimes LastFM returns an artist as Map,
@@ -68,7 +70,8 @@ class LastFMValueNormalizer {
         return Artist.fromJson(supposedArtist as Map<String, dynamic>);
       } else {
         throw ScrobblenautException(
-            description: 'The supposed Artist is not recognized.');
+          description: 'The supposed Artist is not recognized.',
+        );
       }
     } else {
       return null;
@@ -91,8 +94,9 @@ class LastFMValueNormalizer {
         return Duration(milliseconds: supposedMilliseconds);
       } else {
         throw ScrobblenautException(
-            description:
-                'The supposed duration in milliseconds is not recognized.');
+          description:
+              'The supposed duration in milliseconds is not recognized.',
+        );
       }
     } else {
       return null;
@@ -112,7 +116,8 @@ class LastFMValueNormalizer {
         return Duration(seconds: supposedSeconds);
       } else {
         throw ScrobblenautException(
-            description: 'The supposed duration in seconds is not recognized.');
+          description: 'The supposed duration in seconds is not recognized.',
+        );
       }
     } else {
       return null;
@@ -121,11 +126,10 @@ class LastFMValueNormalizer {
 
   /// It transforms a Duration into Milliseconds.
   static int? DurationToMilliseconds(Duration? duration) =>
-      duration == null ? null : duration.inMilliseconds;
+      duration?.inMilliseconds;
 
   /// It transforms a Duration into Seconds.
-  static int? DurationToSeconds(Duration? duration) =>
-      duration == null ? null : duration.inSeconds;
+  static int? DurationToSeconds(Duration? duration) => duration?.inSeconds;
 
   /// It transforms a LastFM number received from [Artist][streamable]
   /// into a bool.
@@ -138,7 +142,8 @@ class LastFMValueNormalizer {
           return true;
         default:
           throw ScrobblenautException(
-              description: 'The supposed streamable bool is not recognized.');
+            description: 'The supposed streamable bool is not recognized.',
+          );
       }
     } else {
       return null;
@@ -154,7 +159,8 @@ class LastFMValueNormalizer {
         return Streamable.fromJson(streamable as Map<String, dynamic>);
       } else {
         throw ScrobblenautException(
-            description: 'The supposed streamable is not recognized.');
+          description: 'The supposed streamable is not recognized.',
+        );
       }
     } else {
       return null;
@@ -175,7 +181,8 @@ class LastFMValueNormalizer {
         return DateTime.fromMillisecondsSinceEpoch(unixTime * 1000);
       } else {
         throw ScrobblenautException(
-            description: 'The supposed unixTime bool is not recognized.');
+          description: 'The supposed unixTime bool is not recognized.',
+        );
       }
     } else {
       return null;
@@ -194,9 +201,11 @@ class LastFMValueNormalizer {
   /// Tracks extractor.
   static List<Track>? tracksExtractor(Map<String, dynamic>? tracks) =>
       tracks == null
-          ? null
-          : List.generate((tracks['track'] as List).length,
-              (i) => Track.fromJson(tracks['track'][i]));
+      ? null
+      : List.generate(
+          (tracks['track'] as List).length,
+          (i) => Track.fromJson(tracks['track'][i]),
+        );
 
   /// Tags extractor.
   static List<Tag>? tagsExtractor(Map<String, dynamic>? tags) {
@@ -204,41 +213,52 @@ class LastFMValueNormalizer {
       return null;
     } else if (tags['tag'] is List) {
       return List.generate(
-          (tags['tag'] as List).length, (i) => Tag.fromJson(tags['tag'][i]));
+        (tags['tag'] as List).length,
+        (i) => Tag.fromJson(tags['tag'][i]),
+      );
     } else if (tags['tag'] is Map) {
       return [Tag.fromJson(tags['tag'])];
     }
+    return null;
   }
 
   /// Albums extractor.
   static List<Album>? albumsExtractor(Map<String, dynamic>? albums) =>
       albums == null
-          ? null
-          : List.generate((albums['album'] as List).length,
-              (i) => Album.fromJson(albums['album'][i]));
+      ? null
+      : List.generate(
+          (albums['album'] as List).length,
+          (i) => Album.fromJson(albums['album'][i]),
+        );
 
   /// Artists extractor.
   static List<Artist>? artistsExtractor(Map<String, dynamic>? artists) =>
       artists == null
-          ? null
-          : List.generate((artists['artist'] as List).length,
-              (i) => Artist.fromJson(artists['artist'][i]));
+      ? null
+      : List.generate(
+          (artists['artist'] as List).length,
+          (i) => Artist.fromJson(artists['artist'][i]),
+        );
 
   /// SimilarArtists extractor.
   static List<Artist>? similarArtistsExtractor(
-          Map<String, dynamic>? similarArtists) =>
-      similarArtists == null
-          ? null
-          : List.generate((similarArtists['artist'] as List).length,
-              (i) => Artist.fromJson(similarArtists['artist'][i]));
+    Map<String, dynamic>? similarArtists,
+  ) => similarArtists == null
+      ? null
+      : List.generate(
+          (similarArtists['artist'] as List).length,
+          (i) => Artist.fromJson(similarArtists['artist'][i]),
+        );
 
   /// Links extractor.
   static List<Link>? linksExtractor(Map<String, dynamic>? links) {
     final supposedLinksList = links;
     if (links != null) {
       if (supposedLinksList is List) {
-        return List.generate((links['link'] as List).length,
-            (i) => Link.fromJson(links['link'][i]));
+        return List.generate(
+          (links['link'] as List).length,
+          (i) => Link.fromJson(links['link'][i]),
+        );
       } else {
         return [Link.fromJson(links['link'])];
       }
@@ -250,6 +270,6 @@ class LastFMValueNormalizer {
   /// TimeStamp normalizer for POST methods.
   static int? timestampToSecondsSinceEpoch(DateTime? timestamp) =>
       timestamp == null
-          ? null
-          : (timestamp.millisecondsSinceEpoch / 1000).round();
+      ? null
+      : (timestamp.millisecondsSinceEpoch / 1000).round();
 }

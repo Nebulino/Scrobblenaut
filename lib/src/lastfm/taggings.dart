@@ -3,7 +3,7 @@
 //                  Copyright (c) 2020 Nebulino                 //
 //                                                              //
 
-part of lastfm_objects;
+part of '../lastfm.dart';
 
 /// This object represents different type of applied tags in taggable objects.
 @JsonSerializable(includeIfNull: false)
@@ -20,11 +20,7 @@ class Taggings {
   @JsonKey(name: 'tracks', fromJson: LastFMValueNormalizer.tracksExtractor)
   List<Track>? tracks;
 
-  Taggings({
-    this.albums,
-    this.artists,
-    this.tracks,
-  });
+  Taggings({this.albums, this.artists, this.tracks});
 
   factory Taggings.fromJson(Map<String, dynamic> json) =>
       _$TaggingsFromJson(json);

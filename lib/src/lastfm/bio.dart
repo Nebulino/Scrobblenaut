@@ -3,7 +3,7 @@
 //                  Copyright (c) 2020 Nebulino                 //
 //                                                              //
 
-part of lastfm_objects;
+part of '../lastfm.dart';
 
 /// This object represents a bio.
 @JsonSerializable(includeIfNull: false)
@@ -26,12 +26,7 @@ class Bio {
   @JsonKey(name: 'content')
   String? content;
 
-  Bio({
-    this.links,
-    this.published,
-    this.summary,
-    this.content,
-  });
+  Bio({this.links, this.published, this.summary, this.content});
 
   factory Bio.fromJson(Map<String, dynamic> json) => _$BioFromJson(json);
 

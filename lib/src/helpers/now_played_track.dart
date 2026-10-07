@@ -79,35 +79,38 @@ class NowPlayedTrack {
       throw ScrobblenautException(description: 'Response unrecognized.');
     }
 
-    bool? _s2b(supposedBool) =>
-        LastFMValueNormalizer.NumberToBool(supposedBool);
+    bool? s2b(supposedBool) => LastFMValueNormalizer.NumberToBool(supposedBool);
 
-    track = responseXML.findAllElements('track').first.text;
+    track = responseXML.findAllElements('track').first.innerText;
 
-    album = responseXML.findAllElements('album').first.text;
+    album = responseXML.findAllElements('album').first.innerText;
 
-    artist = responseXML.findAllElements('artist').first.text;
+    artist = responseXML.findAllElements('artist').first.innerText;
 
-    albumArtist = responseXML.findAllElements('albumArtist').first.text;
+    albumArtist = responseXML.findAllElements('albumArtist').first.innerText;
 
-    tracksCorrected = _s2b(
-        responseXML.findAllElements('track').first.getAttribute('corrected'));
+    tracksCorrected = s2b(
+      responseXML.findAllElements('track').first.getAttribute('corrected'),
+    );
 
-    artistsCorrected = _s2b(
-        responseXML.findAllElements('artist').first.getAttribute('corrected'));
+    artistsCorrected = s2b(
+      responseXML.findAllElements('artist').first.getAttribute('corrected'),
+    );
 
-    albumsCorrected = _s2b(
-        responseXML.findAllElements('album').first.getAttribute('corrected'));
+    albumsCorrected = s2b(
+      responseXML.findAllElements('album').first.getAttribute('corrected'),
+    );
 
-    albumArtistsCorrected = _s2b(responseXML
-        .findAllElements('albumArtist')
-        .first
-        .getAttribute('corrected'));
+    albumArtistsCorrected = s2b(
+      responseXML
+          .findAllElements('albumArtist')
+          .first
+          .getAttribute('corrected'),
+    );
 
-    ignoredMessageCode = _s2b(responseXML
-        .findAllElements('ignoredMessage')
-        .first
-        .getAttribute('code'));
+    ignoredMessageCode = s2b(
+      responseXML.findAllElements('ignoredMessage').first.getAttribute('code'),
+    );
 
     return NowPlayedTrack._(
       status,

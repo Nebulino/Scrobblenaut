@@ -4,7 +4,6 @@
 //                                                              //
 
 import 'package:scrobblenaut/scrobblenaut.dart';
-import 'package:scrobblenaut/src/core/lastfm.dart';
 import 'package:test/test.dart';
 
 // Some Scrobblenaut tests.
