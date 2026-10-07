@@ -18,8 +18,12 @@ class Scrobble {
 
   /// The TimeStamp of the scrobble.
   /// If You're not doing strange stuff, you can use DateTime.now().
-  @JsonKey(name: 'timestamp', toJson: LastFMValueNormalizer.DateTimeToUnixTime)
-  DateTime timestamp;
+  @JsonKey(
+    name: 'timestamp',
+    fromJson: LastFMValueNormalizer.DateTimeFromUnixTime,
+    toJson: LastFMValueNormalizer.DateTimeToUnixTime,
+  )
+  DateTime? timestamp;
 
   /// The [Album] name to scrobble.
   @JsonKey(name: 'album')
@@ -37,7 +41,11 @@ class Scrobble {
   /// If the user chose this song, set on True,
   /// else (if the song was chosen by someone else, such as a radio station
   /// or recommendation service) set it to False.
-  @JsonKey(name: 'chosenByUser', toJson: LastFMValueNormalizer.BoolToIntBool)
+  @JsonKey(
+    name: 'chosenByUser',
+    fromJson: LastFMValueNormalizer.NumberToBool,
+    toJson: LastFMValueNormalizer.BoolToIntBool,
+  )
   bool? chosenByUser;
 
   /// The track number of the [Track] to scrobble.
@@ -51,14 +59,20 @@ class Scrobble {
   /// The duration of the [Track] to scrobble.
   @JsonKey(
     name: 'duration',
+    fromJson: LastFMValueNormalizer.MillisecondsDurationParser,
     toJson: LastFMValueNormalizer.DurationToMilliseconds,
   )
   Duration? duration;
+
+  /// The album artist - if this differs from the track artist.
+  @JsonKey(name: 'albumArtist')
+  String? albumArtist;
 
   Scrobble({
     required this.track,
     this.album,
     required this.artist,
+    this.albumArtist,
     this.trackNumber,
     this.duration,
     DateTime? timestamp,

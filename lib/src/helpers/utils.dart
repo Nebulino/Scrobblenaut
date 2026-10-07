@@ -6,9 +6,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-// ignore: import_of_legacy_library_into_null_safe
 import 'package:convert/convert.dart';
-// ignore: import_of_legacy_library_into_null_safe
 import 'package:crypto/crypto.dart' show md5;
 
 /// Generate a MD5 string by a given value.
@@ -46,6 +44,4 @@ bool isXml(dynamic object) {
 
 /// It helps checking if a field can be parsed in a known way.
 bool isValidParsableStringField(dynamic value) =>
-    (value != null || value.toString() != 'null' || value.toString() != '')
-    ? true
-    : false;
+    value != null && value.toString() != 'null' && value.toString().isNotEmpty;

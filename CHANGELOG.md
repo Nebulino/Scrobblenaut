@@ -1,5 +1,5 @@
 ## 3.0.0
-### Major Update - Dart 3 & Sound Null Safety
+### Major Update - Dart 3, Modern Dependencies & Last.fm API Fixes
 
 - Migrated to Dart 3 (SDK `^3.8.0`) and sound null safety.
 - Upgraded dependencies:
@@ -7,8 +7,21 @@
   - `xml` to `^6.5.0` (migrated to `innerText`)
   - `json_annotation` to `^4.12.0` and `json_serializable` to `^6.8.0`
   - `lints` to `^3.0.0` (replacing deprecated `pedantic`)
+- **Authentication Improvements & Fixes**:
+  - Fixed `auth.getMobileSession` by switching to `POST` and using plain `password` (Last.fm removed support for `authToken`/password hashes).
+  - Added `LastFM.withSessionKey` constructor to instantiate client with pre-existing session keys.
+  - Added web/desktop token authentication support (`LastFM.authenticateWithToken`, `SessionKeyGenerator.getSessionWithToken`, `SessionKeyGenerator.getToken`).
+  - Deprecated legacy `authenticateWithPasswordHash`.
+- **Scrobble & Track Methods Fixes**:
+  - Added support for `albumArtist` in `Scrobble`, `scrobble()`, `multiScrobble()`, and `updateNowPlaying()`.
+  - Fixed 0-based array indexing for `track.multiScrobble` batch requests (`0` to `49` instead of `1` to `50`).
+  - Fixed `duration` formatting in `multiScrobble` to pass integer seconds instead of a stringified object.
+  - Fixed `chosenByUser` formatting in `multiScrobble` to send integer flags `1`/`0`.
+  - Fixed `ignoredMessageCode` parsing (codes 0-5) and added helper `isIgnored` getter in `NowPlayedTrack` and `ScrobbledTrack`.
+- **User Methods**:
+  - Made `user` parameter optional in `user.getInfo` (defaults to authenticated user if omitted).
 - Regenerated code objects via `build_runner`.
-- Formatted and modernized codebase according to Dart 3 standards.
+- Formatted and modernized codebase according to Dart 3 standards with zero analysis warnings/errors.
 
 ## 2.0.5+1
 ### Fix dio/adapters

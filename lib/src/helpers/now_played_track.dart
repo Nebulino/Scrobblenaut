@@ -38,7 +38,7 @@ class NowPlayedTrack {
   final bool? _albumArtistsCorrected;
 
   /// The received ignoreMessage code.
-  final bool? _ignoredMessageCode;
+  final int? _ignoredMessageCode;
 
   NowPlayedTrack._(
     this._status,
@@ -66,7 +66,7 @@ class NowPlayedTrack {
     bool? artistsCorrected;
     bool? albumsCorrected;
     bool? albumArtistsCorrected;
-    bool? ignoredMessageCode;
+    int? ignoredMessageCode;
 
     // Status node.
     final statusNode = responseXML.findElements('lfm').first;
@@ -108,9 +108,11 @@ class NowPlayedTrack {
           .getAttribute('corrected'),
     );
 
-    ignoredMessageCode = s2b(
-      responseXML.findAllElements('ignoredMessage').first.getAttribute('code'),
-    );
+    final ignoredMsgElements = responseXML.findAllElements('ignoredMessage');
+    final codeAttr = ignoredMsgElements.isNotEmpty
+        ? ignoredMsgElements.first.getAttribute('code')
+        : null;
+    ignoredMessageCode = codeAttr != null ? int.tryParse(codeAttr) : null;
 
     return NowPlayedTrack._(
       status,
@@ -153,6 +155,9 @@ class NowPlayedTrack {
   /// True if is a corrected album artist.
   bool? get albumArtistsCorrected => _albumArtistsCorrected;
 
-  /// The received ignoreMessage code.
-  bool? get ignoredMessageCode => _ignoredMessageCode;
+  /// The received ignoreMessage code (0 = ok, 1 = Artist ignored, 2 = Track ignored, 3 = Timestamp too old, 4 = Timestamp too new, 5 = Daily limit exceeded).
+  int? get ignoredMessageCode => _ignoredMessageCode;
+
+  /// True if now playing was ignored (code != 0).
+  bool get isIgnored => _ignoredMessageCode != null && _ignoredMessageCode != 0;
 }

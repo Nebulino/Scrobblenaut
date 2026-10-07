@@ -385,6 +385,7 @@ class TrackMethods {
     String? streamId,
     bool chosenByUser = false,
     String? mbid,
+    String? albumArtist,
   }) async {
     if (!_api.isAuth) {
       return Future.error(
@@ -400,6 +401,7 @@ class TrackMethods {
       'track': track,
       'album': album,
       'artist': artist,
+      'albumArtist': albumArtist,
       'trackNumber': trackNumber,
       'duration': duration?.inSeconds,
       'timestamp': LastFMValueNormalizer.timestampToSecondsSinceEpoch(
@@ -438,6 +440,7 @@ class TrackMethods {
       'track': scrobble.track,
       'album': scrobble.album,
       'artist': scrobble.artist,
+      'albumArtist': scrobble.albumArtist,
       'trackNumber': scrobble.trackNumber,
       'duration': scrobble.duration?.inSeconds,
       'timestamp': LastFMValueNormalizer.timestampToSecondsSinceEpoch(
@@ -480,21 +483,24 @@ class TrackMethods {
 
     var parameters = <String, dynamic>{};
 
-    var i = 1;
+    var i = 0;
 
     for (var scrobble in scrobbleList) {
       parameters['track[$i]'] = scrobble.track;
       parameters['album[$i]'] = scrobble.album;
       parameters['artist[$i]'] = scrobble.artist;
+      parameters['albumArtist[$i]'] = scrobble.albumArtist;
       parameters['trackNumber[$i]'] = scrobble.trackNumber;
-      parameters['duration[$i]'] = scrobble.duration;
+      parameters['duration[$i]'] = scrobble.duration?.inSeconds;
       parameters['timestamp[$i]'] =
           LastFMValueNormalizer.timestampToSecondsSinceEpoch(
             scrobble.timestamp,
           );
       parameters['context[$i]'] = scrobble.context;
       parameters['streamId[$i]'] = scrobble.streamId;
-      parameters['chosenByUser[$i]'] = scrobble.chosenByUser;
+      parameters['chosenByUser[$i]'] = (scrobble.chosenByUser == null
+          ? null
+          : (scrobble.chosenByUser! ? 1 : 0));
       parameters['mbid[$i]'] = scrobble.mbid;
 
       i++;
@@ -578,6 +584,7 @@ class TrackMethods {
     required String track,
     String? album,
     required String artist,
+    String? albumArtist,
     int? trackNumber,
     Duration? duration,
     DateTime? timestamp,
@@ -598,6 +605,7 @@ class TrackMethods {
       'track': track,
       'album': album,
       'artist': artist,
+      'albumArtist': albumArtist,
       'trackNumber': trackNumber,
       'duration': duration?.inSeconds,
       'timestamp': LastFMValueNormalizer.timestampToSecondsSinceEpoch(
@@ -636,6 +644,7 @@ class TrackMethods {
       'track': track.track,
       'album': track.album,
       'artist': track.artist,
+      'albumArtist': track.albumArtist,
       'trackNumber': track.trackNumber,
       'duration': track.duration?.inSeconds,
       'context': track.context,

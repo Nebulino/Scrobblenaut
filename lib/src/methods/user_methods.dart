@@ -54,8 +54,10 @@ class UserMethods {
 
   /// Get information about a user profile.
   ///
+  /// If [user] is null, defaults to the authenticated user.
+  ///
   /// https://www.last.fm/api/show/user.getInfo
-  Future<User> getInfo({required String user}) async {
+  Future<User> getInfo({String? user}) async {
     final parameters = {'user': user};
 
     final request = Request(

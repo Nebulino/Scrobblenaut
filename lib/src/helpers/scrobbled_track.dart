@@ -37,7 +37,7 @@ class ScrobbledTrack {
   final DateTime? _timestamp;
 
   /// The received ignoreMessage code.
-  final bool? _ignoredMessageCode;
+  final int? _ignoredMessageCode;
 
   ScrobbledTrack._(
     this._track,
@@ -62,7 +62,7 @@ class ScrobbledTrack {
     bool? albumsCorrected;
     bool? albumArtistsCorrected;
     DateTime? timestamp;
-    bool? ignoredMessageCode;
+    int? ignoredMessageCode;
 
     bool? s2b(supposedBool) => LastFMValueNormalizer.NumberToBool(supposedBool);
 
@@ -100,12 +100,13 @@ class ScrobbledTrack {
       scrobbleElement.findAllElements('timestamp').first.innerText,
     );
 
-    ignoredMessageCode = s2b(
-      scrobbleElement
-          .findAllElements('ignoredMessage')
-          .first
-          .getAttribute('code'),
+    final ignoredMsgElements = scrobbleElement.findAllElements(
+      'ignoredMessage',
     );
+    final codeAttr = ignoredMsgElements.isNotEmpty
+        ? ignoredMsgElements.first.getAttribute('code')
+        : null;
+    ignoredMessageCode = codeAttr != null ? int.tryParse(codeAttr) : null;
 
     return ScrobbledTrack._(
       track,
@@ -148,6 +149,9 @@ class ScrobbledTrack {
   /// The timestamp of the scrobble.
   DateTime? get timestamp => _timestamp;
 
-  /// The received ignoreMessage code.
-  bool? get ignoredMessageCode => _ignoredMessageCode;
+  /// The received ignoreMessage code (0 = ok, 1 = Artist ignored, 2 = Track ignored, 3 = Timestamp too old, 4 = Timestamp too new, 5 = Daily limit exceeded).
+  int? get ignoredMessageCode => _ignoredMessageCode;
+
+  /// True if the scrobble was ignored (code != 0).
+  bool get isIgnored => _ignoredMessageCode != null && _ignoredMessageCode != 0;
 }

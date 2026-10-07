@@ -11,9 +11,7 @@ NowPlaying _$NowPlayingFromJson(Map<String, dynamic> json) => NowPlaying(
   album: json['album'] as String?,
   artist: json['artist'] as String,
   trackNumber: (json['trackNumber'] as num?)?.toInt(),
-  duration: json['duration'] == null
-      ? null
-      : Duration(microseconds: (json['duration'] as num).toInt()),
+  duration: LastFMValueNormalizer.MillisecondsDurationParser(json['duration']),
   context: json['context'] as String?,
   mbid: json['mbid'] as String?,
   albumArtist: json['albumArtist'] as String?,
@@ -38,16 +36,15 @@ Scrobble _$ScrobbleFromJson(Map<String, dynamic> json) {
     track: json['track'] as String,
     album: json['album'] as String?,
     artist: json['artist'] as String,
+    albumArtist: json['albumArtist'] as String?,
     trackNumber: (json['trackNumber'] as num?)?.toInt(),
-    duration: json['duration'] == null
-        ? null
-        : Duration(microseconds: (json['duration'] as num).toInt()),
-    timestamp: json['timestamp'] == null
-        ? null
-        : DateTime.parse(json['timestamp'] as String),
+    duration: LastFMValueNormalizer.MillisecondsDurationParser(
+      json['duration'],
+    ),
+    timestamp: LastFMValueNormalizer.DateTimeFromUnixTime(json['timestamp']),
     context: json['context'] as String?,
     streamId: json['streamId'] as String?,
-    chosenByUser: json['chosenByUser'] as bool?,
+    chosenByUser: LastFMValueNormalizer.NumberToBool(json['chosenByUser']),
     mbid: json['mbid'] as String?,
   );
 }
@@ -63,6 +60,7 @@ Map<String, dynamic> _$ScrobbleToJson(Scrobble instance) => <String, dynamic>{
   'trackNumber': ?instance.trackNumber,
   'mbid': ?instance.mbid,
   'duration': ?LastFMValueNormalizer.DurationToMilliseconds(instance.duration),
+  'albumArtist': ?instance.albumArtist,
 };
 
 Session _$SessionFromJson(Map<String, dynamic> json) => Session(

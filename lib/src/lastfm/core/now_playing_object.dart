@@ -35,6 +35,7 @@ class NowPlaying {
   /// The duration of the [Track] to scrobble.
   @JsonKey(
     name: 'duration',
+    fromJson: LastFMValueNormalizer.MillisecondsDurationParser,
     toJson: LastFMValueNormalizer.DurationToMilliseconds,
   )
   Duration? duration;
