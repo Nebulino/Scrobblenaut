@@ -3,7 +3,7 @@
 //                  Copyright (c) 2020 Nebulino                 //
 //                                                              //
 
-part of lastfm_objects;
+part of '../lastfm.dart';
 
 /// This object represents a date.
 /// TODO: need to check if it's useful.
@@ -12,16 +12,13 @@ class Date {
   // TODO: needs to be transformed? or just delete and make Date a DateTime?
   /// Unix date in string.
   @JsonKey(name: 'uts')
-  String unixDate;
+  String? unixDate;
 
   // TODO: What's this? it's necessary?
   @JsonKey(name: '#text')
-  String text;
+  String? text;
 
-  Date({
-    this.unixDate,
-    this.text,
-  });
+  Date({this.unixDate, this.text});
 
   factory Date.fromJson(Map<String, dynamic> json) => _$DateFromJson(json);
 

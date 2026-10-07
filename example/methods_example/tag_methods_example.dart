@@ -45,8 +45,9 @@ void main() async {
   print('########################tag.getTopArtists###########################');
 
   // tag.getTopArtists
-  (await scrobblenaut.tag.getTopArtists(tag: 'anime'))
-      ?.forEach((Artist artist) {
+  (await scrobblenaut.tag.getTopArtists(tag: 'anime'))?.forEach((
+    Artist artist,
+  ) {
     print('Top Artist Name: ${artist.name}');
   });
 
@@ -67,8 +68,9 @@ void main() async {
   print('#######################tag.getWeeklyChartList#######################');
 
   // tag.getWeeklyChartList
-  (await scrobblenaut.tag.getWeeklyChartList(tag: 'anime'))
-      ?.forEach((Chart chart) {
+  (await scrobblenaut.tag.getWeeklyChartList(tag: 'anime'))?.forEach((
+    Chart chart,
+  ) {
     print('Chart FromDate: ${chart.fromDate} | Chart ToDate: ${chart.toDate}');
   });
 

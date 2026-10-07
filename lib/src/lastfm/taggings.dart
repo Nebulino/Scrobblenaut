@@ -3,28 +3,24 @@
 //                  Copyright (c) 2020 Nebulino                 //
 //                                                              //
 
-part of lastfm_objects;
+part of '../lastfm.dart';
 
 /// This object represents different type of applied tags in taggable objects.
 @JsonSerializable(includeIfNull: false)
 class Taggings {
   /// A list of tagged albums.
   @JsonKey(name: 'albums', fromJson: LastFMValueNormalizer.albumsExtractor)
-  List<Album> albums;
+  List<Album>? albums;
 
   /// A list of tagged artists.
   @JsonKey(name: 'artists', fromJson: LastFMValueNormalizer.artistsExtractor)
-  List<Artist> artists;
+  List<Artist>? artists;
 
   /// A list of tagged tracks.
   @JsonKey(name: 'tracks', fromJson: LastFMValueNormalizer.tracksExtractor)
-  List<Track> tracks;
+  List<Track>? tracks;
 
-  Taggings({
-    this.albums,
-    this.artists,
-    this.tracks,
-  });
+  Taggings({this.albums, this.artists, this.tracks});
 
   factory Taggings.fromJson(Map<String, dynamic> json) =>
       _$TaggingsFromJson(json);

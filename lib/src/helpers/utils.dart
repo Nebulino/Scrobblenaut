@@ -8,7 +8,6 @@ import 'dart:typed_data';
 
 import 'package:convert/convert.dart';
 import 'package:crypto/crypto.dart' show md5;
-import 'package:meta/meta.dart';
 
 /// Generate a MD5 string by a given value.
 String generateMD5(String value) {
@@ -24,7 +23,7 @@ String generateStringFromList(List list) {
 }
 
 /// Format the text in unicode
-String formatUnicode({@required dynamic text}) {
+String formatUnicode({required dynamic text}) {
   if (text is Uint8List) {
     return utf8.decode(text);
   } else if (text is String) {
@@ -45,6 +44,4 @@ bool isXml(dynamic object) {
 
 /// It helps checking if a field can be parsed in a known way.
 bool isValidParsableStringField(dynamic value) =>
-    (value != null || value.toString() != 'null' || value.toString() != '')
-        ? true
-        : false;
+    value != null && value.toString() != 'null' && value.toString().isNotEmpty;

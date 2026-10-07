@@ -22,22 +22,22 @@ class ScrobbledTrack {
   final String _albumArtist;
 
   /// True if is a corrected track.
-  final bool _tracksCorrected;
+  final bool? _tracksCorrected;
 
   /// True if is a corrected artist.
-  final bool _artistsCorrected;
+  final bool? _artistsCorrected;
 
   /// True if is a corrected album.
-  final bool _albumsCorrected;
+  final bool? _albumsCorrected;
 
   /// True if is a corrected album artist.
-  final bool _albumArtistsCorrected;
+  final bool? _albumArtistsCorrected;
 
   /// The timestamp of the scrobble.
-  final DateTime _timestamp;
+  final DateTime? _timestamp;
 
   /// The received ignoreMessage code.
-  final bool _ignoredMessageCode;
+  final int? _ignoredMessageCode;
 
   ScrobbledTrack._(
     this._track,
@@ -57,50 +57,56 @@ class ScrobbledTrack {
     String album;
     String artist;
     String albumArtist;
-    bool tracksCorrected;
-    bool artistsCorrected;
-    bool albumsCorrected;
-    bool albumArtistsCorrected;
-    DateTime timestamp;
-    bool ignoredMessageCode;
+    bool? tracksCorrected;
+    bool? artistsCorrected;
+    bool? albumsCorrected;
+    bool? albumArtistsCorrected;
+    DateTime? timestamp;
+    int? ignoredMessageCode;
 
-    bool _s2b(supposedBool) => LastFMValueNormalizer.NumberToBool(supposedBool);
+    bool? s2b(supposedBool) => LastFMValueNormalizer.NumberToBool(supposedBool);
 
-    track = scrobbleElement.findAllElements('track').first.text;
+    track = scrobbleElement.findAllElements('track').first.innerText;
 
-    album = scrobbleElement.findAllElements('album').first.text;
+    album = scrobbleElement.findAllElements('album').first.innerText;
 
-    artist = scrobbleElement.findAllElements('artist').first.text;
+    artist = scrobbleElement.findAllElements('artist').first.innerText;
 
-    albumArtist = scrobbleElement.findAllElements('albumArtist').first.text;
-
-    tracksCorrected = _s2b(scrobbleElement
-        .findAllElements('track')
-        .first
-        .getAttribute('corrected'));
-
-    artistsCorrected = _s2b(scrobbleElement
-        .findAllElements('artist')
-        .first
-        .getAttribute('corrected'));
-
-    albumsCorrected = _s2b(scrobbleElement
-        .findAllElements('album')
-        .first
-        .getAttribute('corrected'));
-
-    albumArtistsCorrected = _s2b(scrobbleElement
+    albumArtist = scrobbleElement
         .findAllElements('albumArtist')
         .first
-        .getAttribute('corrected'));
+        .innerText;
+
+    tracksCorrected = s2b(
+      scrobbleElement.findAllElements('track').first.getAttribute('corrected'),
+    );
+
+    artistsCorrected = s2b(
+      scrobbleElement.findAllElements('artist').first.getAttribute('corrected'),
+    );
+
+    albumsCorrected = s2b(
+      scrobbleElement.findAllElements('album').first.getAttribute('corrected'),
+    );
+
+    albumArtistsCorrected = s2b(
+      scrobbleElement
+          .findAllElements('albumArtist')
+          .first
+          .getAttribute('corrected'),
+    );
 
     timestamp = LastFMValueNormalizer.DateTimeFromUnixTime(
-        scrobbleElement.findAllElements('timestamp').first.text);
+      scrobbleElement.findAllElements('timestamp').first.innerText,
+    );
 
-    ignoredMessageCode = _s2b(scrobbleElement
-        .findAllElements('ignoredMessage')
-        .first
-        .getAttribute('code'));
+    final ignoredMsgElements = scrobbleElement.findAllElements(
+      'ignoredMessage',
+    );
+    final codeAttr = ignoredMsgElements.isNotEmpty
+        ? ignoredMsgElements.first.getAttribute('code')
+        : null;
+    ignoredMessageCode = codeAttr != null ? int.tryParse(codeAttr) : null;
 
     return ScrobbledTrack._(
       track,
@@ -129,20 +135,23 @@ class ScrobbledTrack {
   String get albumArtist => _albumArtist;
 
   /// True if is a corrected track.
-  bool get tracksCorrected => _tracksCorrected;
+  bool? get tracksCorrected => _tracksCorrected;
 
   /// True if is a corrected artist.
-  bool get artistsCorrected => _artistsCorrected;
+  bool? get artistsCorrected => _artistsCorrected;
 
   /// True if is a corrected album.
-  bool get albumsCorrected => _albumsCorrected;
+  bool? get albumsCorrected => _albumsCorrected;
 
   /// True if is a corrected album artist.
-  bool get albumArtistsCorrected => _albumArtistsCorrected;
+  bool? get albumArtistsCorrected => _albumArtistsCorrected;
 
   /// The timestamp of the scrobble.
-  DateTime get timestamp => _timestamp;
+  DateTime? get timestamp => _timestamp;
 
-  /// The received ignoreMessage code.
-  bool get ignoredMessageCode => _ignoredMessageCode;
+  /// The received ignoreMessage code (0 = ok, 1 = Artist ignored, 2 = Track ignored, 3 = Timestamp too old, 4 = Timestamp too new, 5 = Daily limit exceeded).
+  int? get ignoredMessageCode => _ignoredMessageCode;
+
+  /// True if the scrobble was ignored (code != 0).
+  bool get isIgnored => _ignoredMessageCode != null && _ignoredMessageCode != 0;
 }

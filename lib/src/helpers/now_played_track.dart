@@ -26,19 +26,19 @@ class NowPlayedTrack {
   final String _albumArtist;
 
   /// True if is a corrected track.
-  final bool _tracksCorrected;
+  final bool? _tracksCorrected;
 
   /// True if is a corrected artist.
-  final bool _artistsCorrected;
+  final bool? _artistsCorrected;
 
   /// True if is a corrected album.
-  final bool _albumsCorrected;
+  final bool? _albumsCorrected;
 
   /// True if is a corrected album artist.
-  final bool _albumArtistsCorrected;
+  final bool? _albumArtistsCorrected;
 
   /// The received ignoreMessage code.
-  final bool _ignoredMessageCode;
+  final int? _ignoredMessageCode;
 
   NowPlayedTrack._(
     this._status,
@@ -62,11 +62,11 @@ class NowPlayedTrack {
     String album;
     String artist;
     String albumArtist;
-    bool tracksCorrected;
-    bool artistsCorrected;
-    bool albumsCorrected;
-    bool albumArtistsCorrected;
-    bool ignoredMessageCode;
+    bool? tracksCorrected;
+    bool? artistsCorrected;
+    bool? albumsCorrected;
+    bool? albumArtistsCorrected;
+    int? ignoredMessageCode;
 
     // Status node.
     final statusNode = responseXML.findElements('lfm').first;
@@ -79,34 +79,40 @@ class NowPlayedTrack {
       throw ScrobblenautException(description: 'Response unrecognized.');
     }
 
-    bool _s2b(supposedBool) => LastFMValueNormalizer.NumberToBool(supposedBool);
+    bool? s2b(supposedBool) => LastFMValueNormalizer.NumberToBool(supposedBool);
 
-    track = responseXML.findAllElements('track').first.text;
+    track = responseXML.findAllElements('track').first.innerText;
 
-    album = responseXML.findAllElements('album').first.text;
+    album = responseXML.findAllElements('album').first.innerText;
 
-    artist = responseXML.findAllElements('artist').first.text;
+    artist = responseXML.findAllElements('artist').first.innerText;
 
-    albumArtist = responseXML.findAllElements('albumArtist').first.text;
+    albumArtist = responseXML.findAllElements('albumArtist').first.innerText;
 
-    tracksCorrected = _s2b(
-        responseXML.findAllElements('track').first.getAttribute('corrected'));
+    tracksCorrected = s2b(
+      responseXML.findAllElements('track').first.getAttribute('corrected'),
+    );
 
-    artistsCorrected = _s2b(
-        responseXML.findAllElements('artist').first.getAttribute('corrected'));
+    artistsCorrected = s2b(
+      responseXML.findAllElements('artist').first.getAttribute('corrected'),
+    );
 
-    albumsCorrected = _s2b(
-        responseXML.findAllElements('album').first.getAttribute('corrected'));
+    albumsCorrected = s2b(
+      responseXML.findAllElements('album').first.getAttribute('corrected'),
+    );
 
-    albumArtistsCorrected = _s2b(responseXML
-        .findAllElements('albumArtist')
-        .first
-        .getAttribute('corrected'));
+    albumArtistsCorrected = s2b(
+      responseXML
+          .findAllElements('albumArtist')
+          .first
+          .getAttribute('corrected'),
+    );
 
-    ignoredMessageCode = _s2b(responseXML
-        .findAllElements('ignoredMessage')
-        .first
-        .getAttribute('code'));
+    final ignoredMsgElements = responseXML.findAllElements('ignoredMessage');
+    final codeAttr = ignoredMsgElements.isNotEmpty
+        ? ignoredMsgElements.first.getAttribute('code')
+        : null;
+    ignoredMessageCode = codeAttr != null ? int.tryParse(codeAttr) : null;
 
     return NowPlayedTrack._(
       status,
@@ -138,17 +144,20 @@ class NowPlayedTrack {
   String get albumArtist => _albumArtist;
 
   /// True if is a corrected track.
-  bool get tracksCorrected => _tracksCorrected;
+  bool? get tracksCorrected => _tracksCorrected;
 
   /// True if is a corrected artist.
-  bool get artistsCorrected => _artistsCorrected;
+  bool? get artistsCorrected => _artistsCorrected;
 
   /// True if is a corrected album.
-  bool get albumsCorrected => _albumsCorrected;
+  bool? get albumsCorrected => _albumsCorrected;
 
   /// True if is a corrected album artist.
-  bool get albumArtistsCorrected => _albumArtistsCorrected;
+  bool? get albumArtistsCorrected => _albumArtistsCorrected;
 
-  /// The received ignoreMessage code.
-  bool get ignoredMessageCode => _ignoredMessageCode;
+  /// The received ignoreMessage code (0 = ok, 1 = Artist ignored, 2 = Track ignored, 3 = Timestamp too old, 4 = Timestamp too new, 5 = Daily limit exceeded).
+  int? get ignoredMessageCode => _ignoredMessageCode;
+
+  /// True if now playing was ignored (code != 0).
+  bool get isIgnored => _ignoredMessageCode != null && _ignoredMessageCode != 0;
 }

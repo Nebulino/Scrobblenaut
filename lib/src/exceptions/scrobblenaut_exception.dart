@@ -6,14 +6,13 @@
 /// It implements [Exception] class.
 /// You can find [description] that gives a brief information of what happened.
 class ScrobblenautException implements Exception {
-  final String _description;
+  final String? _description;
 
   ScrobblenautException._(this._description);
 
-  ScrobblenautException({String description}) : this._(description);
+  ScrobblenautException({String? description}) : this._(description);
 
   @override
   String toString() =>
-      '[ScrobblenautException]' +
-      (_description != null ? ': ${_description}' : '');
+      '[ScrobblenautException]${_description != null ? ': $_description' : ''}';
 }

@@ -14,7 +14,7 @@ class LastFMValueNormalizer {
   /// It transforms a supposed number into a Dart int.
   /// This because LastFM sometimes sends a String, sometimes a int.
   /// How knows...
-  static int NumberToInt(dynamic supposedNumber) {
+  static int? NumberToInt(dynamic supposedNumber) {
     if (supposedNumber != null) {
       if (supposedNumber is String) {
         return int.parse(supposedNumber);
@@ -22,7 +22,8 @@ class LastFMValueNormalizer {
         return supposedNumber;
       } else {
         throw ScrobblenautException(
-            description: 'The supposed number is not recognized.');
+          description: 'The supposed number is not recognized.',
+        );
       }
     } else {
       return null;
@@ -31,18 +32,19 @@ class LastFMValueNormalizer {
 
   /// It transforms a supposed number into a Dart bool.
   /// This because LastFM sends int (0, 1) instead of a bool.
-  static bool NumberToBool(dynamic supposedBool) {
-    bool _intParser(int number) =>
+  static bool? NumberToBool(dynamic supposedBool) {
+    bool? intParser(int? number) =>
         number == null ? null : (number == 1 ? true : false);
 
     if (supposedBool != null) {
       if (supposedBool is String) {
-        return _intParser(int.parse(supposedBool));
+        return intParser(int.parse(supposedBool));
       } else if (supposedBool is int) {
-        return _intParser(supposedBool);
+        return intParser(supposedBool);
       } else {
         throw ScrobblenautException(
-            description: 'The supposed bool is not recognized.');
+          description: 'The supposed bool is not recognized.',
+        );
       }
     } else {
       return null;
@@ -50,25 +52,26 @@ class LastFMValueNormalizer {
   }
 
   /// It transforms a bool into a LastFM 'bool' [0,1].
-  static int BoolToIntBool(bool booleanToTransform) =>
+  static int? BoolToIntBool(bool? booleanToTransform) =>
       booleanToTransform == null
-          ? null
-          : booleanToTransform
-              ? 1
-              : 0;
+      ? null
+      : booleanToTransform
+      ? 1
+      : 0;
 
   /// It transforms a supposed artist into a real [Artist] object.
   /// This because sometimes LastFM returns an artist as Map,
   /// sometimes as String, which is the Artist name.
-  static Artist ArtistParser(dynamic supposedArtist) {
+  static Artist? ArtistParser(dynamic supposedArtist) {
     if (supposedArtist != null) {
       if (supposedArtist is String) {
         return Artist(name: supposedArtist);
       } else if (supposedArtist is Map) {
-        return Artist.fromJson(supposedArtist);
+        return Artist.fromJson(supposedArtist as Map<String, dynamic>);
       } else {
         throw ScrobblenautException(
-            description: 'The supposed Artist is not recognized.');
+          description: 'The supposed Artist is not recognized.',
+        );
       }
     } else {
       return null;
@@ -80,7 +83,7 @@ class LastFMValueNormalizer {
   /// This is useful for [track.getInfo] for example because in other
   /// circumstances the received duration is in seconds since epoch (unix time).
   /// Thanks LastFM, really appreciated.
-  static Duration MillisecondsDurationParser(dynamic supposedMilliseconds) {
+  static Duration? MillisecondsDurationParser(dynamic supposedMilliseconds) {
     // Thanks LastFM: sometimes can contain 'FIX ME'.
     if (supposedMilliseconds.toString() == 'FIXME') return null;
 
@@ -91,8 +94,9 @@ class LastFMValueNormalizer {
         return Duration(milliseconds: supposedMilliseconds);
       } else {
         throw ScrobblenautException(
-            description:
-                'The supposed duration in milliseconds is not recognized.');
+          description:
+              'The supposed duration in milliseconds is not recognized.',
+        );
       }
     } else {
       return null;
@@ -104,7 +108,7 @@ class LastFMValueNormalizer {
   /// This is useful for [album.getInfo] for example because in other
   /// circumstances the received duration is in milliseconds since epoch.
   /// Thanks LastFM, really appreciated.
-  static Duration SecondsDurationParser(dynamic supposedSeconds) {
+  static Duration? SecondsDurationParser(dynamic supposedSeconds) {
     if (supposedSeconds != null) {
       if (supposedSeconds is String) {
         return Duration(seconds: int.parse(supposedSeconds));
@@ -112,7 +116,8 @@ class LastFMValueNormalizer {
         return Duration(seconds: supposedSeconds);
       } else {
         throw ScrobblenautException(
-            description: 'The supposed duration in seconds is not recognized.');
+          description: 'The supposed duration in seconds is not recognized.',
+        );
       }
     } else {
       return null;
@@ -120,16 +125,15 @@ class LastFMValueNormalizer {
   }
 
   /// It transforms a Duration into Milliseconds.
-  static int DurationToMilliseconds(Duration duration) =>
-      duration == null ? null : duration.inMilliseconds;
+  static int? DurationToMilliseconds(Duration? duration) =>
+      duration?.inMilliseconds;
 
   /// It transforms a Duration into Seconds.
-  static int DurationToSeconds(Duration duration) =>
-      duration == null ? null : duration.inSeconds;
+  static int? DurationToSeconds(Duration? duration) => duration?.inSeconds;
 
   /// It transforms a LastFM number received from [Artist][streamable]
   /// into a bool.
-  static bool isArtistStreamable(dynamic supposedBool) {
+  static bool? isArtistStreamable(dynamic supposedBool) {
     if (supposedBool != null) {
       switch (supposedBool.toString()) {
         case '0':
@@ -138,7 +142,8 @@ class LastFMValueNormalizer {
           return true;
         default:
           throw ScrobblenautException(
-              description: 'The supposed streamable bool is not recognized.');
+            description: 'The supposed streamable bool is not recognized.',
+          );
       }
     } else {
       return null;
@@ -146,15 +151,16 @@ class LastFMValueNormalizer {
   }
 
   /// It helps managing a Streamable string or a object.
-  static Streamable StreamableParser(dynamic streamable) {
+  static Streamable? StreamableParser(dynamic streamable) {
     if (streamable != null) {
       if (streamable is String) {
         return Streamable(text: streamable);
       } else if (streamable is Map) {
-        return Streamable.fromJson(streamable);
+        return Streamable.fromJson(streamable as Map<String, dynamic>);
       } else {
         throw ScrobblenautException(
-            description: 'The supposed streamable is not recognized.');
+          description: 'The supposed streamable is not recognized.',
+        );
       }
     } else {
       return null;
@@ -162,7 +168,7 @@ class LastFMValueNormalizer {
   }
 
   /// It transforms a LastFM supposed unixTime into a DateTime.
-  static DateTime DateTimeFromUnixTime(dynamic unixTime) {
+  static DateTime? DateTimeFromUnixTime(dynamic unixTime) {
     // I've found a nil.
     if (unixTime.toString() == 'nil') {
       return null;
@@ -175,7 +181,8 @@ class LastFMValueNormalizer {
         return DateTime.fromMillisecondsSinceEpoch(unixTime * 1000);
       } else {
         throw ScrobblenautException(
-            description: 'The supposed unixTime bool is not recognized.');
+          description: 'The supposed unixTime bool is not recognized.',
+        );
       }
     } else {
       return null;
@@ -183,56 +190,75 @@ class LastFMValueNormalizer {
   }
 
   /// It transforms a LastFM supposed unixTime from a DateTime.
-  static int DateTimeToUnixTime(DateTime dateTime) => dateTime == null
+  static int? DateTimeToUnixTime(DateTime? dateTime) => dateTime == null
       ? null
       : (dateTime.millisecondsSinceEpoch / 1000).round();
 
   /// Makes a meaning-less number into a string.
-  static String MeaninglessNumber(dynamic supposedText) =>
+  static String? MeaninglessNumber(dynamic supposedText) =>
       supposedText == null ? null : (supposedText.toString());
 
   /// Tracks extractor.
-  static List<Track> tracksExtractor(Map<String, dynamic> tracks) =>
+  static List<Track>? tracksExtractor(Map<String, dynamic>? tracks) =>
       tracks == null
-          ? null
-          : List.generate((tracks['track'] as List).length,
-              (i) => Track.fromJson(tracks['track'][i]));
-
-  /// Tags extractor.
-  static List<Tag> tagsExtractor(Map<String, dynamic> tags) => tags == null
       ? null
       : List.generate(
-          (tags['tag'] as List).length, (i) => Tag.fromJson(tags['tag'][i]));
+          (tracks['track'] as List).length,
+          (i) => Track.fromJson(tracks['track'][i]),
+        );
+
+  /// Tags extractor.
+  static List<Tag>? tagsExtractor(Map<String, dynamic>? tags) {
+    if (tags == null) {
+      return null;
+    } else if (tags['tag'] is List) {
+      return List.generate(
+        (tags['tag'] as List).length,
+        (i) => Tag.fromJson(tags['tag'][i]),
+      );
+    } else if (tags['tag'] is Map) {
+      return [Tag.fromJson(tags['tag'])];
+    }
+    return null;
+  }
 
   /// Albums extractor.
-  static List<Album> albumsExtractor(Map<String, dynamic> albums) =>
+  static List<Album>? albumsExtractor(Map<String, dynamic>? albums) =>
       albums == null
-          ? null
-          : List.generate((albums['album'] as List).length,
-              (i) => Album.fromJson(albums['album'][i]));
+      ? null
+      : List.generate(
+          (albums['album'] as List).length,
+          (i) => Album.fromJson(albums['album'][i]),
+        );
 
   /// Artists extractor.
-  static List<Artist> artistsExtractor(Map<String, dynamic> artists) =>
+  static List<Artist>? artistsExtractor(Map<String, dynamic>? artists) =>
       artists == null
-          ? null
-          : List.generate((artists['artist'] as List).length,
-              (i) => Artist.fromJson(artists['artist'][i]));
+      ? null
+      : List.generate(
+          (artists['artist'] as List).length,
+          (i) => Artist.fromJson(artists['artist'][i]),
+        );
 
   /// SimilarArtists extractor.
-  static List<Artist> similarArtistsExtractor(
-          Map<String, dynamic> similarArtists) =>
-      similarArtists == null
-          ? null
-          : List.generate((similarArtists['artist'] as List).length,
-              (i) => Artist.fromJson(similarArtists['artist'][i]));
+  static List<Artist>? similarArtistsExtractor(
+    Map<String, dynamic>? similarArtists,
+  ) => similarArtists == null
+      ? null
+      : List.generate(
+          (similarArtists['artist'] as List).length,
+          (i) => Artist.fromJson(similarArtists['artist'][i]),
+        );
 
   /// Links extractor.
-  static List<Link> linksExtractor(Map<String, dynamic> links) {
+  static List<Link>? linksExtractor(Map<String, dynamic>? links) {
     final supposedLinksList = links;
     if (links != null) {
       if (supposedLinksList is List) {
-        return List.generate((links['link'] as List).length,
-            (i) => Link.fromJson(links['link'][i]));
+        return List.generate(
+          (links['link'] as List).length,
+          (i) => Link.fromJson(links['link'][i]),
+        );
       } else {
         return [Link.fromJson(links['link'])];
       }
@@ -242,8 +268,8 @@ class LastFMValueNormalizer {
   }
 
   /// TimeStamp normalizer for POST methods.
-  static int timestampToSecondsSinceEpoch(DateTime timestamp) =>
+  static int? timestampToSecondsSinceEpoch(DateTime? timestamp) =>
       timestamp == null
-          ? null
-          : (timestamp.millisecondsSinceEpoch / 1000).round();
+      ? null
+      : (timestamp.millisecondsSinceEpoch / 1000).round();
 }

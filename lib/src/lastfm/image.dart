@@ -3,7 +3,7 @@
 //                  Copyright (c) 2020 Nebulino                 //
 //                                                              //
 
-part of lastfm_objects;
+part of '../lastfm.dart';
 
 /// This object represents an image.
 @JsonSerializable(includeIfNull: false)
@@ -11,22 +11,19 @@ class Image {
   /// This is the size of the image.
   /// Check [Size] for more info.
   @JsonKey(
-      name: 'size',
-      defaultValue: null,
-      disallowNullValue: false,
-      nullable: true,
-      unknownEnumValue: Size.None)
-  Size size;
+    name: 'size',
+    defaultValue: null,
+    disallowNullValue: false,
+    unknownEnumValue: Size.None,
+  )
+  Size? size;
 
   // TODO: change the name?
   /// The link of the image.
   @JsonKey(name: '#text')
-  String text;
+  String? text;
 
-  Image({
-    this.size,
-    this.text,
-  });
+  Image({this.size, this.text});
 
   factory Image.fromJson(Map<String, dynamic> json) => _$ImageFromJson(json);
 

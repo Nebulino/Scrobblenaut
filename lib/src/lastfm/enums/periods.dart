@@ -3,17 +3,10 @@
 //                  Copyright (c) 2020 Nebulino                 //
 //                                                              //
 
-part of lastfm_objects;
+part of '../../lastfm.dart';
 
 /// List of different periods used in LastFM methods.
-enum Period {
-  WEEK,
-  MONTH,
-  MONTHS3,
-  MONTHS6,
-  YEAR,
-  OVERALL,
-}
+enum Period { WEEK, MONTH, MONTHS3, MONTHS6, YEAR, OVERALL }
 
 extension PeriodExtension on Period {
   String get value {
@@ -30,8 +23,6 @@ extension PeriodExtension on Period {
         return '12month';
       case Period.OVERALL:
         return 'overall';
-      default:
-        return null;
     }
   }
 }
