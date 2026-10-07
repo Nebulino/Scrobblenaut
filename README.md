@@ -6,7 +6,7 @@ A simple, modern Last.fm API wrapper for Dart & Flutter.
 [![Pub Version](https://img.shields.io/pub/v/scrobblenaut?style=flat-square&logo=dart)](https://pub.dev/packages/scrobblenaut)
 [![Dart SDK](https://img.shields.io/badge/Dart-3.0%2B-blue.svg?style=flat-square&logo=dart)](https://dart.dev)
 [![Last.FM](https://img.shields.io/badge/API-v.2.0-00aced.svg?style=flat-square&logo=last.fm)](https://www.last.fm/api/)
-[![License](https://img.shields.io/badge/license-Nebulino-orange.svg?style=flat-square)](LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
 
 </div>
 
@@ -125,3 +125,9 @@ dart analyze
 Full API documentation is available at [pub.dev/documentation/scrobblenaut](https://pub.dev/documentation/scrobblenaut/latest/).
 
 Please file bug reports and feature requests on [GitHub Issues](https://github.com/Nebulino/Scrobblenaut/issues).
+
+---
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

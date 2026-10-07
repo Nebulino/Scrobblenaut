@@ -8,6 +8,8 @@
   - Added optional `albumArtist` parameter to `TrackExtension.scrobble` and `TrackExtension.updateNowPlaying`.
 - **Documentation**:
   - Completely overhauled `README.md` with modern Dart 3 setup, active badges, and comprehensive examples for unauthenticated and authenticated usage.
+- **License**:
+  - Migrated from custom Nebulino Public License to standard OSI-approved **MIT License**.
 
 ## 3.0.0
 ### Major Update - Dart 3, Modern Dependencies & Last.fm API Fixes
