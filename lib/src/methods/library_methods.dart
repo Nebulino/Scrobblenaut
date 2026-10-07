@@ -3,7 +3,6 @@
 //                  Copyright (c) 2020 Nebulino                 //
 //                                                              //
 
-import 'package:meta/meta.dart';
 import 'package:scrobblenaut/lastfm.dart';
 import 'package:scrobblenaut/src/core/lastfm.dart';
 import 'package:scrobblenaut/src/core/request.dart';
@@ -19,27 +18,23 @@ class LibraryMethods {
   /// and tag counts.
   ///
   /// https://www.last.fm/api/show/library.getArtists
-  Future<List<Artist>> getArtists({
-    @required String user,
+  Future<LibraryGetArtistsResponse?> getArtists({
+    required String user,
     int limit = 50,
-    int page,
+    int? page,
   }) async {
-    final parameters = {
-      'user': user,
-      'limit': limit,
-      'page': page,
-    };
+    final parameters = {'user': user, 'limit': limit, 'page': page};
 
     final request = Request(
-        api: _api, method: 'library.getArtists', parameters: parameters);
+      api: _api,
+      method: 'library.getArtists',
+      parameters: parameters,
+    );
 
     final response = await request.send(mode: RequestMode.GET);
 
-    final artists = response['artists']['artist'];
+    final artists = response['artists'];
 
-    return artists == null
-        ? null
-        : List.generate(
-            (artists as List).length, (i) => Artist.fromJson(artists[i]));
+    return artists == null ? null : LibraryGetArtistsResponse.fromJson(artists);
   }
 }

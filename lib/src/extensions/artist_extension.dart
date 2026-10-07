@@ -3,7 +3,6 @@
 //                  Copyright (c) 2020 Nebulino                 //
 //                                                              //
 
-import 'package:meta/meta.dart';
 import 'package:scrobblenaut/lastfm.dart';
 import 'package:scrobblenaut/lastfm_methods.dart';
 import 'package:scrobblenaut/scrobblenaut.dart';
@@ -13,25 +12,18 @@ extension ArtistExtension on Artist {
   ArtistMethods get _artistMethods => Scrobblenaut.instance.artist;
 
   /// [ArtistMethods.addTags]
-  Future<bool> addTags({
-    @required List<String> tags,
-  }) async {
-    return await _artistMethods.addTags(
-      artist: name,
-      tags: tags,
-    );
+  Future<bool> addTags({required List<String> tags}) async {
+    return await _artistMethods.addTags(artist: name ?? '', tags: tags);
   }
 
   /// [ArtistMethods.getCorrection]
   Future<List<Artist>> getCorrection() async {
-    return await _artistMethods.getCorrection(
-      artist: name,
-    );
+    return await _artistMethods.getCorrection(artist: name ?? '');
   }
 
   /// [ArtistMethods.getInfo]
   Future<Artist> getInfo({
-    String username,
+    String? username,
     Language language = Language.en,
     bool autoCorrect = false,
   }) async {
@@ -45,8 +37,8 @@ extension ArtistExtension on Artist {
   }
 
   /// [ArtistMethods.getSimilar]
-  Future<List<Artist>> getSimilar({
-    int limit,
+  Future<List<Artist>?> getSimilar({
+    int? limit,
     bool autoCorrect = false,
   }) async {
     return await _artistMethods.getSimilar(
@@ -58,10 +50,7 @@ extension ArtistExtension on Artist {
   }
 
   /// [ArtistMethods.getTags]
-  Future<List<Tag>> getTags({
-    String user,
-    bool autoCorrect = false,
-  }) async {
+  Future<List<Tag>?> getTags({String? user, bool autoCorrect = false}) async {
     return await _artistMethods.getTags(
       artist: name,
       mbid: mbid,
@@ -71,10 +60,7 @@ extension ArtistExtension on Artist {
   }
 
   /// [ArtistMethods.getTopAlbums]
-  Future<List<Album>> getTopAlbums({
-    int page = 1,
-    int limit = 50,
-  }) async {
+  Future<List<Album>?> getTopAlbums({int page = 1, int limit = 50}) async {
     return await _artistMethods.getTopAlbums(
       artist: name,
       mbid: mbid,
@@ -84,9 +70,7 @@ extension ArtistExtension on Artist {
   }
 
   /// [ArtistMethods.getTopTags]
-  Future<List<Tag>> getTopTags({
-    bool autoCorrect = false,
-  }) async {
+  Future<List<Tag>?> getTopTags({bool autoCorrect = false}) async {
     return await _artistMethods.getTopTags(
       artist: name,
       mbid: mbid,
@@ -95,7 +79,7 @@ extension ArtistExtension on Artist {
   }
 
   /// [ArtistMethods.getTopTracks]
-  Future<List<Track>> getTopTracks({
+  Future<List<Track>?> getTopTracks({
     int page = 1,
     int limit = 50,
     bool autoCorrect = false,
@@ -110,22 +94,14 @@ extension ArtistExtension on Artist {
   }
 
   /// [ArtistMethods.removeTag]
-  Future<bool> removeTag({
-    @required String tag,
-  }) async {
-    return await _artistMethods.removeTag(
-      artist: name,
-      tag: tag,
-    );
+  Future<bool> removeTag({required String tag}) async {
+    return await _artistMethods.removeTag(artist: name ?? '', tag: tag);
   }
 
   /// [ArtistMethods.search]
-  Future<ArtistSearchResults> search({
-    int page = 1,
-    int limit = 30,
-  }) async {
+  Future<ArtistSearchResults> search({int page = 1, int limit = 30}) async {
     return await _artistMethods.search(
-      artist: name,
+      artist: name ?? '',
       page: page,
       limit: limit,
     );

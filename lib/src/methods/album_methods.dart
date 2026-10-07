@@ -3,7 +3,6 @@
 //                  Copyright (c) 2020 Nebulino                 //
 //                                                              //
 
-import 'package:meta/meta.dart';
 import 'package:scrobblenaut/lastfm.dart';
 import 'package:scrobblenaut/src/core/lastfm.dart';
 import 'package:scrobblenaut/src/core/request.dart';
@@ -22,18 +21,24 @@ class AlbumMethods {
   ///
   /// https://www.last.fm/api/show/album.addTags
   Future<bool> addTags({
-    @required String artist,
-    @required String album,
-    @required List<String> tags,
+    required String artist,
+    required String album,
+    required List<String> tags,
   }) async {
     if (!_api.isAuth) {
-      return Future.error(ScrobblenautException(
-          description: "You can't use this method unless you Authenticate."));
+      return Future.error(
+        ScrobblenautException(
+          description: "You can't use this method unless you Authenticate.",
+        ),
+      );
     }
 
     if (tags.length > 10) {
-      return Future.error(ScrobblenautException(
-          description: "You've supplied more than 10 tags."));
+      return Future.error(
+        ScrobblenautException(
+          description: "You've supplied more than 10 tags.",
+        ),
+      );
     }
 
     final parameters = {
@@ -42,12 +47,15 @@ class AlbumMethods {
       'tags': generateStringFromList(tags),
     };
 
-    final request =
-        Request(api: _api, method: 'album.addTags', parameters: parameters)
-          ..signRequest();
+    final request = Request(
+      api: _api,
+      method: 'album.addTags',
+      parameters: parameters,
+    )..signRequest();
 
-    final response =
-        PostResponseHelper.parse(await request.send(mode: RequestMode.POST));
+    final response = PostResponseHelper.parse(
+      await request.send(mode: RequestMode.POST),
+    );
 
     if (response.status) {
       return true;
@@ -61,17 +69,21 @@ class AlbumMethods {
   ///
   /// https://www.last.fm/api/show/album.getInfo
   Future<Album> getInfo({
-    String artist,
-    String album,
-    String mbid,
+    String? artist,
+    String? album,
+    String? mbid,
     bool autoCorrect = false,
-    String username,
+    String? username,
     Language language = Language.en,
   }) async {
     if ((album == null || artist == null) && mbid == null) {
-      return Future.error(ScrobblenautException(
-          description: 'At least mbid is required. '
-              'Can be used also album and artist.'));
+      return Future.error(
+        ScrobblenautException(
+          description:
+              'At least mbid is required. '
+              'Can be used also album and artist.',
+        ),
+      );
     }
 
     final parameters = {
@@ -80,11 +92,14 @@ class AlbumMethods {
       'mbid': mbid,
       'autocorrect': (autoCorrect ? 1 : 0),
       'username': username,
-      'lang': language?.code,
+      'lang': language.code,
     };
 
-    final request =
-        Request(api: _api, method: 'album.getInfo', parameters: parameters);
+    final request = Request(
+      api: _api,
+      method: 'album.getInfo',
+      parameters: parameters,
+    );
 
     final response = await request.send(mode: RequestMode.GET);
 
@@ -92,7 +107,7 @@ class AlbumMethods {
     // from [track.getInfo].
     var albumInfo = Album.fromJson(response['album']);
     albumInfo.tracks?.forEach((Track track) {
-      track.duration = track.duration * 1000;
+      track.duration = track.duration != null ? track.duration! * 1000 : null;
     });
 
     return albumInfo;
@@ -103,34 +118,44 @@ class AlbumMethods {
   /// album.getTopTags.
   ///
   /// https://www.last.fm/api/show/album.getTags
-  Future<List<Tag>> getTags({
-    String artist,
-    String album,
-    String mbid,
+  Future<List<Tag>?> getTags({
+    String? artist,
+    String? album,
+    String? mbid,
     bool autoCorrect = false,
-    String user,
+    String? user,
   }) async {
     if ((album == null || artist == null) && mbid == null) {
-      return Future.error(ScrobblenautException(
-          description: 'At least mbid is required. '
-              'Can be used also album and artist.'));
+      return Future.error(
+        ScrobblenautException(
+          description:
+              'At least mbid is required. '
+              'Can be used also album and artist.',
+        ),
+      );
     }
 
     if (!_api.isAuth && user == null) {
-      return Future.error(ScrobblenautException(
-          description: "You're not authenticated, you must use user."));
+      return Future.error(
+        ScrobblenautException(
+          description: "You're not authenticated, you must use user.",
+        ),
+      );
     }
 
     final parameters = {
       'artist': artist,
       'album': album,
       'mbid': mbid,
-      'user': user,
+      'user': user ?? _api.username,
       'autocorrect': (autoCorrect ? 1 : 0),
     };
 
-    final request =
-        Request(api: _api, method: 'album.getTags', parameters: parameters);
+    final request = Request(
+      api: _api,
+      method: 'album.getTags',
+      parameters: parameters,
+    );
 
     final response = await request.send(mode: RequestMode.GET);
 
@@ -144,16 +169,20 @@ class AlbumMethods {
   /// Get the top tags for an album on Last.fm, ordered by popularity.
   ///
   /// https://www.last.fm/api/show/album.getTopTags
-  Future<List<Tag>> getTopTags({
-    String artist,
-    String album,
-    String mbid,
+  Future<List<Tag>?> getTopTags({
+    String? artist,
+    String? album,
+    String? mbid,
     bool autoCorrect = false,
   }) async {
     if ((album == null || artist == null) && mbid == null) {
-      return Future.error(ScrobblenautException(
-          description: 'At least mbid is required. '
-              'Can be used also album and artist.'));
+      return Future.error(
+        ScrobblenautException(
+          description:
+              'At least mbid is required. '
+              'Can be used also album and artist.',
+        ),
+      );
     }
 
     final parameters = {
@@ -163,8 +192,11 @@ class AlbumMethods {
       'autocorrect': (autoCorrect ? 1 : 0),
     };
 
-    final request =
-        Request(api: _api, method: 'album.getTopTags', parameters: parameters);
+    final request = Request(
+      api: _api,
+      method: 'album.getTopTags',
+      parameters: parameters,
+    );
 
     final response = await request.send(mode: RequestMode.GET);
 
@@ -179,27 +211,29 @@ class AlbumMethods {
   ///
   /// https://www.last.fm/api/show/album.removeTag
   Future<bool> removeTag({
-    @required String artist,
-    @required String album,
-    @required String tag,
+    required String artist,
+    required String album,
+    required String tag,
   }) async {
     if (!_api.isAuth) {
-      return Future.error(ScrobblenautException(
-          description: "You can't use this method unless you Authenticate."));
+      return Future.error(
+        ScrobblenautException(
+          description: "You can't use this method unless you Authenticate.",
+        ),
+      );
     }
 
-    final parameters = {
-      'artist': artist,
-      'album': album,
-      'tag': tag,
-    };
+    final parameters = {'artist': artist, 'album': album, 'tag': tag};
 
-    final request =
-        Request(api: _api, method: 'album.removeTag', parameters: parameters)
-          ..signRequest();
+    final request = Request(
+      api: _api,
+      method: 'album.removeTag',
+      parameters: parameters,
+    )..signRequest();
 
-    final response =
-        PostResponseHelper.parse(await request.send(mode: RequestMode.POST));
+    final response = PostResponseHelper.parse(
+      await request.send(mode: RequestMode.POST),
+    );
 
     if (response.status) {
       return true;
@@ -212,18 +246,17 @@ class AlbumMethods {
   ///
   /// https://www.last.fm/api/show/album.search
   Future<AlbumSearchResults> search({
-    @required String album,
+    required String album,
     int page = 1,
     int limit = 30,
   }) async {
-    final parameters = {
-      'album': album,
-      'page': page,
-      'limit': limit,
-    };
+    final parameters = {'album': album, 'page': page, 'limit': limit};
 
-    final request =
-        Request(api: _api, method: 'album.search', parameters: parameters);
+    final request = Request(
+      api: _api,
+      method: 'album.search',
+      parameters: parameters,
+    );
 
     final response = await request.send(mode: RequestMode.GET);
 

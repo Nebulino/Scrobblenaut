@@ -19,10 +19,10 @@ class ScrobbleResponse {
   final List<ScrobbledTrack> _scrobbledTracks;
 
   /// Number of accepted scrobble.
-  final int _scrobbleAccepted;
+  final int? _scrobbleAccepted;
 
   /// Number of ignored scrobble.
-  final int _scrobbleIgnored;
+  final int? _scrobbleIgnored;
 
   ScrobbleResponse._(
     this._status,
@@ -38,8 +38,8 @@ class ScrobbleResponse {
 
     bool status;
     var scrobbledTracks = <ScrobbledTrack>[];
-    int scrobbleAccepted;
-    int scrobbleIgnored;
+    int? scrobbleAccepted;
+    int? scrobbleIgnored;
 
     // Status node.
     final statusNode = responseXML.findElements('lfm').first;
@@ -56,10 +56,12 @@ class ScrobbleResponse {
     final scrobblesNode = responseXML.findAllElements('scrobbles').first;
 
     scrobbleAccepted = LastFMValueNormalizer.NumberToInt(
-        scrobblesNode.getAttribute('accepted'));
+      scrobblesNode.getAttribute('accepted'),
+    );
 
     scrobbleIgnored = LastFMValueNormalizer.NumberToInt(
-        scrobblesNode.getAttribute('ignored'));
+      scrobblesNode.getAttribute('ignored'),
+    );
 
     final scrobbleListNode = responseXML.findAllElements('scrobble');
 
@@ -68,7 +70,11 @@ class ScrobbleResponse {
     });
 
     return ScrobbleResponse._(
-        status, scrobbledTracks, scrobbleAccepted, scrobbleIgnored);
+      status,
+      scrobbledTracks,
+      scrobbleAccepted,
+      scrobbleIgnored,
+    );
   }
 
   /// Returns the status.
@@ -80,8 +86,8 @@ class ScrobbleResponse {
   List<ScrobbledTrack> get scrobbleResponses => _scrobbledTracks;
 
   /// Returns the number of accepted scrobbles.
-  int get scrobbleAccepted => _scrobbleAccepted;
+  int? get scrobbleAccepted => _scrobbleAccepted;
 
   /// Returns the number of ignored scrobbles.
-  int get scrobbleIgnored => _scrobbleIgnored;
+  int? get scrobbleIgnored => _scrobbleIgnored;
 }

@@ -5,15 +5,12 @@
 
 import 'package:scrobblenaut/lastfm.dart';
 import 'package:scrobblenaut/scrobblenaut.dart';
-import 'package:scrobblenaut/src/core/lastfm.dart';
 
 import 'api_values.dart';
 
 // Just an example of use.
 void main() async {
-  var lastFM = await LastFM.noAuth(
-    apiKey: APIValues.API,
-  );
+  var lastFM = LastFM.noAuth(apiKey: APIValues.API);
 
   var scrobblenaut = Scrobblenaut(lastFM: lastFM);
 
@@ -24,8 +21,10 @@ void main() async {
     autoCorrect: true,
   ));
 
-  print('Album Name: ${albumGetInfo.name} |'
-      ' Album Artist: ${albumGetInfo.artist.name}');
+  print(
+    'Album Name: ${albumGetInfo.name} |'
+    ' Album Artist: ${albumGetInfo.artist?.name}',
+  );
 
   albumGetInfo.tracks?.forEach((Track track) {
     print('Track Title: ${track.name} | Track Duration: ${track.duration}');
@@ -35,14 +34,12 @@ void main() async {
     apiKey: APIValues.API,
     apiSecret: APIValues.secret,
     username: APIValues.username,
-    password: APIValues.password
+    password: APIValues.password,
   );
 
   scrobblenaut = Scrobblenaut(lastFM: lastFM);
 
   print(
-    'Username: ${(await scrobblenaut.user.getInfo(
-      user: APIValues.username,
-    )).name}',
+    'Username: ${(await scrobblenaut.user.getInfo(user: APIValues.username)).name}',
   );
 }

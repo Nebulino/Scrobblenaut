@@ -8,7 +8,6 @@ import 'dart:typed_data';
 
 import 'package:convert/convert.dart';
 import 'package:crypto/crypto.dart' show md5;
-import 'package:meta/meta.dart';
 
 /// Generate a MD5 string by a given value.
 String generateMD5(String value) {
@@ -24,7 +23,7 @@ String generateStringFromList(List list) {
 }
 
 /// Format the text in unicode
-String formatUnicode({@required dynamic text}) {
+String formatUnicode({required dynamic text}) {
   if (text is Uint8List) {
     return utf8.decode(text);
   } else if (text is String) {
@@ -45,6 +44,22 @@ bool isXml(dynamic object) {
 
 /// It helps checking if a field can be parsed in a known way.
 bool isValidParsableStringField(dynamic value) =>
-    (value != null || value.toString() != 'null' || value.toString() != '')
-        ? true
-        : false;
+    value != null && value.toString() != 'null' && value.toString().isNotEmpty;
+
+/// Safely parses a Last.fm response node that can be either a `List` of items or a
+/// single `Map` (when only 1 result exists in Last.fm XML-to-JSON engine).
+List<T>? parseLastFMList<T>(
+  dynamic rawNode,
+  T Function(Map<String, dynamic> item) fromJson,
+) {
+  if (rawNode == null) return null;
+  if (rawNode is List) {
+    return rawNode
+        .map((item) => fromJson(Map<String, dynamic>.from(item as Map)))
+        .toList();
+  }
+  if (rawNode is Map) {
+    return [fromJson(Map<String, dynamic>.from(rawNode))];
+  }
+  return null;
+}

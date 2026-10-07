@@ -4,13 +4,12 @@
 //                                                              //
 
 import 'package:scrobblenaut/scrobblenaut.dart';
-import 'package:scrobblenaut/src/core/lastfm.dart';
 import 'package:test/test.dart';
 
 // Some Scrobblenaut tests.
 void main() {
   group('A group of tests', () {
-    Scrobblenaut scrobblenaut;
+    late Scrobblenaut scrobblenaut;
     String token;
     LastFM lastFM;
 

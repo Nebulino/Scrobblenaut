@@ -1,98 +1,127 @@
 <h1 align="center">Scrobblenaut</h1>
 
 <div align="center">
-Just a Last.FM API Wrapper for Dart.
-A package to interact with the official 
+A simple, modern Last.fm API wrapper for Dart & Flutter.
 
-[Last.FM API](https://last.fm/api/).
-
-[![Dart Version](https://img.shields.io/badge/Dart-2.12.1-blue.svg?style=flat-square&logo=dart)](https://dart.dev)
-[![Build Status](https://img.shields.io/travis/Nebulino/Scrobblenaut/master?style=flat-square&logo=travis)](https://travis-ci.org/github/Nebulino/Scrobblenaut)
+[![Pub Version](https://img.shields.io/pub/v/scrobblenaut?style=flat-square&logo=dart)](https://pub.dev/packages/scrobblenaut)
+[![Dart SDK](https://img.shields.io/badge/Dart-3.0%2B-blue.svg?style=flat-square&logo=dart)](https://dart.dev)
 [![Last.FM](https://img.shields.io/badge/API-v.2.0-00aced.svg?style=flat-square&logo=last.fm)](https://www.last.fm/api/)
-[![Nebulino](https://img.shields.io/badge/💬%20Telegram-Nebulino-blue.svg?style=flat-square)](https://t.me/Nebulino/)
+[![License](https://img.shields.io/badge/license-Nebulino-orange.svg?style=flat-square)](LICENSE)
 
 </div>
 
-## Disclaimer
+---
 
-I'm doing it just for fun, so... use at your own risk.
+## Installation
 
-I hope it will become something great.
+Add Scrobblenaut to your project:
 
-^-^
+```bash
+dart pub add scrobblenaut
+```
+
+Or manually in `pubspec.yaml`:
+
+```yaml
+dependencies:
+  scrobblenaut: ^3.0.1
+```
+
+---
+
 ## Usage
 
-First build the .g files for Serializable (if you clone the repo):
+### 1. Unauthenticated Requests (Search & Metadata)
 
-```pub run build_runner build```
-
-A simple usage example:
+For methods that do not require user authorization (e.g. searching artists, albums, tracks, fetching tags or charts):
 
 ```dart
 import 'package:scrobblenaut/scrobblenaut.dart';
 
-// A simple example...
-// For more, check the example folder.
 void main() async {
-  final lastFMAuth = await LastFM.noAuth(apiKey: APIValues.API);
-  final scrobblenaut = Scrobblenaut(lastFM: lastFMAuth);
-  
-  // Start using the Wrapper...
+  final lastFM = LastFM.noAuth(apiKey: 'YOUR_API_KEY');
+  final scrobblenaut = Scrobblenaut(lastFM: lastFM);
+
+  // Fetch track metadata
+  final track = await scrobblenaut.track.getInfo(
+    artist: 'Daft Punk',
+    track: 'One More Time',
+  );
+
+  print('Track listeners: ${track.listeners}');
 }
-
 ```
 
-## Get Scrobblenaut
+### 2. Authenticated Requests (Scrobbling & Now Playing)
 
-Add Scrobblenaut dependency on `pubspec.yaml`:
+You can authenticate using a pre-existing session key, user credentials, or an authorized web/desktop token:
 
-From GitHub (for example: branch-name >> dev-build):
-```yaml
-dependencies:
-  scrobblenaut:
-    git: https://github.com/Nebulino/Scrobblenaut.git
-      ref: branch-name
+```dart
+import 'package:scrobblenaut/scrobblenaut.dart';
+
+void main() async {
+  // Option A: Using an existing session key (recommended for apps after first login)
+  final lastFM = LastFM.withSessionKey(
+    apiKey: 'YOUR_API_KEY',
+    apiSecret: 'YOUR_API_SECRET',
+    sessionKey: 'YOUR_SESSION_KEY',
+  );
+
+  // Option B: Authenticating with credentials via mobile session
+  // final lastFM = await LastFM.authenticate(
+  //   apiKey: 'YOUR_API_KEY',
+  //   apiSecret: 'YOUR_API_SECRET',
+  //   username: 'YOUR_USERNAME',
+  //   password: 'YOUR_PASSWORD',
+  // );
+
+  final scrobblenaut = Scrobblenaut(lastFM: lastFM);
+
+  // Update Now Playing
+  await scrobblenaut.track.updateNowPlaying(
+    artist: 'Daft Punk',
+    track: 'One More Time',
+    album: 'Discovery',
+  );
+
+  // Scrobble a track
+  final response = await scrobblenaut.track.scrobble(
+    artist: 'Daft Punk',
+    track: 'One More Time',
+    album: 'Discovery',
+    timestamp: DateTime.now(),
+  );
+
+  print('Scrobble accepted: ${response.accepted}');
+}
 ```
 
-From pub.dev:
+#### Authentication Options:
+- **`LastFM.withSessionKey(...)`**: Instantiate with an already stored session key (best practice for persisted sessions).
+- **`LastFM.authenticateWithToken(...)`**: Exchange an authorized web/desktop token (`auth.getSession`).
+- **`LastFM.authenticate(...)`**: Authenticate directly with username and password (`auth.getMobileSession`).
 
-```yaml
-dependencies:
-  scrobblenaut: ^version-number
+---
+
+## Development
+
+If you are cloning this repository to contribute:
+
+```bash
+dart run build_runner build
 ```
 
-## Features and bugs
+Run tests and analyzer:
 
-### Status
+```bash
+dart test
+dart analyze
+```
 
-All the methods are available.
-Needs more time to check for problems caused by a bad information management from the API side.
-For example: 
+---
 
-  - Tracks duration information taken from an album like method is different from a Track duration taken from a 
-track info query.
+## Documentation
 
-  - Some variables can have strange content such as FIXME on some Track duration.
+Full API documentation is available at [pub.dev/documentation/scrobblenaut](https://pub.dev/documentation/scrobblenaut/latest/).
 
-  - Many more. For now with my tests, this is the best I can handle. I just need more track and usage of my package
-to track different type of errors that can occurs.
-
-### Future of the package after all methods implemented
-
-It's still a long way.
-I have some ideas, and I'm going to continue to support it, just stay tuned.
-
-### For the documentation
-
-For now, You have to download the repo and run *dartdoc* on the console,
-on the root of the package. When I upload this package on *pub.dev* you can use the documentation from there directly.
-
-There's 2 type of usage:
-  - with authentication;
-  - without authentication.
-
-Please file feature requests and bugs at the [issue tracker][tracker].
-
-##### Copyright © 2020 Nebulino
-
-[tracker]: https://github.com/Nebulino/Scrobblenaut/issues
+Please file bug reports and feature requests on [GitHub Issues](https://github.com/Nebulino/Scrobblenaut/issues).

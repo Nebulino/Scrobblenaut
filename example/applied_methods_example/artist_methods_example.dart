@@ -31,15 +31,16 @@ void main() async {
   print('#########################artist.addTags#############################');
 
   // artist.addTags
-  print('Result of addTag request: ' +
-      (await artistInstance.addTags(tags: ['anime'])).toString());
+  print(
+    'Result of addTag request: ${await artistInstance.addTags(tags: ['anime'])}',
+  );
 
   print('#######################artist.getCorrection#########################');
 
   // artist.getCorrection
-  (await artistInstance.getCorrection())?.forEach((Artist artist) {
+  for (var artist in (await artistInstance.getCorrection())) {
     print('Artist correction: ${artist.name}');
-  });
+  }
 
   print('#########################artist.getInfo#############################');
 
@@ -49,8 +50,10 @@ void main() async {
     autoCorrect: true,
   ));
 
-  print('Artist Info Name: ${artistGetInfo.name} | '
-      'Artist URL: ${artistGetInfo.url}');
+  print(
+    'Artist Info Name: ${artistGetInfo.name} | '
+    'Artist URL: ${artistGetInfo.url}',
+  );
 
   print('########################artist.getSimilar###########################');
 
@@ -90,8 +93,9 @@ void main() async {
   print('########################artist.removeTag############################');
 
   // artist.removeTag
-  print('Result of removeTag request: ' +
-      (await artistInstance.removeTag(tag: 'anime')).toString());
+  print(
+    'Result of removeTag request: ${await artistInstance.removeTag(tag: 'anime')}',
+  );
 
   print('##########################artist.search#############################');
 

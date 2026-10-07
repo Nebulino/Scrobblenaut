@@ -49,9 +49,9 @@ void main() async {
 
   // user.getPersonalTags
   (await userInstance.getPersonalTags(
-          tag: 'anime', taggingType: TaggingType.track))
-      .tracks
-      ?.forEach((Track track) {
+    tag: 'anime',
+    taggingType: TaggingType.track,
+  )).tracks?.forEach((Track track) {
     print('Track Name: ${track.name} | Track URL: ${track.url}');
   });
 
@@ -86,18 +86,22 @@ void main() async {
   print('#####################user.getWeeklyAlbumChart#######################');
 
   // user.getTopTracks
-  (await userInstance.getTopTracks())?.forEach((Track track) {
-    print('Top Tracks Name: ${track.name} | Top Tracks URL: ${track.url} |'
-        ' Duration: ${track.duration}');
-  });
+  for (var track in (await userInstance.getTopTracks())) {
+    print(
+      'Top Tracks Name: ${track.name} | Top Tracks URL: ${track.url} |'
+      ' Duration: ${track.duration}',
+    );
+  }
 
   print('#####################user.getWeeklyArtistChart######################');
 
   // user.getWeeklyAlbumChart
-  (await userInstance.getTopTracks())?.forEach((Track track) {
-    print('Top Tracks Name: ${track.name} | Top Tracks URL: ${track.url} |'
-        ' Duration: ${track.duration}');
-  });
+  for (var track in (await userInstance.getTopTracks())) {
+    print(
+      'Top Tracks Name: ${track.name} | Top Tracks URL: ${track.url} |'
+      ' Duration: ${track.duration}',
+    );
+  }
 
   print('#####################user.getWeeklyArtistChart######################');
 
@@ -118,8 +122,9 @@ void main() async {
   // user.getWeeklyTrackChart
   (await userInstance.getWeeklyTrackChart())?.forEach((Track track) {
     print(
-        'Weekly Tracks Name: ${track.name} | Weekly Tracks URL: ${track.url} |'
-        ' Duration: ${track.duration}');
+      'Weekly Tracks Name: ${track.name} | Weekly Tracks URL: ${track.url} |'
+      ' Duration: ${track.duration}',
+    );
   });
 
   print('####################################################################');
