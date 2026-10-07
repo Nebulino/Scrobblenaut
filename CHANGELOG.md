@@ -1,3 +1,14 @@
+## 3.0.1
+### Documentation & API Robustness Improvements
+
+- **API Robustness**:
+  - Fixed `CastError` when Last.fm XML-to-JSON engine returns a single item as a `Map` instead of a `List` across `UserMethods` (`getRecentTracks`, `getLovedTracks`, `getFriends`, `getTopAlbums`, `getTopArtists`, `getTopTracks`, `getTopTags`, and weekly chart methods).
+  - Added `parseLastFMList` helper for safe extraction of single or multiple item response nodes.
+- **Extensions**:
+  - Added optional `albumArtist` parameter to `TrackExtension.scrobble` and `TrackExtension.updateNowPlaying`.
+- **Documentation**:
+  - Completely overhauled `README.md` with modern Dart 3 setup, active badges, and comprehensive examples for unauthenticated and authenticated usage.
+
 ## 3.0.0
 ### Major Update - Dart 3, Modern Dependencies & Last.fm API Fixes
 

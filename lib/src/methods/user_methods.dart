@@ -44,12 +44,7 @@ class UserMethods {
 
     final friends = response['friends']['user'];
 
-    return friends == null
-        ? null
-        : List.generate(
-            (friends as List).length,
-            (i) => User.fromJson(friends[i]),
-          );
+    return parseLastFMList<User>(friends, (item) => User.fromJson(item));
   }
 
   /// Get information about a user profile.
@@ -91,12 +86,7 @@ class UserMethods {
 
     final lovedTracks = response['lovedtracks']['track'];
 
-    return lovedTracks == null
-        ? null
-        : List.generate(
-            (lovedTracks as List).length,
-            (i) => Track.fromJson(lovedTracks[i]),
-          );
+    return parseLastFMList<Track>(lovedTracks, (item) => Track.fromJson(item));
   }
 
   /// Get the user's personal tags.
@@ -134,35 +124,23 @@ class UserMethods {
 
     if (taggingType == TaggingType.album) {
       final taggedAlbum = response['taggings']['albums']['album'];
-
-      if (taggedAlbum != null) {
-        taggings.albums = List.generate(
-          (taggedAlbum as List).length,
-          (i) => Album.fromJson(taggedAlbum[i]),
-        );
-      }
+      taggings.albums =
+          parseLastFMList<Album>(taggedAlbum, (i) => Album.fromJson(i)) ??
+          <Album>[];
     }
 
     if (taggingType == TaggingType.artist) {
       final taggedArtists = response['taggings']['artists']['artist'];
-
-      if (taggedArtists != null) {
-        taggings.artists = List.generate(
-          (taggedArtists as List).length,
-          (i) => Artist.fromJson(taggedArtists[i]),
-        );
-      }
+      taggings.artists =
+          parseLastFMList<Artist>(taggedArtists, (i) => Artist.fromJson(i)) ??
+          <Artist>[];
     }
 
     if (taggingType == TaggingType.track) {
       final taggedTracks = response['taggings']['tracks']['track'];
-
-      if (taggedTracks != null) {
-        taggings.tracks = List.generate(
-          (taggedTracks as List).length,
-          (i) => Track.fromJson(taggedTracks[i]),
-        );
-      }
+      taggings.tracks =
+          parseLastFMList<Track>(taggedTracks, (i) => Track.fromJson(i)) ??
+          <Track>[];
     }
 
     return taggings;
@@ -211,18 +189,15 @@ class UserMethods {
     if (recentTracks == null) {
       return null;
     } else {
-      for (var track in (recentTracks as List)) {
-        // Fixing the track value.
-        track['artist']['name'] ??=
-            isValidParsableStringField(track['artist']['#text'])
-            ? track['artist']['#text']
-            : null; // If there's no #text field, don't touch the artist.
-      }
-
-      return List.generate(
-        recentTracks.length,
-        (i) => Track.fromJson(recentTracks[i]),
-      );
+      return parseLastFMList<Track>(recentTracks, (track) {
+        if (track['artist'] is Map) {
+          track['artist']['name'] ??=
+              isValidParsableStringField(track['artist']['#text'])
+              ? track['artist']['#text']
+              : null;
+        }
+        return Track.fromJson(track);
+      });
     }
   }
 
@@ -255,12 +230,7 @@ class UserMethods {
 
     final topAlbums = response['topalbums']['album'];
 
-    return topAlbums == null
-        ? null
-        : List.generate(
-            (topAlbums as List).length,
-            (i) => Album.fromJson(topAlbums[i]),
-          );
+    return parseLastFMList<Album>(topAlbums, (i) => Album.fromJson(i));
   }
 
   /// Get the top artists listened to by a user.
@@ -293,12 +263,7 @@ class UserMethods {
 
     final topArtist = response['topartists']['artist'];
 
-    return topArtist == null
-        ? null
-        : List.generate(
-            (topArtist as List).length,
-            (i) => Artist.fromJson(topArtist[i]),
-          );
+    return parseLastFMList<Artist>(topArtist, (i) => Artist.fromJson(i));
   }
 
   /// Get the top tags used by this user.
@@ -319,12 +284,7 @@ class UserMethods {
 
     final topTags = response['toptags']['tag'];
 
-    return topTags == null
-        ? null
-        : List.generate(
-            (topTags as List).length,
-            (i) => Tag.fromJson(topTags[i]),
-          );
+    return parseLastFMList<Tag>(topTags, (i) => Tag.fromJson(i));
   }
 
   /// Get the top tracks listened to by a user.
@@ -363,10 +323,8 @@ class UserMethods {
       return [];
     } else {
       // This operation is necessary because the tracks have different duration.
-      var fixTopTracks = List.generate(
-        (topTracks as List).length,
-        (i) => Track.fromJson(topTracks[i]),
-      );
+      var fixTopTracks =
+          parseLastFMList<Track>(topTracks, (i) => Track.fromJson(i)) ?? [];
 
       for (var track in fixTopTracks) {
         if (track.duration != null) {
@@ -407,12 +365,7 @@ class UserMethods {
 
     final weeklyAlbumChart = response['weeklyalbumchart']['album'];
 
-    return weeklyAlbumChart == null
-        ? null
-        : List.generate(
-            (weeklyAlbumChart as List).length,
-            (i) => Album.fromJson(weeklyAlbumChart[i]),
-          );
+    return parseLastFMList<Album>(weeklyAlbumChart, (i) => Album.fromJson(i));
   }
 
   /// Get an artist chart for a user profile, for a given date range.
@@ -445,12 +398,10 @@ class UserMethods {
 
     final weeklyArtistChart = response['weeklyartistchart']['artist'];
 
-    return weeklyArtistChart == null
-        ? null
-        : List.generate(
-            (weeklyArtistChart as List).length,
-            (i) => Artist.fromJson(weeklyArtistChart[i]),
-          );
+    return parseLastFMList<Artist>(
+      weeklyArtistChart,
+      (i) => Artist.fromJson(i),
+    );
   }
 
   /// Get a list of available charts for this user,
@@ -470,12 +421,7 @@ class UserMethods {
 
     final weeklyChartList = response['weeklychartlist']['chart'];
 
-    return weeklyChartList == null
-        ? null
-        : List.generate(
-            (weeklyChartList as List).length,
-            (i) => Chart.fromJson(weeklyChartList[i]),
-          );
+    return parseLastFMList<Chart>(weeklyChartList, (i) => Chart.fromJson(i));
   }
 
   /// Get a track chart for a user profile, for a given date range.
@@ -508,11 +454,6 @@ class UserMethods {
 
     final weeklyTrackChart = response['weeklytrackchart']['track'];
 
-    return weeklyTrackChart == null
-        ? null
-        : List.generate(
-            (weeklyTrackChart as List).length,
-            (i) => Track.fromJson(weeklyTrackChart[i]),
-          );
+    return parseLastFMList<Track>(weeklyTrackChart, (i) => Track.fromJson(i));
   }
 }

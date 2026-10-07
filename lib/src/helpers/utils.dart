@@ -45,3 +45,21 @@ bool isXml(dynamic object) {
 /// It helps checking if a field can be parsed in a known way.
 bool isValidParsableStringField(dynamic value) =>
     value != null && value.toString() != 'null' && value.toString().isNotEmpty;
+
+/// Safely parses a Last.fm response node that can be either a `List` of items or a
+/// single `Map` (when only 1 result exists in Last.fm XML-to-JSON engine).
+List<T>? parseLastFMList<T>(
+  dynamic rawNode,
+  T Function(Map<String, dynamic> item) fromJson,
+) {
+  if (rawNode == null) return null;
+  if (rawNode is List) {
+    return rawNode
+        .map((item) => fromJson(Map<String, dynamic>.from(item as Map)))
+        .toList();
+  }
+  if (rawNode is Map) {
+    return [fromJson(Map<String, dynamic>.from(rawNode))];
+  }
+  return null;
+}

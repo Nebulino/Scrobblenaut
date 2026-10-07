@@ -93,6 +93,7 @@ extension TrackExtension on Track {
   /// [TrackMethods.scrobble]
   Future<ScrobbleResponse> scrobble({
     String? album,
+    String? albumArtist,
     int? trackNumber,
     Duration? duration,
     DateTime? timestamp,
@@ -107,6 +108,7 @@ extension TrackExtension on Track {
       track: name,
       album: album ?? this.album?.name,
       artist: artist?.name ?? '',
+      albumArtist: albumArtist,
       trackNumber: trackNumber,
       duration: duration ?? this.duration,
       timestamp: timestamp,
@@ -139,6 +141,7 @@ extension TrackExtension on Track {
   /// [TrackMethods.updateNowPlaying]
   Future<NowPlayedTrack> updateNowPlaying({
     String? album,
+    String? albumArtist,
     int? trackNumber,
     Duration? duration,
     DateTime? timestamp,
@@ -151,6 +154,7 @@ extension TrackExtension on Track {
       track: name,
       album: album ?? this.album?.name,
       artist: artist?.name ?? '',
+      albumArtist: albumArtist,
       trackNumber: trackNumber,
       duration: duration ?? this.duration,
       timestamp: timestamp,

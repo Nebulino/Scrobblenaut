@@ -136,5 +136,26 @@ void main() {
     test('generateMD5 produces correct hash', () {
       expect(generateMD5('hello'), '5d41402abc4b2a76b9719d911017c592');
     });
+
+    test('parseLastFMList handles list, single item map, and null', () {
+      expect(parseLastFMList(null, (item) => item['id']), isNull);
+
+      final singleItem = {'id': '123', 'name': 'Item 1'};
+      final singleResult = parseLastFMList(
+        singleItem,
+        (item) => item['name'] as String,
+      );
+      expect(singleResult, ['Item 1']);
+
+      final multipleItems = [
+        {'id': '1', 'name': 'Item A'},
+        {'id': '2', 'name': 'Item B'},
+      ];
+      final multiResult = parseLastFMList(
+        multipleItems,
+        (item) => item['name'] as String,
+      );
+      expect(multiResult, ['Item A', 'Item B']);
+    });
   });
 }
