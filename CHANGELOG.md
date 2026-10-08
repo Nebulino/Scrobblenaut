@@ -1,3 +1,10 @@
+## 3.0.2
+### CI Maintenance (no API changes)
+
+- Set up automated publishing to pub.dev via GitHub Actions (OIDC) with a
+  release gate on the `publish` branch. `CREDENTIAL_JSON`-based OAuth publishing
+  is no longer used.
+
 ## 3.0.1
 ### Documentation & API Robustness Improvements
 
