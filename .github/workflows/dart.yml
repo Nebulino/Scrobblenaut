@@ -1,36 +1,68 @@
-name: Dart CI - Publish
+name: Publish to pub.dev
+
+# Release gate: a version is published if and only if its tag is on `publish`.
+#
+# Flow
+#   1. bump `version:` in pubspec.yaml (+ CHANGELOG.md) and merge to `publish`
+#   2. git tag vX.Y.Z && git push origin vX.Y.Z
+#   3. the `guard` job refuses any tag whose commit is not on `publish`; only
+#      then does the official Dart reusable workflow authenticate with OIDC and
+#      run `dart pub publish -f`.
+#
+# Why the branch check lives here and not in `on: push: branches:` — pub.dev
+# only authorizes runs triggered by a *tag* push, never by a branch push.
+#
+# One-time setup: pub.dev → package → Admin → Automated publishing
+#   repository:  Nebulino/Scrobblenaut
+#   tag pattern: v{{version}}
 
 on:
+  # Re-runs: pick the TAG as the ref in the GitHub UI, not a branch.
+  workflow_dispatch:
   push:
-    branches: [ publish ]
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'      # v1.2.3   → pub.dev tag pattern: v{{version}}
+      - 'v[0-9]+.[0-9]+.[0-9]+-*'    # v1.2.3-rc.1 (pre-release)
+
+concurrency:
+  group: publish-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
-  publish_scrobblenaut:
+  guard:
+    name: Tag must be on publish
     runs-on: ubuntu-latest
-
+    permissions:
+      contents: read
     steps:
-    - uses: actions/checkout@v4
+      - name: Verify the tagged commit is on publish
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          branch=publish
+          if ! gh api "repos/${GITHUB_REPOSITORY}/branches/${branch}" >/dev/null 2>&1; then
+            echo "::error::Branch '${branch}' does not exist in ${GITHUB_REPOSITORY}."
+            exit 1
+          fi
+          status=$(gh api "repos/${GITHUB_REPOSITORY}/compare/${branch}...${GITHUB_SHA}" --jq .status)
+          echo "compare(${branch}...${GITHUB_SHA}) -> ${status}"
+          case "$status" in
+            identical|behind)
+              echo "::notice::${GITHUB_REF_NAME} (${GITHUB_SHA}) is on '${branch}'. Publishing." ;;
+            *)
+              echo "::error::Refusing to publish: ${GITHUB_REF_NAME} (${GITHUB_SHA}) is not on the '${branch}' branch (status: ${status})."
+              exit 1 ;;
+          esac
 
-    - uses: dart-lang/setup-dart@v1
+  publish:
+    needs: guard
+    permissions:
+      id-token: write   # required for OIDC authentication to pub.dev
+      contents: read
+    uses: dart-lang/setup-dart/.github/workflows/publish.yml@v1
 
-    - name: Install dependencies
-      run: dart pub get
-
-    - name: Clean the project if necessary
-      run: sh ./clean.sh
-
-    - name: Generate .g.dart object files
-      run: dart run build_runner build
-
-    - name: Publish on pub.dev
-      id: publish_package
-      uses: k-paxian/dart-package-publisher@master
-      with:
-        credentialJson: ${{ secrets.CREDENTIAL_JSON }}
-
-    - name: Commit release tag
-      if: steps.publish_package.outputs.success
-      uses: hole19/git-tag-action@master
-      env:
-        TAG: ${{steps.publish_package.outputs.package}}-${{steps.publish_package.outputs.localVersion}}
-        GITHUB_TOKEN: ${{ secrets.OAOTH_GITHUB_TOKEN }}
+# The old k-paxian/dart-package-publisher + secrets.CREDENTIAL_JSON (Google
+# OAuth) flow is no longer used: it hangs when pub.dev wants interactive
+# authorization. The CREDENTIAL_JSON / OAOTH_GITHUB_TOKEN secrets in this repo
+# can now be deleted.
