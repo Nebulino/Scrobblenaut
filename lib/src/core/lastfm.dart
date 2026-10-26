@@ -3,6 +3,7 @@
 //                  Copyright (c) 2020 Nebulino                 //
 //                                                              //
 
+import 'package:meta/meta.dart';
 import 'package:scrobblenaut/src/core/session_key_generator.dart';
 import 'package:scrobblenaut/src/tools/spaceship.dart';
 
@@ -24,8 +25,10 @@ class LastFM {
     this._sessionKey,
     this._username,
     this._passwordHash,
-    this._isAuth,
-  ) : _client = SpaceShip(baseUrl: 'https://ws.audioscrobbler.com/2.0/');
+    this._isAuth, [
+    SpaceShip? client,
+  ]) : _client =
+           client ?? SpaceShip(baseUrl: 'https://ws.audioscrobbler.com/2.0/');
 
   /// Default kind of API usage.
   /// You can use methods that does not required authentication.
@@ -40,6 +43,29 @@ class LastFM {
     String? username,
     String? proxy,
   }) : this._(apiKey, apiSecret, sessionKey, username, null, true);
+
+  /// It creates a LastFM object that sends its requests through the given
+  /// [client] instead of a [SpaceShip] with its own `Dio`.
+  ///
+  /// It exists so tests can fake the HTTP layer: build a [SpaceShip] around a
+  /// `Dio` with a fake `HttpClientAdapter` and pass it here. The object is
+  /// authenticated if, and only if, a [sessionKey] is given.
+  @visibleForTesting
+  LastFM.withClient({
+    required SpaceShip client,
+    required String apiKey,
+    String? apiSecret,
+    String? sessionKey,
+    String? username,
+  }) : this._(
+         apiKey,
+         apiSecret,
+         sessionKey,
+         username,
+         null,
+         sessionKey != null,
+         client,
+       );
 
   /// It creates a LastFM object with auth mode using [username] and [password].
   /// Uses [auth.getMobileSession] via POST.

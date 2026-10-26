@@ -15,16 +15,28 @@ import 'package:scrobblenaut/src/helpers/utils.dart';
 class SpaceShip {
   late Dio _dio;
 
-  SpaceShip({required String baseUrl, String? proxy}) {
+  /// Creates the client.
+  ///
+  /// By default [SpaceShip] builds and owns its own [Dio]. A caller (typically
+  /// a test) can pass its own [dio], e.g. one with a fake
+  /// [HttpClientAdapter]. The same interceptors are registered on it, and the
+  /// default [baseUrl], headers and content type are filled in only where the
+  /// given [dio] leaves them unset.
+  SpaceShip({required String baseUrl, String? proxy, Dio? dio}) {
     _dio =
-        Dio(
-            BaseOptions(
-              baseUrl: baseUrl,
-              headers: {'Accept-Charset': 'utf-8', 'User-Agent': 'DartyFM'},
-              contentType: Headers.formUrlEncodedContentType,
-              responseType: ResponseType.json,
-            ),
-          )
+        (dio == null
+              ? Dio(
+                  BaseOptions(
+                    baseUrl: baseUrl,
+                    headers: {
+                      'Accept-Charset': 'utf-8',
+                      'User-Agent': 'DartyFM',
+                    },
+                    contentType: Headers.formUrlEncodedContentType,
+                    responseType: ResponseType.json,
+                  ),
+                )
+              : _withDefaults(dio, baseUrl))
           ..interceptors.add(
             InterceptorsWrapper(
               onRequest:
@@ -79,6 +91,19 @@ class SpaceShip {
               },
             ),
           );
+  }
+
+  /// Fills the options a caller-supplied [dio] left unset with the defaults
+  /// used for the [Dio] built internally.
+  static Dio _withDefaults(Dio dio, String baseUrl) {
+    final options = dio.options;
+    if (options.baseUrl.isEmpty) {
+      options.baseUrl = baseUrl;
+    }
+    options.headers.putIfAbsent('Accept-Charset', () => 'utf-8');
+    options.headers.putIfAbsent('User-Agent', () => 'DartyFM');
+    options.contentType ??= Headers.formUrlEncodedContentType;
+    return dio;
   }
 
   Future<dynamic> get({

@@ -2,6 +2,9 @@
 // Scrobblenaut - A deadly simple Last.FM API Wrapper for Dart. //
 //                  Copyright (c) 2020 Nebulino                 //
 //                                                              //
+// Public names such as these are part of the published API and can't be
+// renamed without a breaking change, so the naming lint is silenced here.
+// ignore_for_file: non_constant_identifier_names
 
 import 'package:scrobblenaut/lastfm.dart';
 import 'package:scrobblenaut/src/exceptions/scrobblenaut_exception.dart';
