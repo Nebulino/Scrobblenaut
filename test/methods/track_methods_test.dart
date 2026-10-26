@@ -506,29 +506,20 @@ void main() {
       });
     }
 
-    // Known bug, deliberately not fixed in this run (it is a behaviour
-    // change): multiScrobble is the only POST method in lib/src/methods with
-    // no `isAuth` guard, so on a noAuth client it sends an unsigned
-    // track.scrobble upstream instead of failing locally.
-    test(
-      'multiScrobble fails with a ScrobblenautException and makes no '
-      'HTTP request',
-      () async {
-        adapter.enqueue(FakeResponse.xml(_scrobbleXml(1)));
-        final methods = TrackMethods(fakeLastFM(adapter));
+    // multiScrobble must fail locally like every other authenticated POST.
+    test('multiScrobble fails with a ScrobblenautException and makes no '
+        'HTTP request', () async {
+      adapter.enqueue(FakeResponse.xml(_scrobbleXml(1)));
+      final methods = TrackMethods(fakeLastFM(adapter));
 
-        await expectLater(
-          methods.multiScrobble(
-            scrobbleList: [Scrobble(track: 'Believe', artist: 'Cher')],
-          ),
-          throwsA(isA<ScrobblenautException>()),
-        );
-        expect(adapter.requests, isEmpty);
-      },
-      skip:
-          'Known bug: multiScrobble has no isAuth guard (fix is the next '
-          'slice).',
-    );
+      await expectLater(
+        methods.multiScrobble(
+          scrobbleList: [Scrobble(track: 'Believe', artist: 'Cher')],
+        ),
+        throwsA(isA<ScrobblenautException>()),
+      );
+      expect(adapter.requests, isEmpty);
+    });
 
     test('the same guard does not block a public method', () async {
       adapter.enqueue(FakeResponse.json(_trackInfoJson));

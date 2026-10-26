@@ -292,67 +292,80 @@ void main() {
     });
   });
 
-  // The complete round-trip is broken in the library today. These tests state
-  // the contract and are skipped until the serialization is fixed, which is
-  // a behaviour change outside this run (additive only). Each reason is a real
-  // measurement, not a guess.
-  group('complete toJson -> fromJson round-trip (known bugs)', () {
-    const nestedLists =
-        'toJson writes nested lists (toptags/tags/similar/tracks/...matches) '
-        'as bare Lists, but fromJson expects the Last.fm {"tag": [...]} '
-        'wrapper object, so fromJson throws a cast error.';
+  group('complete toJson -> fromJson round-trip', () {
+    test('Track keeps its duration', () {
+      final track = Track.fromJson(_json(_trackJson));
 
-    test(
-      'Track keeps its duration',
-      () {
-        final track = Track.fromJson(_json(_trackJson));
+      final copy = Track.fromJson(
+        _wire(Track(name: 'x', duration: track.duration).toJson()),
+      );
 
-        final copy = Track.fromJson(
-          _wire(Track(name: 'x', duration: track.duration).toJson()),
-        );
+      expect(copy.duration, track.duration);
+    });
 
-        expect(copy.duration, track.duration);
-      },
-      skip:
-          'toJson writes duration in microseconds (239000000) while fromJson '
-          'reads milliseconds, so a round-trip multiplies it by 1000.',
-    );
+    test('Track.duration is written in milliseconds', () {
+      final json = _wire(
+        Track(
+          name: 'x',
+          duration: const Duration(minutes: 3, seconds: 42),
+        ).toJson(),
+      );
+
+      expect(json['duration'], 222000);
+      expect(
+        Track.fromJson(json).duration,
+        const Duration(minutes: 3, seconds: 42),
+      );
+    });
 
     test('Track', () {
       final track = Track.fromJson(_json(_trackJson));
       final copy = Track.fromJson(_wire(track.toJson()));
       expect(_wire(copy.toJson()), _wire(track.toJson()));
-    }, skip: nestedLists);
+      expect(copy.loved, isTrue);
+      expect(copy.topTags!.single.name, 'pop');
+    });
 
     test('Album', () {
       final album = Album.fromJson(_json(_albumJson));
       final copy = Album.fromJson(_wire(album.toJson()));
       expect(_wire(copy.toJson()), _wire(album.toJson()));
-    }, skip: nestedLists);
+    });
 
     test('Artist', () {
       final artist = Artist.fromJson(_json(_artistJson));
       final copy = Artist.fromJson(_wire(artist.toJson()));
       expect(_wire(copy.toJson()), _wire(artist.toJson()));
-    }, skip: nestedLists);
+      expect(copy.onTour, isTrue);
+      expect(copy.isStreamable, isFalse);
+      expect(copy.similarArtists!.single.name, 'Madonna');
+    });
 
-    test(
-      'Tag',
-      () {
-        final tag = Tag.fromJson(_json(_tagJson));
-        final copy = Tag.fromJson(_wire(tag.toJson()));
-        expect(_wire(copy.toJson()), _wire(tag.toJson()));
-      },
-      skip:
-          'toJson writes streamable as a bool, but fromJson '
-          '(NumberToBool) only accepts 0/1 and throws a ScrobblenautException '
-          'on a bool. Same for Track.loved and Artist.onTour.',
-    );
+    test('Tag', () {
+      final tag = Tag.fromJson(_json(_tagJson));
+      final copy = Tag.fromJson(_wire(tag.toJson()));
+      expect(_wire(copy.toJson()), _wire(tag.toJson()));
+      expect(copy.streamable, isFalse);
+    });
+
+    test('Bio links round-trip and still accept a single link object', () {
+      final bio = Bio(
+        links: [Link(text: '', rel: 'original', webLink: 'https://x.test')],
+        summary: 'Short',
+      );
+      final copy = Bio.fromJson(_wire(bio.toJson()));
+      expect(copy.links!.single.webLink, 'https://x.test');
+
+      final single = Bio.fromJson(
+        _json('{"links":{"link":{"#text":"","rel":"original","href":"u"}}}'),
+      );
+      expect(single.links!.single.rel, 'original');
+    });
 
     test('TrackSearchResults, AlbumSearchResults and ArtistSearchResults', () {
       final tracks = TrackSearchResults.fromJson(_json(_trackSearchJson));
       final copy = TrackSearchResults.fromJson(_wire(tracks.toJson()));
       expect(_wire(copy.toJson()), _wire(tracks.toJson()));
-    }, skip: nestedLists);
+    });
   });
 }

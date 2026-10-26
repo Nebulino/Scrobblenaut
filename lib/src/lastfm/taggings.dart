@@ -9,15 +9,27 @@ part of '../lastfm.dart';
 @JsonSerializable(includeIfNull: false)
 class Taggings {
   /// A list of tagged albums.
-  @JsonKey(name: 'albums', fromJson: LastFMValueNormalizer.albumsExtractor)
+  @JsonKey(
+    name: 'albums',
+    fromJson: LastFMValueNormalizer.albumsExtractor,
+    toJson: LastFMValueNormalizer.albumsToJson,
+  )
   List<Album>? albums;
 
   /// A list of tagged artists.
-  @JsonKey(name: 'artists', fromJson: LastFMValueNormalizer.artistsExtractor)
+  @JsonKey(
+    name: 'artists',
+    fromJson: LastFMValueNormalizer.artistsExtractor,
+    toJson: LastFMValueNormalizer.artistsToJson,
+  )
   List<Artist>? artists;
 
   /// A list of tagged tracks.
-  @JsonKey(name: 'tracks', fromJson: LastFMValueNormalizer.tracksExtractor)
+  @JsonKey(
+    name: 'tracks',
+    fromJson: LastFMValueNormalizer.tracksExtractor,
+    toJson: LastFMValueNormalizer.tracksToJson,
+  )
   List<Track>? tracks;
 
   Taggings({this.albums, this.artists, this.tracks});

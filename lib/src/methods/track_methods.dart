@@ -471,6 +471,14 @@ class TrackMethods {
   Future<ScrobbleResponse> multiScrobble({
     required List<Scrobble> scrobbleList,
   }) async {
+    if (!_api.isAuth) {
+      return Future.error(
+        ScrobblenautException(
+          description: "You can't use this method unless you Authenticate.",
+        ),
+      );
+    }
+
     // TODO: make a queue for scrobbleList longer than 50?
 
     if (scrobbleList.length > 50) {

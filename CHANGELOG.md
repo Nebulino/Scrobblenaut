@@ -1,3 +1,13 @@
+## Unreleased
+### Bug Fixes
+
+- **Authentication**:
+  - `TrackMethods.multiScrobble` now fails with a `ScrobblenautException` on a client without authentication, like every other authenticated method, instead of sending an unsigned request.
+- **Serialization**:
+  - `Track.toJson` now writes `duration` in milliseconds, the unit `Track.fromJson` and `track.getInfo` use, so a `toJson` -> `fromJson` round-trip no longer shifts it by 1000x. `Scrobble.duration` (seconds) is unchanged.
+  - `toJson` now writes nested collections in the Last.fm wrapper shape (`{"tag": [...]}`, `{"track": [...]}`, `{"album": [...]}`, `{"artist": [...]}`, `{"link": [...]}`) and booleans as `0`/`1`, so `toJson` -> `fromJson` is lossless for `Track`, `Album`, `Artist`, `Tag`, `User`, `Bio`, `Taggings` and the search results.
+  - `Bio.links` now also accepts a list of links, not only a single link object.
+
 ## 3.0.2
 ### CI Maintenance (no API changes)
 

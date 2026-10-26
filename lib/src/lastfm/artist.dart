@@ -21,7 +21,11 @@ class Artist {
   List<Image>? images;
 
   /// A list of tags assigned to the artist..
-  @JsonKey(name: 'tags', fromJson: LastFMValueNormalizer.tagsExtractor)
+  @JsonKey(
+    name: 'tags',
+    fromJson: LastFMValueNormalizer.tagsExtractor,
+    toJson: LastFMValueNormalizer.tagsToJson,
+  )
   List<Tag>? tags;
 
   /// Number of tags onto the artist.
@@ -40,6 +44,7 @@ class Artist {
   @JsonKey(
     name: 'similar',
     fromJson: LastFMValueNormalizer.similarArtistsExtractor,
+    toJson: LastFMValueNormalizer.artistsToJson,
   )
   List<Artist>? similarArtists;
 
@@ -51,6 +56,7 @@ class Artist {
   @JsonKey(
     name: 'streamable',
     fromJson: LastFMValueNormalizer.isArtistStreamable,
+    toJson: LastFMValueNormalizer.BoolToIntBool,
   )
   bool? isStreamable;
 
@@ -63,7 +69,11 @@ class Artist {
   int? playCount;
 
   /// Information about ongoing Tours.
-  @JsonKey(name: 'ontour', fromJson: LastFMValueNormalizer.NumberToBool)
+  @JsonKey(
+    name: 'ontour',
+    fromJson: LastFMValueNormalizer.NumberToBool,
+    toJson: LastFMValueNormalizer.BoolToIntBool,
+  )
   bool? onTour;
 
   /// MusicBrainz ID.

@@ -37,7 +37,11 @@ class User {
   List<Image>? image;
 
   // If it's a subscriber.
-  @JsonKey(name: 'subscriber', fromJson: LastFMValueNormalizer.NumberToBool)
+  @JsonKey(
+    name: 'subscriber',
+    fromJson: LastFMValueNormalizer.NumberToBool,
+    toJson: LastFMValueNormalizer.BoolToIntBool,
+  )
   bool? subscriber;
 
   // The number of playlist of the user.

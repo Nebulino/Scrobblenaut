@@ -33,7 +33,11 @@ class Tag {
   int? taggings;
 
   /// If True, this tag can be used as a Radio Station.
-  @JsonKey(name: 'streamable', fromJson: LastFMValueNormalizer.NumberToBool)
+  @JsonKey(
+    name: 'streamable',
+    fromJson: LastFMValueNormalizer.NumberToBool,
+    toJson: LastFMValueNormalizer.BoolToIntBool,
+  )
   bool? streamable;
 
   /// The wiki of the tag.

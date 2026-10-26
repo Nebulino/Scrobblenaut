@@ -29,11 +29,19 @@ class Album {
   List<Image>? images;
 
   /// A list of tracks of the album.
-  @JsonKey(name: 'tracks', fromJson: LastFMValueNormalizer.tracksExtractor)
+  @JsonKey(
+    name: 'tracks',
+    fromJson: LastFMValueNormalizer.tracksExtractor,
+    toJson: LastFMValueNormalizer.tracksToJson,
+  )
   List<Track>? tracks;
 
   /// A list of tags assigned to the album.
-  @JsonKey(name: 'tags', fromJson: LastFMValueNormalizer.tagsExtractor)
+  @JsonKey(
+    name: 'tags',
+    fromJson: LastFMValueNormalizer.tagsExtractor,
+    toJson: LastFMValueNormalizer.tagsToJson,
+  )
   List<Tag>? tags;
 
   /// The number of listeners of the album.
