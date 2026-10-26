@@ -13,7 +13,7 @@ void main() async {
   print('####################################################################');
 
   final lastFMAuth = await LastFM.authenticate(
-    apiKey: APIValues.API,
+    apiKey: APIValues.api,
     apiSecret: APIValues.secret,
     username: APIValues.username,
     password: APIValues.password,

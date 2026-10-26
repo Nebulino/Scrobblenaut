@@ -341,18 +341,21 @@ void main() {
       expect(response.scrobbleResponses, hasLength(50));
     });
 
-    test('rejects more than 50 scrobbles with no request', () async {
+    test('chunks more than 50 scrobbles instead of refusing them', () async {
       final batch = [
         for (var i = 0; i < 51; i++) Scrobble(track: 'T$i', artist: 'Cher'),
       ];
+      adapter
+        ..enqueue(FakeResponse.xml(_scrobbleXml(50)))
+        ..enqueue(FakeResponse.xml(_scrobbleXml(1)));
 
-      await expectLater(
-        TrackMethods(
-          fakeAuthLastFM(adapter),
-        ).multiScrobble(scrobbleList: batch),
-        throwsA(isA<ScrobblenautException>()),
-      );
-      expect(adapter.requests, isEmpty);
+      final response = await TrackMethods(
+        fakeAuthLastFM(adapter),
+      ).multiScrobble(scrobbleList: batch);
+
+      expect(adapter.requests, hasLength(2));
+      expect(response.scrobbleAccepted, 51);
+      expect(response.scrobbleResponses, hasLength(51));
     });
   });
 

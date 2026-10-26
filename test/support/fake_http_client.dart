@@ -17,20 +17,49 @@ class FakeResponse {
   final String body;
   final String contentType;
 
-  const FakeResponse._(this.statusCode, this.body, this.contentType);
+  /// Extra response headers, e.g. `Retry-After`.
+  final Map<String, String> headers;
+
+  /// When set, the adapter throws it instead of answering, which is how a
+  /// transport failure (timeout, connection error) looks to dio.
+  final DioException? error;
+
+  const FakeResponse._(
+    this.statusCode,
+    this.body,
+    this.contentType, {
+    this.headers = const {},
+    this.error,
+  });
 
   /// A JSON body, as Last.fm sends it when the request has `format=json`.
   /// [body] can be a `String` with JSON, or any JSON-encodable object.
-  factory FakeResponse.json(Object body, {int statusCode = 200}) =>
-      FakeResponse._(
-        statusCode,
-        body is String ? body : jsonEncode(body),
-        'application/json; charset=utf-8',
-      );
+  factory FakeResponse.json(
+    Object body, {
+    int statusCode = 200,
+    Map<String, String> headers = const {},
+  }) => FakeResponse._(
+    statusCode,
+    body is String ? body : jsonEncode(body),
+    'application/json; charset=utf-8',
+    headers: headers,
+  );
 
   /// An XML body, as Last.fm sends it for POST requests.
-  factory FakeResponse.xml(String body, {int statusCode = 200}) =>
-      FakeResponse._(statusCode, body, 'text/xml; charset=UTF-8');
+  factory FakeResponse.xml(
+    String body, {
+    int statusCode = 200,
+    Map<String, String> headers = const {},
+  }) => FakeResponse._(
+    statusCode,
+    body,
+    'text/xml; charset=UTF-8',
+    headers: headers,
+  );
+
+  /// A transport failure: the adapter throws [error] instead of answering.
+  factory FakeResponse.failure(DioException error) =>
+      FakeResponse._(0, '', '', error: error);
 }
 
 /// A request received by [FakeHttpClientAdapter].
@@ -112,11 +141,16 @@ class FakeHttpClientAdapter implements HttpClientAdapter {
       );
     }
 
+    if (response.error != null) {
+      throw response.error!;
+    }
+
     return ResponseBody.fromString(
       response.body,
       response.statusCode,
       headers: {
         Headers.contentTypeHeader: [response.contentType],
+        for (final header in response.headers.entries) header.key: [header.value],
       },
     );
   }

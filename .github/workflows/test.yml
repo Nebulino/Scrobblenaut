@@ -24,17 +24,11 @@ jobs:
       - name: Install dependencies
         run: dart pub get
 
-      # The package itself must be free of any analyzer issue, infos included.
-      - name: Analyze lib and test
-        run: dart analyze --fatal-infos lib test
-
-      # example/ imports a git-ignored `api_values.dart` that every developer
-      # creates locally; a clean checkout has only the placeholder template.
-      # Copy it so the examples can be type-checked against the public API.
-      - name: Analyze example
-        run: |
-          cp example/api_values.example.dart example/api_values.dart
-          dart analyze example
+      # Nothing may be flagged, infos included, and a clean checkout must be
+      # analyzable on its own: example/api_values.dart is committed and reads
+      # its values from --define, so no placeholder has to be created first.
+      - name: Analyze
+        run: dart analyze --fatal-infos .
 
       - name: Run tests
         run: dart test

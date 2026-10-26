@@ -27,13 +27,17 @@ class LastFM {
     this._passwordHash,
     this._isAuth, [
     SpaceShip? client,
-  ]) : _client =
-           client ?? SpaceShip(baseUrl: 'https://ws.audioscrobbler.com/2.0/');
+    String? proxy,
+  ]) : _client = client ??
+           SpaceShip(
+             baseUrl: 'https://ws.audioscrobbler.com/2.0/',
+             proxy: proxy,
+           );
 
   /// Default kind of API usage.
   /// You can use methods that does not required authentication.
   LastFM.noAuth({required String apiKey, String? proxy})
-    : this._(apiKey, null, null, null, null, false);
+    : this._(apiKey, null, null, null, null, false, null, proxy);
 
   /// It creates a LastFM object using an existing [sessionKey].
   LastFM.withSessionKey({
@@ -42,7 +46,7 @@ class LastFM {
     required String sessionKey,
     String? username,
     String? proxy,
-  }) : this._(apiKey, apiSecret, sessionKey, username, null, true);
+  }) : this._(apiKey, apiSecret, sessionKey, username, null, true, null, proxy);
 
   /// It creates a LastFM object that sends its requests through the given
   /// [client] instead of a [SpaceShip] with its own `Dio`.
@@ -83,11 +87,12 @@ class LastFM {
         apiSecret: apiSecret,
         sessionKey: sessionKey,
         username: username,
+        proxy: proxy,
       );
     }
 
     final session = await SessionKeyGenerator(
-      LastFM._(apiKey, apiSecret, null, null, null, false),
+      LastFM._(apiKey, apiSecret, null, null, null, false, null, proxy),
     ).getMobileSessionKey(username: username, password: password);
 
     return LastFM._(
@@ -97,6 +102,8 @@ class LastFM {
       session.name ?? username,
       null,
       true,
+      null,
+      proxy,
     );
   }
 
@@ -109,7 +116,7 @@ class LastFM {
     String? proxy,
   }) async {
     final session = await SessionKeyGenerator(
-      LastFM._(apiKey, apiSecret, null, null, null, false),
+      LastFM._(apiKey, apiSecret, null, null, null, false, null, proxy),
     ).getSessionWithToken(token: token);
 
     return LastFM._(
@@ -119,6 +126,8 @@ class LastFM {
       session.name,
       null,
       true,
+      null,
+      proxy,
     );
   }
 
@@ -140,6 +149,7 @@ class LastFM {
         apiSecret: apiSecret,
         sessionKey: sessionKey,
         username: username,
+        proxy: proxy,
       );
     }
     throw UnsupportedError(

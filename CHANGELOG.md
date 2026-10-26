@@ -8,6 +8,18 @@
   - `toJson` now writes nested collections in the Last.fm wrapper shape (`{"tag": [...]}`, `{"track": [...]}`, `{"album": [...]}`, `{"artist": [...]}`, `{"link": [...]}`) and booleans as `0`/`1`, so `toJson` -> `fromJson` is lossless for `Track`, `Album`, `Artist`, `Tag`, `User`, `Bio`, `Taggings` and the search results.
   - `Bio.links` now also accepts a list of links, not only a single link object.
 
+### Features
+- **Scrobbling**:
+  - `TrackMethods.multiScrobble` now accepts lists of any length: they are split into sequential requests of at most 50 scrobbles (Last.fm's limit) and merged into a single `ScrobbleResponse` whose counters are the sums and whose entries keep the input order. `ScrobbleResponse.merge` builds that combined response. An empty list fails without sending anything.
+- **Networking**:
+  - Transient failures are retried with an exponential backoff: timeouts, connection errors, HTTP 429, HTTP 5xx and Last.fm error 29 ("Rate limit exceeded"). `retryLimit` (default 5) is the total number of attempts, 1 means no retry; the delay starts at 500 ms, doubles, is capped at 8 s, and honours a `Retry-After` header in its seconds form. A 4xx that is not a rate limit is never retried, and after the last attempt the original exception is rethrown.
+  - `proxy: 'host:port'` is now actually applied on native platforms (`HttpClient.findProxy`), instead of being accepted and ignored. A malformed value throws `ArgumentError` at construction; on the web the value is documented as ignored.
+  - `LastFMException` now carries the `Response` it was generated from, so the status code and headers stay readable by callers and by the retry layer.
+
+### Documentation & Examples
+- `example/api_values.dart` is committed and reads its values from `String.fromEnvironment` (`LASTFM_API_KEY`, …): a clean checkout analyzes and runs the examples without creating a git-ignored file, and no credential can be committed.
+- CI analyzes the whole repository (`dart analyze --fatal-infos .`) instead of the library only; README documents how to run an example with `--define`.
+
 ## 3.0.2
 ### CI Maintenance (no API changes)
 

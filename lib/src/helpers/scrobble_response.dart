@@ -31,6 +31,33 @@ class ScrobbleResponse {
     this._scrobbleIgnored,
   );
 
+  /// Combines the responses of a chunked scrobble call into a single one.
+  ///
+  /// [status] is true only when every response succeeded, the per-scrobble
+  /// entries keep the input order, and the accepted/ignored counters are the
+  /// sums (null when no response carried them).
+  factory ScrobbleResponse.merge(Iterable<ScrobbleResponse> responses) {
+    final all = responses.toList(growable: false);
+
+    int? sumOf(int? Function(ScrobbleResponse response) read) {
+      int? total;
+      for (final response in all) {
+        final value = read(response);
+        if (value != null) {
+          total = (total ?? 0) + value;
+        }
+      }
+      return total;
+    }
+
+    return ScrobbleResponse._(
+      all.isNotEmpty && all.every((response) => response.status),
+      [for (final response in all) ...response.scrobbleResponses],
+      sumOf((response) => response.scrobbleAccepted),
+      sumOf((response) => response.scrobbleIgnored),
+    );
+  }
+
   // It helps creating a ScrobbleResponseHelper from a response in String.
   factory ScrobbleResponse.parse(String response) {
     // It creates the document.

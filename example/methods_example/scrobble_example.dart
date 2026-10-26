@@ -11,14 +11,14 @@ import '../api_values.dart';
 // Just an example of use.
 void main() async {
   final lastFMAuth = await LastFM.authenticate(
-    apiKey: APIValues.API,
+    apiKey: APIValues.api,
     apiSecret: APIValues.secret,
     username: APIValues.username,
     password: APIValues.password,
     // sessionKey: APIValues.sessionKey,
   );
 
-  // final lastFMnoAuth = await LastFM.noAuth(apiKey: APIValues.API);
+  // final lastFMnoAuth = await LastFM.noAuth(apiKey: APIValues.api);
   // When used a LastFM in noAuth mode, it raises an exception.
 
   final scrobblenaut = Scrobblenaut(lastFM: lastFMAuth);

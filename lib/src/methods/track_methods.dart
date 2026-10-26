@@ -467,7 +467,14 @@ class TrackMethods {
     return ScrobbleResponse.parse(response);
   }
 
-  /// See [TrackMethods.scrobble] and [Scrobble] for more information.
+  /// The maximum number of scrobbles Last.fm accepts in a single request.
+  static const int maxScrobblesPerRequest = 50;
+
+  /// Scrobbles a list of [Scrobble]s, in blocks of [maxScrobblesPerRequest].
+  ///
+  /// A list longer than 50 is split into sequential requests, and the result is
+  /// a single [ScrobbleResponse] whose counters are the sums. See
+  /// [TrackMethods.scrobble] and [Scrobble] for more information.
   Future<ScrobbleResponse> multiScrobble({
     required List<Scrobble> scrobbleList,
   }) async {
@@ -479,17 +486,38 @@ class TrackMethods {
       );
     }
 
-    // TODO: make a queue for scrobbleList longer than 50?
-
-    if (scrobbleList.length > 50) {
+    if (scrobbleList.isEmpty) {
       return Future.error(
         ScrobblenautException(
-          description: "You've supplied more than 50 scrobbles.",
+          description: "You've supplied an empty list of scrobbles.",
         ),
       );
     }
 
-    var parameters = <String, dynamic>{};
+    final responses = <ScrobbleResponse>[];
+
+    for (
+      var start = 0;
+      start < scrobbleList.length;
+      start += maxScrobblesPerRequest
+    ) {
+      final remaining = scrobbleList.length - start;
+      final end = start +
+          (remaining < maxScrobblesPerRequest
+              ? remaining
+              : maxScrobblesPerRequest);
+
+      responses.add(await _scrobbleChunk(scrobbleList.sublist(start, end)));
+    }
+
+    return ScrobbleResponse.merge(responses);
+  }
+
+  /// Sends at most [maxScrobblesPerRequest] scrobbles in one request.
+  ///
+  /// The keys are 0-based (`track[0]`..`track[49]`), as Last.fm expects.
+  Future<ScrobbleResponse> _scrobbleChunk(List<Scrobble> scrobbleList) async {
+    final parameters = <String, dynamic>{};
 
     var i = 0;
 

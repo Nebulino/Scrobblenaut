@@ -10,7 +10,7 @@ import 'api_values.dart';
 
 // Just an example of use.
 void main() async {
-  var lastFM = LastFM.noAuth(apiKey: APIValues.API);
+  var lastFM = LastFM.noAuth(apiKey: APIValues.api);
 
   var scrobblenaut = Scrobblenaut(lastFM: lastFM);
 
@@ -31,7 +31,7 @@ void main() async {
   });
 
   lastFM = await LastFM.authenticate(
-    apiKey: APIValues.API,
+    apiKey: APIValues.api,
     apiSecret: APIValues.secret,
     username: APIValues.username,
     password: APIValues.password,
