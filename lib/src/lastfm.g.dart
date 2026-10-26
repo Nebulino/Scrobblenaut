@@ -116,8 +116,8 @@ Map<String, dynamic> _$AlbumToJson(Album instance) => <String, dynamic>{
   'artist': ?instance.artist,
   'url': ?instance.url,
   'image': ?instance.images,
-  'tracks': ?instance.tracks,
-  'tags': ?instance.tags,
+  'tracks': ?LastFMValueNormalizer.tracksToJson(instance.tracks),
+  'tags': ?LastFMValueNormalizer.tagsToJson(instance.tags),
   'listeners': ?instance.listeners,
   'playcount': ?instance.playCount,
   'mbid': ?instance.mbid,
@@ -141,7 +141,7 @@ AlbumSearchResults _$AlbumSearchResultsFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$AlbumSearchResultsToJson(AlbumSearchResults instance) =>
     <String, dynamic>{
-      'albummatches': ?instance.albums,
+      'albummatches': ?LastFMValueNormalizer.albumsToJson(instance.albums),
       'opensearch:TotalResults': ?instance.totalResults,
       'opensearch:StartIndex': ?instance.statingIndex,
       'opensearch:ItemsPerPage': ?instance.itemsPerPage,
@@ -178,16 +178,16 @@ Map<String, dynamic> _$ArtistToJson(Artist instance) => <String, dynamic>{
   'name': ?instance.name,
   'url': ?instance.url,
   'image': ?instance.images,
-  'tags': ?instance.tags,
+  'tags': ?LastFMValueNormalizer.tagsToJson(instance.tags),
   'tagcount': ?instance.tagCount,
   'stats': ?instance.stats,
   'bio': ?instance.bio,
-  'similar': ?instance.similarArtists,
+  'similar': ?LastFMValueNormalizer.artistsToJson(instance.similarArtists),
   'match': ?instance.match,
-  'streamable': ?instance.isStreamable,
+  'streamable': ?LastFMValueNormalizer.BoolToIntBool(instance.isStreamable),
   'listeners': ?instance.listeners,
   'playcount': ?instance.playCount,
-  'ontour': ?instance.onTour,
+  'ontour': ?LastFMValueNormalizer.BoolToIntBool(instance.onTour),
   'mbid': ?instance.mbid,
 };
 
@@ -210,7 +210,7 @@ ArtistSearchResults _$ArtistSearchResultsFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$ArtistSearchResultsToJson(
   ArtistSearchResults instance,
 ) => <String, dynamic>{
-  'artistmatches': ?instance.artists,
+  'artistmatches': ?LastFMValueNormalizer.artistsToJson(instance.artists),
   'opensearch:TotalResults': ?instance.totalResults,
   'opensearch:StartIndex': ?instance.statingIndex,
   'opensearch:ItemsPerPage': ?instance.itemsPerPage,
@@ -226,7 +226,7 @@ Bio _$BioFromJson(Map<String, dynamic> json) => Bio(
 );
 
 Map<String, dynamic> _$BioToJson(Bio instance) => <String, dynamic>{
-  'links': ?instance.links,
+  'links': ?LastFMValueNormalizer.linksToJson(instance.links),
   'published': ?instance.published,
   'summary': ?instance.summary,
   'content': ?instance.content,
@@ -342,7 +342,7 @@ Map<String, dynamic> _$TagToJson(Tag instance) => <String, dynamic>{
   'total': ?instance.total,
   'reach': ?instance.reach,
   'taggings': ?instance.taggings,
-  'streamable': ?instance.streamable,
+  'streamable': ?LastFMValueNormalizer.BoolToIntBool(instance.streamable),
   'wiki': ?instance.wiki,
 };
 
@@ -359,9 +359,9 @@ Taggings _$TaggingsFromJson(Map<String, dynamic> json) => Taggings(
 );
 
 Map<String, dynamic> _$TaggingsToJson(Taggings instance) => <String, dynamic>{
-  'albums': ?instance.albums,
-  'artists': ?instance.artists,
-  'tracks': ?instance.tracks,
+  'albums': ?LastFMValueNormalizer.albumsToJson(instance.albums),
+  'artists': ?LastFMValueNormalizer.artistsToJson(instance.artists),
+  'tracks': ?LastFMValueNormalizer.tracksToJson(instance.tracks),
 };
 
 Track _$TrackFromJson(Map<String, dynamic> json) => Track(
@@ -396,16 +396,16 @@ Map<String, dynamic> _$TrackToJson(Track instance) => <String, dynamic>{
   'album': ?instance.album,
   'artist': ?instance.artist,
   'url': ?instance.url,
-  'duration': ?instance.duration?.inMicroseconds,
+  'duration': ?LastFMValueNormalizer.DurationToMilliseconds(instance.duration),
   'image': ?instance.images,
-  'toptags': ?instance.topTags,
+  'toptags': ?LastFMValueNormalizer.tagsToJson(instance.topTags),
   'date': ?instance.date,
   'streamable': ?instance.streamable,
   'listeners': ?instance.listeners,
   'playcount': ?instance.playCount,
   'wiki': ?instance.wiki,
   'mbid': ?instance.mbid,
-  'loved': ?instance.loved,
+  'loved': ?LastFMValueNormalizer.BoolToIntBool(instance.loved),
 };
 
 TrackSearchResults _$TrackSearchResultsFromJson(Map<String, dynamic> json) =>
@@ -426,7 +426,7 @@ TrackSearchResults _$TrackSearchResultsFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$TrackSearchResultsToJson(TrackSearchResults instance) =>
     <String, dynamic>{
-      'trackmatches': ?instance.tracks,
+      'trackmatches': ?LastFMValueNormalizer.tracksToJson(instance.tracks),
       'opensearch:TotalResults': ?instance.totalResults,
       'opensearch:StartIndex': ?instance.statingIndex,
       'opensearch:ItemsPerPage': ?instance.itemsPerPage,
@@ -460,7 +460,7 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
   'country': ?instance.country,
   'url': ?instance.url,
   'image': ?instance.image,
-  'subscriber': ?instance.subscriber,
+  'subscriber': ?LastFMValueNormalizer.BoolToIntBool(instance.subscriber),
   'playlists': ?instance.playlists,
   'playcount': ?instance.playCount,
   'registered': ?instance.registered,

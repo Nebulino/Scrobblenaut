@@ -9,7 +9,11 @@ part of '../lastfm.dart';
 @JsonSerializable(includeIfNull: false)
 class Bio {
   /// A list of links.
-  @JsonKey(name: 'links', fromJson: LastFMValueNormalizer.linksExtractor)
+  @JsonKey(
+    name: 'links',
+    fromJson: LastFMValueNormalizer.linksExtractor,
+    toJson: LastFMValueNormalizer.linksToJson,
+  )
   List<Link>? links;
 
   /// A string that indicates the date of publishing.

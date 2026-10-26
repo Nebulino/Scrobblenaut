@@ -5,7 +5,7 @@
 
 /// Scrobblenaut Library.
 /// This is the brain of my Wrapper.
-library scrobblenaut;
+library;
 
 // Core.
 export 'package:scrobblenaut/src/core/lastfm.dart';

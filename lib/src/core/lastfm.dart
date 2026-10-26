@@ -3,6 +3,7 @@
 //                  Copyright (c) 2020 Nebulino                 //
 //                                                              //
 
+import 'package:meta/meta.dart';
 import 'package:scrobblenaut/src/core/session_key_generator.dart';
 import 'package:scrobblenaut/src/tools/spaceship.dart';
 
@@ -24,13 +25,19 @@ class LastFM {
     this._sessionKey,
     this._username,
     this._passwordHash,
-    this._isAuth,
-  ) : _client = SpaceShip(baseUrl: 'https://ws.audioscrobbler.com/2.0/');
+    this._isAuth, [
+    SpaceShip? client,
+    String? proxy,
+  ]) : _client = client ??
+           SpaceShip(
+             baseUrl: 'https://ws.audioscrobbler.com/2.0/',
+             proxy: proxy,
+           );
 
   /// Default kind of API usage.
   /// You can use methods that does not required authentication.
   LastFM.noAuth({required String apiKey, String? proxy})
-    : this._(apiKey, null, null, null, null, false);
+    : this._(apiKey, null, null, null, null, false, null, proxy);
 
   /// It creates a LastFM object using an existing [sessionKey].
   LastFM.withSessionKey({
@@ -39,7 +46,30 @@ class LastFM {
     required String sessionKey,
     String? username,
     String? proxy,
-  }) : this._(apiKey, apiSecret, sessionKey, username, null, true);
+  }) : this._(apiKey, apiSecret, sessionKey, username, null, true, null, proxy);
+
+  /// It creates a LastFM object that sends its requests through the given
+  /// [client] instead of a [SpaceShip] with its own `Dio`.
+  ///
+  /// It exists so tests can fake the HTTP layer: build a [SpaceShip] around a
+  /// `Dio` with a fake `HttpClientAdapter` and pass it here. The object is
+  /// authenticated if, and only if, a [sessionKey] is given.
+  @visibleForTesting
+  LastFM.withClient({
+    required SpaceShip client,
+    required String apiKey,
+    String? apiSecret,
+    String? sessionKey,
+    String? username,
+  }) : this._(
+         apiKey,
+         apiSecret,
+         sessionKey,
+         username,
+         null,
+         sessionKey != null,
+         client,
+       );
 
   /// It creates a LastFM object with auth mode using [username] and [password].
   /// Uses [auth.getMobileSession] via POST.
@@ -57,11 +87,12 @@ class LastFM {
         apiSecret: apiSecret,
         sessionKey: sessionKey,
         username: username,
+        proxy: proxy,
       );
     }
 
     final session = await SessionKeyGenerator(
-      LastFM._(apiKey, apiSecret, null, null, null, false),
+      LastFM._(apiKey, apiSecret, null, null, null, false, null, proxy),
     ).getMobileSessionKey(username: username, password: password);
 
     return LastFM._(
@@ -71,6 +102,8 @@ class LastFM {
       session.name ?? username,
       null,
       true,
+      null,
+      proxy,
     );
   }
 
@@ -83,7 +116,7 @@ class LastFM {
     String? proxy,
   }) async {
     final session = await SessionKeyGenerator(
-      LastFM._(apiKey, apiSecret, null, null, null, false),
+      LastFM._(apiKey, apiSecret, null, null, null, false, null, proxy),
     ).getSessionWithToken(token: token);
 
     return LastFM._(
@@ -93,6 +126,8 @@ class LastFM {
       session.name,
       null,
       true,
+      null,
+      proxy,
     );
   }
 
@@ -114,6 +149,7 @@ class LastFM {
         apiSecret: apiSecret,
         sessionKey: sessionKey,
         username: username,
+        proxy: proxy,
       );
     }
     throw UnsupportedError(

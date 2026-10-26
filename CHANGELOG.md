@@ -1,3 +1,31 @@
+## 3.1.0
+### Tooling
+
+- Minimum Dart SDK raised to `^3.13.0`, required by `xml ^7.1.0`. The 7.x major rewrote namespace handling and XPath; the parsing surface this package uses (`XmlDocument.parse`, `findElements`/`findAllElements`, `innerText`) is unchanged, and the whole suite passes against it.
+- Dependencies raised: `xml ^7.1.0`, `crypto ^3.0.8`, `convert ^3.1.2`, `dio ^5.11.1`, `meta ^1.19.0`; dev dependencies `lints ^6.1.0`, `test ^1.33.0`, `json_serializable ^6.15.2`, `build_runner ^2.17.1`.
+- Clean under `lints` 6: redundant `library` names dropped, one initializing formal fixed; `dart analyze --fatal-infos .` reports no issue on the whole repository.
+
+### Bug Fixes
+
+- **Authentication**:
+  - `TrackMethods.multiScrobble` now fails with a `ScrobblenautException` on a client without authentication, like every other authenticated method, instead of sending an unsigned request.
+- **Serialization**:
+  - `Track.toJson` now writes `duration` in milliseconds, the unit `Track.fromJson` and `track.getInfo` use, so a `toJson` -> `fromJson` round-trip no longer shifts it by 1000x. `Scrobble.duration` (seconds) is unchanged.
+  - `toJson` now writes nested collections in the Last.fm wrapper shape (`{"tag": [...]}`, `{"track": [...]}`, `{"album": [...]}`, `{"artist": [...]}`, `{"link": [...]}`) and booleans as `0`/`1`, so `toJson` -> `fromJson` is lossless for `Track`, `Album`, `Artist`, `Tag`, `User`, `Bio`, `Taggings` and the search results.
+  - `Bio.links` now also accepts a list of links, not only a single link object.
+
+### Features
+- **Scrobbling**:
+  - `TrackMethods.multiScrobble` now accepts lists of any length: they are split into sequential requests of at most 50 scrobbles (Last.fm's limit) and merged into a single `ScrobbleResponse` whose counters are the sums and whose entries keep the input order. `ScrobbleResponse.merge` builds that combined response. An empty list fails without sending anything.
+- **Networking**:
+  - Transient failures are retried with an exponential backoff: timeouts, connection errors, HTTP 429, HTTP 5xx and Last.fm error 29 ("Rate limit exceeded"). `retryLimit` (default 5) is the total number of attempts, 1 means no retry; the delay starts at 500 ms, doubles, is capped at 8 s, and honours a `Retry-After` header in its seconds form. A 4xx that is not a rate limit is never retried, and after the last attempt the original exception is rethrown.
+  - `proxy: 'host:port'` is now actually applied on native platforms (`HttpClient.findProxy`), instead of being accepted and ignored. A malformed value throws `ArgumentError` at construction; on the web the value is documented as ignored.
+  - `LastFMException` now carries the `Response` it was generated from, so the status code and headers stay readable by callers and by the retry layer.
+
+### Documentation & Examples
+- `example/api_values.dart` is committed and reads its values from `String.fromEnvironment` (`LASTFM_API_KEY`, …): a clean checkout analyzes and runs the examples without creating a git-ignored file, and no credential can be committed.
+- CI analyzes the whole repository (`dart analyze --fatal-infos .`) instead of the library only; README documents how to run an example with `--define`.
+
 ## 3.0.2
 ### CI Maintenance (no API changes)
 

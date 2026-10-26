@@ -12,6 +12,7 @@ class TrackSearchResults {
   @JsonKey(
     name: 'trackmatches',
     fromJson: LastFMValueNormalizer.tracksExtractor,
+    toJson: LastFMValueNormalizer.tracksToJson,
   )
   List<Track>? tracks;
 

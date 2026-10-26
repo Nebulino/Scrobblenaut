@@ -20,17 +20,25 @@ class LastFMException extends DioException {
     this._errorCode,
     this._description, [
     RequestOptions? requestOptions,
-  ]) : super(requestOptions: requestOptions ?? RequestOptions(path: ''));
+    Response? response,
+  ]) : super(
+           requestOptions: requestOptions ?? RequestOptions(path: ''),
+           response: response,
+         );
 
   LastFMException({
     required String errorCode,
     required String description,
     RequestOptions? requestOptions,
-  }) : this._(int.parse(errorCode), description, requestOptions);
+    Response? response,
+  }) : this._(int.parse(errorCode), description, requestOptions, response);
 
+  /// Builds the exception from a response body, keeping the [Response] so
+  /// callers can read its status code and headers (e.g. `Retry-After`).
   factory LastFMException.generate(
     dynamic errorObject, {
     RequestOptions? requestOptions,
+    Response? response,
   }) {
     if (isXml(errorObject.toString())) {
       // Is a XML
@@ -49,6 +57,7 @@ class LastFMException extends DioException {
         errorCode: errorNode.getAttribute('code') ?? '',
         description: errorNode.innerText,
         requestOptions: requestOptions,
+        response: response,
       );
     } else {
       // Else is a Json...
@@ -56,6 +65,7 @@ class LastFMException extends DioException {
         errorCode: errorObject['error'].toString(),
         description: errorObject['message']?.toString() ?? '',
         requestOptions: requestOptions,
+        response: response,
       );
     }
   }

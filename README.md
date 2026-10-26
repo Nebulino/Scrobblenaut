@@ -101,6 +101,12 @@ void main() async {
 - **`LastFM.authenticateWithToken(...)`**: Exchange an authorized web/desktop token (`auth.getSession`).
 - **`LastFM.authenticate(...)`**: Authenticate directly with username and password (`auth.getMobileSession`).
 
+#### Proxy
+
+Every `LastFM` constructor accepts `proxy: 'host:port'` (an optional `http://`
+prefix is fine). On native platforms the whole session goes through it; in the
+browser the proxy belongs to the browser, so the value is ignored there.
+
 ---
 
 ## Development
@@ -111,11 +117,25 @@ If you are cloning this repository to contribute:
 dart run build_runner build
 ```
 
-Run tests and analyzer:
+Run the analyzer and the tests. Both must stay clean, and the suite never
+touches the network:
 
 ```bash
+dart analyze --fatal-infos .
 dart test
-dart analyze
+```
+
+The examples carry no credentials: they read them from `--define`, so a fresh
+clone analyzes and runs without a local `api_values.dart`.
+
+```bash
+dart run \
+  --define=LASTFM_API_KEY=your-key \
+  --define=LASTFM_API_SECRET=your-secret \
+  --define=LASTFM_USERNAME=your-user \
+  --define=LASTFM_PASSWORD=your-password \
+  --define=LASTFM_SESSION_KEY=your-session-key \
+  example/scrobblenaut_example.dart
 ```
 
 ---

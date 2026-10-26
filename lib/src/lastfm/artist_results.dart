@@ -12,6 +12,7 @@ class ArtistSearchResults {
   @JsonKey(
     name: 'artistmatches',
     fromJson: LastFMValueNormalizer.artistsExtractor,
+    toJson: LastFMValueNormalizer.artistsToJson,
   )
   List<Artist>? artists;
 

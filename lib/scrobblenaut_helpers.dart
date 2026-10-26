@@ -5,7 +5,7 @@
 
 /// Scrobblenaut Library.
 /// Import this if you want to use some helpers.
-library scrobblenaut_helpers;
+library;
 
 export 'package:scrobblenaut/src/helpers/scrobble_response.dart';
 export 'package:scrobblenaut/src/helpers/scrobbled_track.dart';

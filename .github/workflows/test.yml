@@ -1,0 +1,34 @@
+name: Test
+
+# Offline unit tests and static analysis. This is the everyday CI check; the
+# pub.dev release gate lives in dart.yml and is not touched by this file.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: stable
+
+      - name: Install dependencies
+        run: dart pub get
+
+      # Nothing may be flagged, infos included, and a clean checkout must be
+      # analyzable on its own: example/api_values.dart is committed and reads
+      # its values from --define, so no placeholder has to be created first.
+      - name: Analyze
+        run: dart analyze --fatal-infos .
+
+      - name: Run tests
+        run: dart test

@@ -12,6 +12,7 @@ class AlbumSearchResults {
   @JsonKey(
     name: 'albummatches',
     fromJson: LastFMValueNormalizer.albumsExtractor,
+    toJson: LastFMValueNormalizer.albumsToJson,
   )
   List<Album>? albums;
 

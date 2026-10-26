@@ -2,6 +2,9 @@
 // Scrobblenaut - A deadly simple Last.FM API Wrapper for Dart. //
 //                  Copyright (c) 2020 Nebulino                 //
 //                                                              //
+// Public names such as these are part of the published API and can't be
+// renamed without a breaking change, so the naming lint is silenced here.
+// ignore_for_file: non_constant_identifier_names
 
 import 'package:scrobblenaut/lastfm.dart';
 import 'package:scrobblenaut/src/exceptions/scrobblenaut_exception.dart';
@@ -252,20 +255,49 @@ class LastFMValueNormalizer {
 
   /// Links extractor.
   static List<Link>? linksExtractor(Map<String, dynamic>? links) {
-    final supposedLinksList = links;
-    if (links != null) {
-      if (supposedLinksList is List) {
-        return List.generate(
-          (links['link'] as List).length,
-          (i) => Link.fromJson(links['link'][i]),
-        );
-      } else {
-        return [Link.fromJson(links['link'])];
-      }
-    } else {
+    if (links == null) {
       return null;
     }
+
+    final supposedLinks = links['link'];
+    if (supposedLinks is List) {
+      return List.generate(
+        supposedLinks.length,
+        (i) => Link.fromJson(supposedLinks[i]),
+      );
+    }
+
+    return [Link.fromJson(supposedLinks)];
   }
+
+  /// Wraps a list into the shape LastFM uses for nested collections,
+  /// so that the matching extractor can read it back.
+  static Map<String, dynamic>? _wrapList(
+    String key,
+    List<dynamic>? items,
+    Map<String, dynamic> Function(dynamic) itemToJson,
+  ) => items == null ? null : {key: items.map(itemToJson).toList()};
+
+  /// Tags to the LastFM `{"tag": [...]}` shape. See [tagsExtractor].
+  static Map<String, dynamic>? tagsToJson(List<Tag>? tags) =>
+      _wrapList('tag', tags, (e) => (e as Tag).toJson());
+
+  /// Tracks to the LastFM `{"track": [...]}` shape. See [tracksExtractor].
+  static Map<String, dynamic>? tracksToJson(List<Track>? tracks) =>
+      _wrapList('track', tracks, (e) => (e as Track).toJson());
+
+  /// Albums to the LastFM `{"album": [...]}` shape. See [albumsExtractor].
+  static Map<String, dynamic>? albumsToJson(List<Album>? albums) =>
+      _wrapList('album', albums, (e) => (e as Album).toJson());
+
+  /// Artists to the LastFM `{"artist": [...]}` shape.
+  /// See [artistsExtractor] and [similarArtistsExtractor].
+  static Map<String, dynamic>? artistsToJson(List<Artist>? artists) =>
+      _wrapList('artist', artists, (e) => (e as Artist).toJson());
+
+  /// Links to the LastFM `{"link": [...]}` shape. See [linksExtractor].
+  static Map<String, dynamic>? linksToJson(List<Link>? links) =>
+      _wrapList('link', links, (e) => (e as Link).toJson());
 
   /// TimeStamp normalizer for POST methods.
   static int? timestampToSecondsSinceEpoch(DateTime? timestamp) =>

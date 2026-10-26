@@ -28,6 +28,7 @@ class Track {
   @JsonKey(
     name: 'duration',
     fromJson: LastFMValueNormalizer.MillisecondsDurationParser,
+    toJson: LastFMValueNormalizer.DurationToMilliseconds,
   )
   Duration? duration;
 
@@ -36,7 +37,11 @@ class Track {
   List<Image>? images;
 
   /// A list of Top Tags of the track.
-  @JsonKey(name: 'toptags', fromJson: LastFMValueNormalizer.tagsExtractor)
+  @JsonKey(
+    name: 'toptags',
+    fromJson: LastFMValueNormalizer.tagsExtractor,
+    toJson: LastFMValueNormalizer.tagsToJson,
+  )
   List<Tag>? topTags;
 
   // TODO: make it directly a Dart object?
@@ -66,7 +71,11 @@ class Track {
   String? mbid;
 
   /// If called from a [User] data, True if the user loved the track.
-  @JsonKey(name: 'loved', fromJson: LastFMValueNormalizer.NumberToBool)
+  @JsonKey(
+    name: 'loved',
+    fromJson: LastFMValueNormalizer.NumberToBool,
+    toJson: LastFMValueNormalizer.BoolToIntBool,
+  )
   bool? loved;
 
   Track({

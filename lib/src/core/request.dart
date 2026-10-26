@@ -9,14 +9,14 @@ import 'package:scrobblenaut/src/helpers/utils.dart';
 
 /// It's creates a request object for the method.
 class Request {
-  final LastFM _api;
+  final LastFM _lastFM;
   final Map<String, dynamic> _parameters;
 
   Request({
     required LastFM api,
     required String method,
     Map<String, dynamic>? parameters,
-  }) : _api = api,
+  }) : _lastFM = api,
        _parameters = {} {
     parameters ?? {};
 
@@ -26,11 +26,11 @@ class Request {
       }
     });
 
-    _parameters['api_key'] = _api.apiKey;
+    _parameters['api_key'] = _lastFM.apiKey;
     _parameters['method'] = method;
 
-    if (_api.sessionKey != null) {
-      _parameters['sk'] = _api.sessionKey;
+    if (_lastFM.sessionKey != null) {
+      _parameters['sk'] = _lastFM.sessionKey;
       signRequest();
     }
   }
@@ -52,7 +52,7 @@ class Request {
       signature += _parameters[key];
     }
 
-    signature += _api.apiSecret ?? '';
+    signature += _lastFM.apiSecret ?? '';
 
     return generateMD5(signature);
   }
@@ -61,9 +61,9 @@ class Request {
   Future<dynamic> send({required RequestMode mode}) async {
     switch (mode) {
       case RequestMode.GET:
-        return await _api.client.get(parameters: _parameters);
+        return await _lastFM.client.get(parameters: _parameters);
       case RequestMode.POST:
-        return await _api.client.post(parameters: _parameters);
+        return await _lastFM.client.post(parameters: _parameters);
     }
   }
 }

@@ -12,7 +12,7 @@ import '../api_values.dart';
 void main() async {
   print('####################################################################');
 
-  final lastFMAuth = LastFM.noAuth(apiKey: APIValues.API);
+  final lastFMAuth = LastFM.noAuth(apiKey: APIValues.api);
 
   final scrobblenaut = Scrobblenaut(lastFM: lastFMAuth);
 
