@@ -5,7 +5,7 @@
 
 /// scrobblenaut Exception Library.
 /// It contains some of the exceptions of my library.
-library scrobblenaut_exceptions;
+library;
 
 export 'package:scrobblenaut/src/exceptions/lastfm_exception.dart';
 export 'package:scrobblenaut/src/exceptions/scrobblenaut_exception.dart';

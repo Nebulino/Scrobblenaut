@@ -4,7 +4,7 @@
 //                                                              //
 
 /// LastFM Type Class.
-library lastfm_objects;
+library;
 
 import 'package:json_annotation/json_annotation.dart';
 import 'package:scrobblenaut/src/helpers/lastfm_value_normalizer.dart';

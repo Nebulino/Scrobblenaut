@@ -1,4 +1,10 @@
-## Unreleased
+## 3.1.0
+### Tooling
+
+- Minimum Dart SDK raised to `^3.13.0`, required by `xml ^7.1.0`. The 7.x major rewrote namespace handling and XPath; the parsing surface this package uses (`XmlDocument.parse`, `findElements`/`findAllElements`, `innerText`) is unchanged, and the whole suite passes against it.
+- Dependencies raised: `xml ^7.1.0`, `crypto ^3.0.8`, `convert ^3.1.2`, `dio ^5.11.1`, `meta ^1.19.0`; dev dependencies `lints ^6.1.0`, `test ^1.33.0`, `json_serializable ^6.15.2`, `build_runner ^2.17.1`.
+- Clean under `lints` 6: redundant `library` names dropped, one initializing formal fixed; `dart analyze --fatal-infos .` reports no issue on the whole repository.
+
 ### Bug Fixes
 
 - **Authentication**:

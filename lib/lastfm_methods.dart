@@ -4,7 +4,7 @@
 //                                                              //
 
 /// It contains and group up all the methods.
-library lastfm_methods;
+library;
 
 export 'package:scrobblenaut/src/methods/album_methods.dart';
 export 'package:scrobblenaut/src/methods/artist_methods.dart';

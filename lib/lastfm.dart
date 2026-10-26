@@ -5,6 +5,6 @@
 
 /// LastFM Library.
 /// It contains different types you can find in LastFM.
-library lastfm;
+library;
 
 export 'package:scrobblenaut/src/lastfm.dart';
